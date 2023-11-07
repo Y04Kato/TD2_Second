@@ -30,7 +30,9 @@ public:
 	Ground* GetGround(int num) { return ground_->get(); }
 	
 private:
-	unique_ptr<Ground> ground_[4];
+	unique_ptr<Ground> ground_[3];
 	unique_ptr<Model> groundModel_;
-	OBB obb_[4];
+	OBB obb_[3];
+
+	bool isGroundMove_;
 };

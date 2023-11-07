@@ -14,6 +14,7 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 	WorldTransform& GetWorldTransform() { return worldTransform_; }
+	void SetWorldTransform(const WorldTransform& worldTransform) { worldTransform_ = worldTransform; }
 
 private:
 	TextureManager* textureManager_;
