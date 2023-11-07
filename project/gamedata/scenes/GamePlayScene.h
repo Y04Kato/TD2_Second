@@ -13,6 +13,10 @@
 #include "components/utilities/collisionManager/CollisionManager.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
 
+#pragma region ゲームオブジェクト
+#include "Ground/GroundManager.h"
+#pragma endregion
+
 class GamePlayScene :public Iscene {
 public:
 	void Initialize() override;
@@ -66,4 +70,6 @@ private:
 	int isSphereDraw_;
 	int isSpriteDraw_;
 	int isModelDraw_;
+
+	std::unique_ptr<GroundManager> groundManager_;
 };

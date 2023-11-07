@@ -77,6 +77,10 @@ void GamePlayScene::Initialize() {
 	const char* groupName = "GamePlayScene";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "Test", 90);
+
+	// グラウンド
+	groundManager_ = make_unique<GroundManager>();
+	groundManager_->Initialize();
 }
 
 void GamePlayScene::Update() {
@@ -91,6 +95,8 @@ void GamePlayScene::Update() {
 	viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
+
+	groundManager_->Update();
 
 	if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Press A\n");
@@ -219,6 +225,8 @@ void GamePlayScene::Draw() {
 	if (isModelDraw_) {
 		model_->Draw(worldTransformModel_, viewProjection_, modelMaterial_);
 	}
+
+	groundManager_->Draw(viewProjection_);
 #pragma endregion
 
 #pragma region パーティクル描画

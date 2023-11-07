@@ -228,6 +228,12 @@
     <ClCompile Include="base\components\2d\CreateParticle.cpp">
       <Filter>ソース ファイル\base\components\2d</Filter>
     </ClCompile>
+    <ClCompile Include="project\gamedata\Ground\Ground.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="project\gamedata\Ground\GroundManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="project\gamedata\resources\shaders\Object3d.PS.hlsl">
@@ -360,6 +366,12 @@
     </ClInclude>
     <ClInclude Include="base\components\2d\CreateParticle.h">
       <Filter>ヘッダー ファイル\base\components\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="project\gamedata\Ground\Ground.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="project\gamedata\Ground\GroundManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

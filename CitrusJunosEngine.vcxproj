@@ -81,6 +81,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)project/gamedata;$(ProjectDir)project/gamedata/Ground;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,6 +119,8 @@
     <ClCompile Include="base\components\math\MatrixCalculation.cpp" />
     <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="project\gamedata\Ground\Ground.cpp" />
+    <ClCompile Include="project\gamedata\Ground\GroundManager.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
@@ -196,6 +199,8 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="project\gamedata\Ground\Ground.h" />
+    <ClInclude Include="project\gamedata\Ground\GroundManager.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />
