@@ -86,7 +86,7 @@ private:
 	//2Dモードの生成位置
 	Vector3 obstacleSpawnPosition_{ 60.0f,0.0f,0.0f };
 	//レーンごとの座標
-	float lanePosition_[3] = { -10.0f,0.0f,10.0f };
+	float lanePosition_[3] = { -15.0f,0.0f,15.0f };
 	//ランダムエンジン
 	std::mt19937 randomEngine_;
 	//カメラ切り替えのフラグ
