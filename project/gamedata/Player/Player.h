@@ -13,6 +13,8 @@ public:
 
 	void Draw(const ViewProjection& view);
 
+	void Move();
+
 	const WorldTransform& GetWorldTransform() { return worldTransformBase_; }
 
 	//ワールド座標

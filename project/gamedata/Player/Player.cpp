@@ -2,19 +2,16 @@
 
 void Player::Initialize(const std::vector<Model*>& models) {
 	worldTransformBase_.Initialize();
+	//worldTransformBase_.translation_.num[1] = -2.0f;
+	worldTransformBase_.scale_ = { 3.0f,3.0f,3.0f };
 	models_ = models;
 	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	input_ = Input::GetInstance();
 }
 
 void Player::Update() {
-	if (input_->PressKey(DIK_D)) {
-		worldTransformBase_.translation_.num[0] += 0.1f;
-	}
-	else if (input_->PressKey(DIK_A)) {
-		worldTransformBase_.translation_.num[0] -= 0.1f;
-	}
-
+	
+	Move();
 
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
@@ -25,6 +22,29 @@ void Player::Update() {
 
 void Player::Draw(const ViewProjection& view) {
 	models_[0]->Draw(worldTransformBase_, view, modelMaterial_);
+}
+
+void Player::Move() {
+	//横スクロール視点移動
+	worldTransformBase_.translation_.num[0] += 0.1f;
+	if (worldTransformBase_.translation_.num[0] > 20.0f) {
+		worldTransformBase_.translation_.num[0] = -20.0f;
+	}
+	//俯瞰視点移動
+	if (input_->TriggerKey(DIK_D)) {
+		worldTransformBase_.translation_.num[2] -= 20.0f;
+	}else if (input_->TriggerKey(DIK_A)) {
+		worldTransformBase_.translation_.num[2] += 20.0f;
+	}
+	if (worldTransformBase_.translation_.num[2] <= -20.0f) {
+		worldTransformBase_.translation_.num[2] = -20.0f;
+	}else if (worldTransformBase_.translation_.num[2] >= 20.0f) {
+		worldTransformBase_.translation_.num[2] = 20.0f;
+	}
+
+
+
+
 }
 
 Vector3 Player::GetWorldPosition() {
