@@ -77,6 +77,10 @@ void GamePlayScene::Initialize() {
 	const char* groupName = "GamePlayScene";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "Test", 90);
+
+	//障害物
+	obstacleManager_ = std::make_unique<ObstacleManager>();
+	obstacleManager_->Initialize(sphere_.get(), uvResourceNum_);
 }
 
 void GamePlayScene::Update() {
@@ -199,6 +203,9 @@ void GamePlayScene::Update() {
 	ImGui::Text("%f", ImGui::GetIO().Framerate);
 
 	ImGui::End();
+
+	//障害物の更新処理
+	obstacleManager_->Update();
 }
 
 void GamePlayScene::Draw() {
@@ -219,6 +226,10 @@ void GamePlayScene::Draw() {
 	if (isModelDraw_) {
 		model_->Draw(worldTransformModel_, viewProjection_, modelMaterial_);
 	}
+
+	//障害物の描画
+	obstacleManager_->Draw(viewProjection_);
+
 #pragma endregion
 
 #pragma region パーティクル描画

@@ -118,6 +118,8 @@
     <ClCompile Include="base\components\math\MatrixCalculation.cpp" />
     <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="project\gamedata\Obstacle\Obstacle.cpp" />
+    <ClCompile Include="project\gamedata\Obstacle\ObstacleManager.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
@@ -196,6 +198,8 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="project\gamedata\Obstacle\Obstacle.h" />
+    <ClInclude Include="project\gamedata\Obstacle\ObstacleManager.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />

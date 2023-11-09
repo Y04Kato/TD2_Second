@@ -12,6 +12,7 @@
 #include "components/debugcamera/DebugCamera.h"
 #include "components/utilities/collisionManager/CollisionManager.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
+#include "../Obstacle/ObstacleManager.h"
 
 class GamePlayScene :public Iscene {
 public:
@@ -66,4 +67,7 @@ private:
 	int isSphereDraw_;
 	int isSpriteDraw_;
 	int isModelDraw_;
+
+	//障害物
+	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
 };
