@@ -121,6 +121,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="project\gamedata\Ground\Ground.cpp" />
     <ClCompile Include="project\gamedata\Ground\GroundManager.cpp" />
+    <ClCompile Include="project\gamedata\Player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="project\gamedata\Ground\Ground.h" />
     <ClInclude Include="project\gamedata\Ground\GroundManager.h" />
+    <ClInclude Include="project\gamedata\Player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />
