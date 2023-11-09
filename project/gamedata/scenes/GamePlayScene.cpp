@@ -121,13 +121,13 @@ void GamePlayScene::Update() {
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll == true) {
-			//debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 1.0f);
-			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 1.0f);
+			//debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 0.05f);
+			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
 			isSideScroll = false;
 			groundManager_->SetFlag(true);
 		}
 		else {
-			debugCamera_->MovingCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
+			debugCamera_->MovingCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
 			isSideScroll = true;
 			groundManager_->SetFlag(false);
 		}
