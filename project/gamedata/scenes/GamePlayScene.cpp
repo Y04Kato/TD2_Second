@@ -116,6 +116,7 @@ void GamePlayScene::Update() {
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 
+	//プレイヤーの移動速度をいじる際は、ここも変更すること
 	debugCamera_->SetMovingSpeed(Vector3{ 0.1f,0.0f,0.0f });
 
 
