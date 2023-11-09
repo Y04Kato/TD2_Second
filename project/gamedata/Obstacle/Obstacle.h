@@ -4,7 +4,7 @@
 
 class Obstacle : public Collider {
 public:
-	enum class Lane {
+	enum Lane {
 		Left,
 		Middle,
 		Right,
@@ -14,7 +14,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="position"></param>
-	void Initialize(const Vector3& position, Lane lane);
+	void Initialize(const Vector3& position, int lane);
 
 	/// <summary>
 	/// 更新
@@ -31,7 +31,7 @@ public:
 	/// レーンの情報を取得
 	/// </summary>
 	/// <returns></returns>
-	Lane GetLane() { return lane_; };
+	int GetLane() { return lane_; };
 
 	/// <summary>
 	/// Z座標を設定
@@ -52,7 +52,7 @@ public:
 
 private:
 	WorldTransform worldTransform_;
-	Lane lane_ = Lane::Middle;
+	int lane_ = Middle;
 	bool isDead_ = false;
 };
 

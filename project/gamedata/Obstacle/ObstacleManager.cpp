@@ -10,19 +10,19 @@ void ObstacleManager::Initialize(CreateSphere* sphere, uint32_t textureHandle) {
 
 void ObstacleManager::Update() {
 
-	if (--obstacleSpawnTimer_ <= 0.0f) {
+	if (--obstacleSpawnTimer_ <= 0) {
 		obstacleSpawnTimer_ = kObstacleSpawnInterval;
 		Obstacle* obstacle = new Obstacle();
 		int lane = GetRandomInt(0, 2);
 		switch (lane) {
-		case 0:
-			obstacle->Initialize({ 30.0f,0.0f,0.0f }, Obstacle::Lane::Left);
+		case Obstacle::Lane::Left:
+			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Left);
 			break;
-		case 1:
-			obstacle->Initialize({ 30.0f,0.0f,0.0f }, Obstacle::Lane::Middle);
+		case Obstacle::Lane::Middle:
+			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Middle);
 			break;
-		case 2:
-			obstacle->Initialize({ 30.0f,0.0f,0.0f }, Obstacle::Lane::Right);
+		case Obstacle::Lane::Right:
+			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Right);
 			break;
 		}
 		AddObstacle(obstacle);
@@ -35,18 +35,18 @@ void ObstacleManager::Update() {
 		cameraMode_ = CameraMode::Horizontal;
 	}
 
-	//カメラが切り替わったらレーンを変える
+	//カメラの状態で障害物の座標を変える
 	if (cameraMode_ == CameraMode::Vertical) {
 		for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
 			switch (obstacle->GetLane()) {
 			case Obstacle::Lane::Left:
-				obstacle->SetPositionZ(-5.0f);
+				obstacle->SetPositionZ(lanePosition_[0]);
 				break;
 			case Obstacle::Lane::Middle:
-				obstacle->SetPositionZ(0.0f);
+				obstacle->SetPositionZ(lanePosition_[1]);
 				break;
 			case Obstacle::Lane::Right:
-				obstacle->SetPositionZ(5.0f);
+				obstacle->SetPositionZ(lanePosition_[2]);
 				break;
 			}
 		}

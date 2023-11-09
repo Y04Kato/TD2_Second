@@ -5,9 +5,11 @@
 
 class ObstacleManager {
 public:
-	static const int kObstacleSpawnInterval = 60 * 5;
+	//障害物の間隔
+	static const int kObstacleSpawnInterval = 60 * 8;
 
-	enum class CameraMode {
+	//カメラの状態
+	enum CameraMode {
 		Vertical,
 		Horizontal,
 	};
@@ -42,16 +44,34 @@ public:
 	/// <returns></returns>
 	const std::list<std::unique_ptr<Obstacle>>& GetObstacles() const { return obstacles_; };
 
+	/// <summary>
+	/// ランダムな値を取得
+	/// </summary>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
 	int GetRandomInt(int min, int max);
 
 private:
+	//モデル
 	CreateSphere* sphere_ = nullptr;
+	//モデルの色
 	Vector4 sphereMaterial_{ 1.0f,1.0f,1.0f,1.0f };
+	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+	//障害物のリスト
 	std::list<std::unique_ptr<Obstacle>> obstacles_{};
-	CameraMode cameraMode_ = CameraMode::Horizontal;
-	int obstacleSpawnTimer_ = kObstacleSpawnInterval;
+	//カメラモード
+	int cameraMode_ = Horizontal;
+	//障害物のスポーンタイマー
+	int obstacleSpawnTimer_ = 0;
+	//2Dモードの生成位置
+	Vector3 obstacleSpawnPosition_{ 60.0f,0.0f,0.0f };
+	//レーンごとの座標
+	float lanePosition_[3] = { -10.0f,0.0f,10.0f };
+	//ランダムエンジン
 	std::mt19937 randomEngine_;
+	//カメラ切り替えのフラグ
 	bool cameraChenge_ = false;
 };
 
