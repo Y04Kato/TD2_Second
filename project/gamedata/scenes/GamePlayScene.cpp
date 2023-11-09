@@ -109,26 +109,23 @@ void GamePlayScene::Update() {
 
 	groundManager_->Update();
 	player_->Update();
+	debugCamera_->SetMovingSpeed(Vector3{ 0.1f,0.0f,0.0f });
 
-	if (input_->PressKey(DIK_A)) {
-		OutputDebugStringA("Press A\n");
-	}
-	if (input_->ReleaseKey(DIK_S)) {
-		OutputDebugStringA("Release S\n");
-	}
-	if (input_->TriggerKey(DIK_D)) {
-		OutputDebugStringA("Trigger D\n");
-	}
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll == true) {
-			debugCamera_->MovingCamera(Vector3{ -50.0f,2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 1.0f);
+			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 1.0f);
 			isSideScroll = false;
 		}
 		else {
-			debugCamera_->MovingCamera(Vector3{ 0.0f,2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
+			debugCamera_->MovingCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
 			isSideScroll = true;
 		}
-		
+	}
+	if (isSideScroll == true) {
+		debugCamera_->SetCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f });
+	}
+	else {
+		debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f });
 	}
 
 	if (input_->TriggerKey(DIK_SPACE)&& groundManager_->GetFlag() == false) {

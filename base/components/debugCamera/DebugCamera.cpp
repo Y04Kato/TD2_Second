@@ -36,6 +36,9 @@ void DebugCamera::Update() {
 
 	if (isMovingCamera == true) {
 		timer_ += 0.01f;
+		movingEndTranslate_.num[0] += movingSpeed_.num[0];
+		movingEndTranslate_.num[1] += movingSpeed_.num[1];
+		movingEndTranslate_.num[2] += movingSpeed_.num[2];
 		if (timer_ >= endTimer_) {
 			isMovingCamera = false;
 			timer_ = endTimer_;
@@ -70,4 +73,8 @@ void DebugCamera::MovingCamera(Vector3 translation, Vector3 rotation, float time
 	movingEndTranslate_ = translation;
 	movingEndRotate_ = rotation;
 	isMovingCamera = true;
+}
+
+void DebugCamera::SetMovingSpeed(Vector3 moveSpeed) {
+	movingSpeed_ = moveSpeed;
 }
