@@ -72,4 +72,6 @@ private:
 	int isModelDraw_;
 
 	std::unique_ptr<GroundManager> groundManager_;
+
+	bool isSideScroll = true;
 };
