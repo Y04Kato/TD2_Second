@@ -81,6 +81,13 @@ void GamePlayScene::Initialize() {
 	// グラウンド
 	groundManager_ = make_unique<GroundManager>();
 	groundManager_->Initialize();
+
+	player_ = std::make_unique <Player>();
+	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/cube", "cube.obj"));
+	std::vector<Model*>playerModels = { playerModel_.get() };
+	player_->Initialize(playerModels);
+
+	
 }
 
 void GamePlayScene::Update() {
@@ -97,6 +104,7 @@ void GamePlayScene::Update() {
 	viewProjection_.UpdateMatrix();
 
 	groundManager_->Update();
+	player_->Update();
 
 	if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Press A\n");
@@ -237,6 +245,7 @@ void GamePlayScene::Draw() {
 		model_->Draw(worldTransformModel_, viewProjection_, modelMaterial_);
 	}
 
+	player_->Draw(viewProjection_);
 	groundManager_->Draw(viewProjection_);
 #pragma endregion
 
