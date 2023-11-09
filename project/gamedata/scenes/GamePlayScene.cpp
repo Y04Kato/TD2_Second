@@ -123,19 +123,13 @@ void GamePlayScene::Update() {
 		if (isSideScroll == true) {
 			debugCamera_->MovingCamera(Vector3{ -50.0f,2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 1.0f);
 			isSideScroll = false;
+			groundManager_->SetFlag(true);
 		}
 		else {
 			debugCamera_->MovingCamera(Vector3{ 0.0f,2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
 			isSideScroll = true;
+			groundManager_->SetFlag(false);
 		}
-		
-	}
-
-	if (input_->TriggerKey(DIK_SPACE)&& groundManager_->GetFlag() == false) {
-		groundManager_->SetFlag(true);
-	}
-	else if (input_->TriggerKey(DIK_SPACE) && groundManager_->GetFlag() == true) {
-		groundManager_->SetFlag(false);
 	}
 
 	for (int i = 0; i < 2; i++) {

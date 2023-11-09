@@ -15,6 +15,9 @@ public:
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
+	void OBJtoOBB();
+	void MovingGround();
+
 	/// <summary>
 	/// OBBの取得
 	/// </summary>
