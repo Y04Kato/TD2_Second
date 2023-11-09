@@ -52,6 +52,24 @@ public:
 	/// <returns></returns>
 	int GetRandomInt(int min, int max);
 
+	/// <summary>
+	/// カメラの状態を取得
+	/// </summary>
+	/// <param name="isSideScroll"></param>
+	void SetIsSideScroll(bool isSideScroll) { cameraChenge_ = isSideScroll; };
+
+	/// <summary>
+	/// プレイヤーの座標を取得
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPlayerPosition(const Vector3& position) { playerPos_ = position; };
+
+	/// <summary>
+	/// カメラの座標を取得
+	/// </summary>
+	/// <param name="position"></param>
+	void SetCameraPosition(const Vector3& position) { cameraPos_ = position; };
+
 private:
 	//モデル
 	CreateSphere* sphere_ = nullptr;
@@ -68,10 +86,14 @@ private:
 	//2Dモードの生成位置
 	Vector3 obstacleSpawnPosition_{ 60.0f,0.0f,0.0f };
 	//レーンごとの座標
-	float lanePosition_[3] = { -10.0f,0.0f,10.0f };
+	float lanePosition_[3] = { -15.0f,0.0f,15.0f };
 	//ランダムエンジン
 	std::mt19937 randomEngine_;
 	//カメラ切り替えのフラグ
 	bool cameraChenge_ = false;
+	//プレイヤーの座標
+	Vector3 playerPos_{ 0.0f,0.0f,0.0f };
+	//カメラの座標
+	Vector3 cameraPos_{ 0.0f,0.0f,0.0f };
 };
 

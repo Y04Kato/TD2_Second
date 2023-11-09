@@ -109,11 +109,20 @@ void GamePlayScene::Update() {
 
 	groundManager_->Update();
 	player_->Update();
+
+	//障害物の更新処理
+	obstacleManager_->Update();
+	obstacleManager_->SetIsSideScroll(isSideScroll);
+	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
+	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+
 	debugCamera_->SetMovingSpeed(Vector3{ 0.1f,0.0f,0.0f });
+
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll == true) {
-			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 0.05f);
+			//debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 0.05f);
+			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
 			isSideScroll = false;
 			groundManager_->SetFlag(true);
 		}
@@ -128,7 +137,8 @@ void GamePlayScene::Update() {
 		debugCamera_->SetCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f });
 	}
 	else {
-		debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f });
+		//debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f });
+		debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
 	}
 
 	for (int i = 0; i < 2; i++) {
@@ -228,9 +238,6 @@ void GamePlayScene::Update() {
 	ImGui::Text("%f", ImGui::GetIO().Framerate);
 
 	ImGui::End();
-
-	//障害物の更新処理
-	obstacleManager_->Update();
 }
 
 void GamePlayScene::Draw() {
