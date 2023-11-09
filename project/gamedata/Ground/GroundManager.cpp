@@ -25,12 +25,12 @@ void GroundManager::Update() {
 	}
 
 	if (isGroundMove_ == true) {
-		ground_[1]->SetTranslate({ 0.0f, -6.0f, 10.0f });
-		ground_[2]->SetTranslate({ 0.0f,-6.0f,-10.0f });
+		ground_[1]->SetTranslate(Lerp(ground_[1]->GetWorldTransform().translation_, {0.0f, -6.0f, 15.0f}, 1.0f));
+		ground_[2]->SetTranslate(Lerp(ground_[2]->GetWorldTransform().translation_, {0.0f, -6.0f, -15.0f}, 1.0f));
 	}
 	else if (isGroundMove_ == false) {
-		ground_[1]->SetTranslate({ 0.0f,-6.0f,0.0f });
-		ground_[2]->SetTranslate({ 0.0f,-6.0f,0.0f });
+		ground_[1]->SetTranslate(Lerp(ground_[1]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
+		ground_[2]->SetTranslate(Lerp(ground_[2]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
 	}
 }
 

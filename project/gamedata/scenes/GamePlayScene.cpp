@@ -131,8 +131,11 @@ void GamePlayScene::Update() {
 		
 	}
 
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->TriggerKey(DIK_SPACE)&& groundManager_->GetFlag() == false) {
 		groundManager_->SetFlag(true);
+	}
+	else if (input_->TriggerKey(DIK_SPACE) && groundManager_->GetFlag() == true) {
+		groundManager_->SetFlag(false);
 	}
 
 	for (int i = 0; i < 2; i++) {

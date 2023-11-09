@@ -36,6 +36,12 @@ public:
 	/// <returns>真:縦レーン 偽:横レーン</returns>
 	void SetFlag(bool flag) { isGroundMove_ = flag; }
 
+	/// <summary>
+	/// グランドの場所の可変フラグを取得
+	/// </summary>
+	/// <returns>真:縦レーン 偽:横レーン</returns>
+	bool GetFlag() { return isGroundMove_; }
+
 private:
 	unique_ptr<Ground> ground_[3];
 	unique_ptr<Model> groundModel_;
