@@ -130,6 +130,12 @@
     <Filter Include="ソース ファイル\base\components\utilities\directionalLight">
       <UniqueIdentifier>{dfd6f818-eb7c-42f7-a209-09796a12d3d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\project\gamedata\Obstacle">
+      <UniqueIdentifier>{64d12c60-302a-4437-a4fd-434cd9c0aa5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\project\gamedata\Obstacle">
+      <UniqueIdentifier>{1803d6c9-6da5-46cd-b5a3-cb358ceab78f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -228,6 +234,12 @@
     <ClCompile Include="base\components\2d\CreateParticle.cpp">
       <Filter>ソース ファイル\base\components\2d</Filter>
     </ClCompile>
+    <ClCompile Include="project\gamedata\Obstacle\Obstacle.cpp">
+      <Filter>ソース ファイル\project\gamedata\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="project\gamedata\Obstacle\ObstacleManager.cpp">
+      <Filter>ソース ファイル\project\gamedata\Obstacle</Filter>
+    </ClCompile>  
     <ClCompile Include="project\gamedata\Ground\Ground.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -370,6 +382,12 @@
     <ClInclude Include="base\components\2d\CreateParticle.h">
       <Filter>ヘッダー ファイル\base\components\2d</Filter>
     </ClInclude>
+    <ClInclude Include="project\gamedata\Obstacle\Obstacle.h">
+      <Filter>ヘッダー ファイル\project\gamedata\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="project\gamedata\Obstacle\ObstacleManager.h">
+      <Filter>ヘッダー ファイル\project\gamedata\Obstacle</Filter>
+    </ClInclude>  
     <ClInclude Include="project\gamedata\Ground\Ground.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
