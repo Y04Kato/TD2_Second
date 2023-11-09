@@ -35,13 +35,13 @@ void DebugCamera::Update() {
 #endif
 
 	if (isMovingCamera == true) {
-		timer_ += 0.01f;
+		timer_ += timerCountr_;
 		movingEndTranslate_.num[0] += movingSpeed_.num[0];
 		movingEndTranslate_.num[1] += movingSpeed_.num[1];
 		movingEndTranslate_.num[2] += movingSpeed_.num[2];
-		if (timer_ >= endTimer_) {
+		if (timer_ >= 1.0f) {
 			isMovingCamera = false;
-			timer_ = endTimer_;
+			timer_ = 1.0f;
 		}
 		viewProjection_.translation_.num[0] = (1.0f - timer_) * movingStartTranslate_.num[0] + timer_ * movingEndTranslate_.num[0];
 		viewProjection_.translation_.num[1] = (1.0f - timer_) * movingStartTranslate_.num[1] + timer_ * movingEndTranslate_.num[1];
@@ -65,9 +65,9 @@ void DebugCamera::SetCamera(Vector3 translation, Vector3 rotation) {
 	viewProjection_.rotation_ = rotation;
 }
 
-void DebugCamera::MovingCamera(Vector3 translation, Vector3 rotation, float timer) {
+void DebugCamera::MovingCamera(Vector3 translation, Vector3 rotation, float timerSpeed) {
 	timer_ = 0.0f;
-	endTimer_ = timer;
+	timerCountr_ = timerSpeed;
 	movingStartTranslate_ = viewProjection_.translation_;
 	movingStartRotate_ = viewProjection_.rotation_;
 	movingEndTranslate_ = translation;
