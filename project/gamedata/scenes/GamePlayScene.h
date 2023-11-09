@@ -14,6 +14,10 @@
 #include "components/utilities/collisionManager/CollisionConfig.h"
 #include "../Obstacle/ObstacleManager.h"
 
+#pragma region ゲームオブジェクト
+#include "Ground/GroundManager.h"
+#pragma endregion
+
 class GamePlayScene :public Iscene {
 public:
 	void Initialize() override;
@@ -70,4 +74,7 @@ private:
 
 	//障害物
 	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
+	std::unique_ptr<GroundManager> groundManager_;
+
+	bool isSideScroll = true;
 };

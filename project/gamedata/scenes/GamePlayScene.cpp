@@ -81,6 +81,10 @@ void GamePlayScene::Initialize() {
 	//障害物
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize(sphere_.get(), uvResourceNum_);
+  
+	// グラウンド
+	groundManager_ = make_unique<GroundManager>();
+	groundManager_->Initialize();
 }
 
 void GamePlayScene::Update() {
@@ -96,6 +100,8 @@ void GamePlayScene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
+	groundManager_->Update();
+
 	if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Press A\n");
 	}
@@ -104,6 +110,17 @@ void GamePlayScene::Update() {
 	}
 	if (input_->TriggerKey(DIK_D)) {
 		OutputDebugStringA("Trigger D\n");
+	}
+	if (input_->TriggerKey(DIK_SPACE)) {
+		if (isSideScroll == true) {
+			debugCamera_->MovingCamera(Vector3{ -50.0f,2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 1.0f);
+			isSideScroll = false;
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ 0.0f,2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
+			isSideScroll = true;
+		}
+		
 	}
 
 	for (int i = 0; i < 2; i++) {
@@ -230,6 +247,8 @@ void GamePlayScene::Draw() {
 	//障害物の描画
 	obstacleManager_->Draw(viewProjection_);
 
+	groundManager_->Draw(viewProjection_);
+  
 #pragma endregion
 
 #pragma region パーティクル描画
