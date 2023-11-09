@@ -1,4 +1,5 @@
 #include "ObstacleManager.h"
+#include "components/math/MatrixCalculation.h"
 
 void ObstacleManager::Initialize(CreateSphere* sphere, uint32_t textureHandle) {
 	assert(sphere);
@@ -6,33 +7,49 @@ void ObstacleManager::Initialize(CreateSphere* sphere, uint32_t textureHandle) {
 	textureHandle_ = textureHandle;
 	std::random_device seedGenerator;
 	randomEngine_ = std::mt19937(seedGenerator());
+	Obstacle* obstacles[3]{};
+	for (int i = 0; i < 3; i++) {
+		obstacles[i] = new Obstacle();
+		switch (i) {
+		case Obstacle::Lane::Left:
+			obstacles[i]->Initialize({ i * 20 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Left);
+			break;
+		case Obstacle::Lane::Middle:
+			obstacles[i]->Initialize({ i * 20 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Middle);
+			break;
+		case Obstacle::Lane::Right:
+			obstacles[i]->Initialize({ i * 20 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Right);
+			break;
+		}
+		AddObstacle(obstacles[i]);
+	}
 }
 
 void ObstacleManager::Update() {
 
-	if (--obstacleSpawnTimer_ <= 0) {
-		obstacleSpawnTimer_ = kObstacleSpawnInterval;
-		Obstacle* obstacle = new Obstacle();
-		int lane = GetRandomInt(0, 2);
-		switch (lane) {
-		case Obstacle::Lane::Left:
-			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Left);
-			break;
-		case Obstacle::Lane::Middle:
-			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Middle);
-			break;
-		case Obstacle::Lane::Right:
-			obstacle->Initialize(obstacleSpawnPosition_, Obstacle::Lane::Right);
-			break;
-		}
-		AddObstacle(obstacle);
-	}
+	//if (--obstacleSpawnTimer_ <= 0) {
+	//	obstacleSpawnTimer_ = kObstacleSpawnInterval;
+	//	Obstacle* obstacle = new Obstacle();
+	//	int lane = GetRandomInt(0, 2);
+	//	switch (lane) {
+	//	case Obstacle::Lane::Left:
+	//		obstacle->Initialize(Add(playerPos_, obstacleSpawnPosition_), Obstacle::Lane::Left);
+	//		break;
+	//	case Obstacle::Lane::Middle:
+	//		obstacle->Initialize(Add(playerPos_, obstacleSpawnPosition_), Obstacle::Lane::Middle);
+	//		break;
+	//	case Obstacle::Lane::Right:
+	//		obstacle->Initialize(Add(playerPos_, obstacleSpawnPosition_), Obstacle::Lane::Right);
+	//		break;
+	//	}
+	//	AddObstacle(obstacle);
+	//}
 
 	if (cameraChenge_) {
-		cameraMode_ = CameraMode::Vertical;
+		cameraMode_ = CameraMode::Horizontal;
 	}
 	else {
-		cameraMode_ = CameraMode::Horizontal;
+		cameraMode_ = CameraMode::Vertical;
 	}
 
 	//カメラの状態で障害物の座標を変える
@@ -69,11 +86,8 @@ void ObstacleManager::Update() {
 	//障害物の更新
 	for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
 		obstacle->Update();
+		obstacle->GetCameraPosition(cameraPos_);
 	}
-
-	ImGui::Begin("Obstacle");
-	ImGui::Checkbox("CameraChenge", &cameraChenge_);
-	ImGui::End();
 }
 
 void ObstacleManager::Draw(const ViewProjection& viewProjection) {

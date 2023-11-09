@@ -50,9 +50,16 @@ public:
 	/// <returns></returns>
 	WorldTransform GetWorldTransform() override { return worldTransform_; };
 
+	/// <summary>
+	/// カメラ座標を取得
+	/// </summary>
+	/// <param name="position"></param>
+	void GetCameraPosition(const Vector3& position) { cameraPos_ = position; };
+
 private:
 	WorldTransform worldTransform_;
 	int lane_ = Middle;
 	bool isDead_ = false;
+	Vector3 cameraPos_{ 0.0f,0.0f,0.0f };
 };
 

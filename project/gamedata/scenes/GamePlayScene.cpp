@@ -109,7 +109,15 @@ void GamePlayScene::Update() {
 
 	groundManager_->Update();
 	player_->Update();
+
+	//障害物の更新処理
+	obstacleManager_->Update();
+	obstacleManager_->SetIsSideScroll(isSideScroll);
+	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
+	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+
 	debugCamera_->SetMovingSpeed(Vector3{ 0.1f,0.0f,0.0f });
+
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll == true) {
@@ -228,9 +236,6 @@ void GamePlayScene::Update() {
 	ImGui::Text("%f", ImGui::GetIO().Framerate);
 
 	ImGui::End();
-
-	//障害物の更新処理
-	obstacleManager_->Update();
 }
 
 void GamePlayScene::Draw() {
