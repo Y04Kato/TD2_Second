@@ -7,8 +7,6 @@ void Ground::Initialize(Model* model, Vector3 translation, Vector3 scale) {
 	worldTransform_.translation_ = translation;
 	worldTransform_.scale_ = scale;
 
-	//textureHandle_ = textureManager_->Load("project/gamedata/resources/ground/tex.png");
-
 	groundModel_ = model;
 }
 

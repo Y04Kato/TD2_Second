@@ -8,9 +8,9 @@ void GroundManager::Initialize() {
 	}
 
 	groundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/ground", "CUBE.obj"));
-	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,5.0f });
-	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,5.0f });
-	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,5.0f });
+	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,4.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,4.0f });
+	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { 20.0f,3.0f,4.0f });
 }
 
 void GroundManager::Update() {
@@ -25,7 +25,12 @@ void GroundManager::Update() {
 	}
 
 	if (isGroundMove_ == true) {
-	
+		ground_[1]->SetTranslate({ 0.0f, -6.0f, 10.0f });
+		ground_[2]->SetTranslate({ 0.0f,-6.0f,-10.0f });
+	}
+	else if (isGroundMove_ == false) {
+		ground_[1]->SetTranslate({ 0.0f,-6.0f,0.0f });
+		ground_[2]->SetTranslate({ 0.0f,-6.0f,0.0f });
 	}
 }
 

@@ -131,6 +131,10 @@ void GamePlayScene::Update() {
 		
 	}
 
+	if (input_->TriggerKey(DIK_SPACE)) {
+		groundManager_->SetFlag(true);
+	}
+
 	for (int i = 0; i < 2; i++) {
 		worldTransformTriangle_[i].UpdateMatrix();
 	}

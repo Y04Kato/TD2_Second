@@ -14,7 +14,7 @@ public:
 	void Draw(const ViewProjection& viewProjection);
 
 	WorldTransform& GetWorldTransform() { return worldTransform_; }
-	void SetWorldTransform(const WorldTransform& worldTransform) { worldTransform_ = worldTransform; }
+	void SetTranslate(const Vector3& translate) { worldTransform_.translation_ = translate; }
 
 private:
 	TextureManager* textureManager_;

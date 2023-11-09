@@ -29,6 +29,13 @@ public:
 	/// <returns>Groundの情報</returns>
 	Ground* GetGround(int num) { return ground_->get(); }
 	
+	/// <summary>
+	/// グランドの場所の可変フラグ
+	/// </summary>
+	/// <param name="flag">移動フラグ</param>
+	/// <returns>真:縦レーン 偽:横レーン</returns>
+	void SetFlag(bool flag) { isGroundMove_ = flag; }
+
 private:
 	unique_ptr<Ground> ground_[3];
 	unique_ptr<Model> groundModel_;
