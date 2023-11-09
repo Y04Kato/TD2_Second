@@ -83,7 +83,7 @@ void GamePlayScene::Initialize() {
 	groundManager_->Initialize();
 
 	player_ = std::make_unique <Player>();
-	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/cube", "cube.obj"));
+	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "cube.obj"));
 	std::vector<Model*>playerModels = { playerModel_.get() };
 	player_->Initialize(playerModels);
 
