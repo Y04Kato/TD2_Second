@@ -1,10 +1,11 @@
 #include "Obstacle.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
 
-void Obstacle::Initialize(const Vector3& position, int lane) {
+void Obstacle::Initialize(const Vector3& position, int lane, int mode) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 	lane_ = lane;
+	mode_ = mode;
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
 }
@@ -24,5 +25,4 @@ void Obstacle::Update() {
 }
 
 void Obstacle::OnCollision() {
-
 }

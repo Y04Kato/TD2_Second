@@ -7,6 +7,8 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	models_ = models;
 	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	input_ = Input::GetInstance();
+
+	moveSpeed_ = 0.1f;
 }
 
 void Player::Update() {
@@ -26,7 +28,7 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	worldTransformBase_.translation_.num[0] += 0.1f;
+	worldTransformBase_.translation_.num[0] += moveSpeed_;
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -20.0f;
 	}
@@ -42,9 +44,6 @@ void Player::Move() {
 		worldTransformBase_.translation_.num[2] = 20.0f;
 	}
 
-
-
-
 }
 
 Vector3 Player::GetWorldPosition() {
@@ -59,4 +58,10 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::OnCollision() {
 	isHit = true;
+	if (obstacleMode_ == Obstacle::Mode::None) {
+
+	}
+	if (obstacleMode_ == Obstacle::Mode::Acceleration) {
+		moveSpeed_ = 0.5f;
+	}
 }

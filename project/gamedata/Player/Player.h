@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "ViewProjection.h"
 
+#include "Obstacle/Obstacle.h"
 
 class Player {
 public:
@@ -22,6 +23,8 @@ public:
 	//当たり判定
 	void OnCollision();
 
+	void SetObstacleMode(int obstacleMode) { obstacleMode_ = obstacleMode; };
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
@@ -29,5 +32,9 @@ private:
 	std::vector<Model*> models_;
 	Vector4 modelMaterial_;
 
+	float moveSpeed_;
+
 	bool isHit;
+
+	int obstacleMode_;
 };
