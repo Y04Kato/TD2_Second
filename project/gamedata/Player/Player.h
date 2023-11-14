@@ -6,6 +6,8 @@
 #include "ViewProjection.h"
 #include "components/utilities/collisionmanager/Collider.h"
 
+#include "Obstacle/Obstacle.h"
+
 class Player : public Collider {
 public:
 	void Initialize(const std::vector<Model*>& models, uint32_t textureHandle);
@@ -25,6 +27,8 @@ public:
 	//当たり判定
 	void OnCollision() override;
 
+	void SetObstacleMode(int mode) { mode_ = mode; };
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
@@ -42,4 +46,8 @@ private:
 
 	//攻撃時間
 	int fireTimer_ = 1;
+
+	int mode_;
+
+	float moveSpeed = 0.1f;
 };

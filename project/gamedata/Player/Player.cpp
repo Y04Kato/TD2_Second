@@ -38,7 +38,7 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	worldTransformBase_.translation_.num[0] += 0.1f;
+	worldTransformBase_.translation_.num[0] += moveSpeed;
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
@@ -110,5 +110,10 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::OnCollision() {
 	isHit = true;
-	life_--;
+	if (mode_ == Obstacle::Mode::None) {
+		life_--;
+	}
+	if (mode_ == Obstacle::Mode::Acceleration) {
+		moveSpeed = 0.5f;
+	}
 }
