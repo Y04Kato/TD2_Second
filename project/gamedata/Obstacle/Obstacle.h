@@ -14,7 +14,7 @@ public:
 		None,
 		Acceleration,
 		Deceleration,
-		Restoration,
+		HealLife,
 	};
 
 	/// <summary>
