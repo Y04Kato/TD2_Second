@@ -4,6 +4,7 @@
 void Obstacle::Initialize(const Vector3& position, int lane) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
+	worldTransform_.UpdateMatrix();
 	lane_ = lane;
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
@@ -24,5 +25,5 @@ void Obstacle::Update() {
 }
 
 void Obstacle::OnCollision() {
-
+	isDead_ = true;
 }

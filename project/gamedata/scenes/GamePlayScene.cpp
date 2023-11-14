@@ -99,6 +99,11 @@ void GamePlayScene::Update() {
 	ApplyGlobalVariables();
 
 	collisionManager_->ClearColliders();
+	collisionManager_->AddCollider(player_.get());
+	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
+	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+		collisionManager_->AddCollider(obstacle.get());
+	}
 	collisionManager_->CheckAllCollision();
 
 	debugCamera_->Update();
