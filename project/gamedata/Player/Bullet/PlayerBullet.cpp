@@ -1,0 +1,58 @@
+#include "PlayerBullet.h"
+#include <cassert>
+
+
+PlayerBullet::~PlayerBullet() {
+	
+}
+
+void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, uint32_t textureHandle) {
+	worldTransform_.translation_ = position;
+	worldTransform_.Initialize();
+	sphere_ = std::make_unique <CreateSphere>();
+	sphere_->Initialize();
+	textureHandle_ = textureHandle;
+	//引数で受け取った速度をメンバ変数に代入
+	velocity_ = velocity;
+};
+
+/// <summary>
+/// 毎フレーム処理
+/// </summary>
+void PlayerBullet::Update() {
+
+
+	//時間経過でデス
+	if (--deathTimer_ <= 0) {
+		isDead_ = true;
+	}
+
+	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+	worldTransform_.UpdateMatrix();
+
+	
+};
+
+/// <summary>
+/// 描画
+/// </summary>
+void PlayerBullet::Draw(const ViewProjection& viewprojection) {
+	sphere_->Draw(worldTransform_, viewprojection, sphereMaterial_, textureHandle_);
+
+};
+
+
+Vector3 PlayerBullet::GetWorldPosition() {
+	// ワールド座標を入れる関数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.num[0] = worldTransform_.translation_.num[0];
+	worldPos.num[1] = worldTransform_.translation_.num[1];
+	worldPos.num[2] = worldTransform_.translation_.num[2];
+	return worldPos;
+}
+
+// 衝突を検出したら呼び出されるコールバック関数
+void PlayerBullet::OnCollision() {
+	isDead_ = true;
+}
