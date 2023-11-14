@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "components/utilities/collisionManager/CollisionConfig.h"
 
 void Player::Initialize(const std::vector<Model*>& models) {
 	worldTransformBase_.Initialize();
@@ -7,6 +8,8 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	models_ = models;
 	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	input_ = Input::GetInstance();
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
+	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 }
 
 void Player::Update() {
@@ -16,6 +19,7 @@ void Player::Update() {
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
+	ImGui::Text("Life : %d", life_);
 	ImGui::End();
 
 }
@@ -32,14 +36,14 @@ void Player::Move() {
 	}
 	//俯瞰視点移動
 	if (input_->TriggerKey(DIK_D)) {
-		worldTransformBase_.translation_.num[2] -= 20.0f;
+		worldTransformBase_.translation_.num[2] -= 15.0f;
 	}else if (input_->TriggerKey(DIK_A)) {
-		worldTransformBase_.translation_.num[2] += 20.0f;
+		worldTransformBase_.translation_.num[2] += 15.0f;
 	}
-	if (worldTransformBase_.translation_.num[2] <= -20.0f) {
-		worldTransformBase_.translation_.num[2] = -20.0f;
-	}else if (worldTransformBase_.translation_.num[2] >= 20.0f) {
-		worldTransformBase_.translation_.num[2] = 20.0f;
+	if (worldTransformBase_.translation_.num[2] <= -15.0f) {
+		worldTransformBase_.translation_.num[2] = -15.0f;
+	}else if (worldTransformBase_.translation_.num[2] >= 15.0f) {
+		worldTransformBase_.translation_.num[2] = 15.0f;
 	}
 
 
@@ -59,4 +63,5 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::OnCollision() {
 	isHit = true;
+	life_--;
 }
