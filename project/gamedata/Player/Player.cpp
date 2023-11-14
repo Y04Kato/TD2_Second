@@ -36,14 +36,14 @@ void Player::Move() {
 	}
 	//俯瞰視点移動
 	if (input_->TriggerKey(DIK_D)) {
-		worldTransformBase_.translation_.num[2] -= 20.0f;
+		worldTransformBase_.translation_.num[2] -= 15.0f;
 	}else if (input_->TriggerKey(DIK_A)) {
-		worldTransformBase_.translation_.num[2] += 20.0f;
+		worldTransformBase_.translation_.num[2] += 15.0f;
 	}
-	if (worldTransformBase_.translation_.num[2] <= -20.0f) {
-		worldTransformBase_.translation_.num[2] = -20.0f;
-	}else if (worldTransformBase_.translation_.num[2] >= 20.0f) {
-		worldTransformBase_.translation_.num[2] = 20.0f;
+	if (worldTransformBase_.translation_.num[2] <= -15.0f) {
+		worldTransformBase_.translation_.num[2] = -15.0f;
+	}else if (worldTransformBase_.translation_.num[2] >= 15.0f) {
+		worldTransformBase_.translation_.num[2] = 15.0f;
 	}
 
 
