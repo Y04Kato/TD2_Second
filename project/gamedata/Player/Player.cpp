@@ -114,6 +114,12 @@ void Player::OnCollision() {
 		life_--;
 	}
 	if (mode_ == Obstacle::Mode::Acceleration) {
-		moveSpeed = 0.5f;
+		moveSpeed++;
+	}
+	if (mode_ == Obstacle::Mode::Deceleration) {
+		moveSpeed--;
+	}
+	if (mode_ == Obstacle::Mode::Restoration) {
+		life_++;
 	}
 }

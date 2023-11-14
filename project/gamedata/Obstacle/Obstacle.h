@@ -13,6 +13,8 @@ public:
 	enum Mode {
 		None,
 		Acceleration,
+		Deceleration,
+		Restoration,
 	};
 
 	/// <summary>
