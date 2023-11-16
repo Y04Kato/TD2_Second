@@ -111,6 +111,11 @@ void GamePlayScene::Update() {
 			distance_ = 100.0f;
 		}
 	}
+	//弾
+	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
+	for (PlayerBullet* bullet : bullets) {
+		collisionManager_->AddCollider(bullet);
+	}
 	collisionManager_->CheckAllCollision();
 
 	debugCamera_->Update();

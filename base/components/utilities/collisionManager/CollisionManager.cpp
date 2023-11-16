@@ -34,7 +34,7 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		(posB.num[2] - posA.num[2]) * (posB.num[2] - posA.num[2]) };
 
 	if (Distance.num[0] + Distance.num[1] + Distance.num[2] <= (radA + radB) * (radA + radB)) {
-		colliderA->OnCollision();
-		colliderB->OnCollision();
+		colliderA->OnCollision(colliderB);
+		colliderB->OnCollision(colliderA);
 	}
 }

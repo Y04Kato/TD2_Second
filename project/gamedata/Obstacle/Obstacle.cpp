@@ -7,8 +7,8 @@ void Obstacle::Initialize(const Vector3& position, int lane, int mode) {
 	worldTransform_.UpdateMatrix();
 	lane_ = lane;
 	mode_ = mode;
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributeEnemy);
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacle);
+	SetCollisionMask(CollisionConfig::kCollisionMaskObstacle);
 }
 
 void Obstacle::Update() {
@@ -23,8 +23,43 @@ void Obstacle::Update() {
 	if (worldTransform_.translation_.num[0] <= cameraPos_.num[0] - 40.0f) {
 		isDead_ = true;
 	}
+
+	ImGui::Begin("Obstacle");
+	switch (mode_) {
+	case Mode::Acceleration:
+		ImGui::Text("Acceleration");
+		break;
+	case Mode::Deceleration:
+		ImGui::Text("Deceleration");
+		break;
+	case Mode::HealLife:
+		ImGui::Text("HealLife");
+		break;
+	case Mode::None:
+		ImGui::Text("None");
+		break;
+	}
+
+	switch (lane_) {
+	case Lane::Left:
+		ImGui::Text("Left");
+		break;
+	case Lane::Middle:
+		ImGui::Text("Middle");
+		break;
+	case Lane::Right:
+		ImGui::Text("Right");
+		break;
+	}
+	ImGui::End();
 }
 
-void Obstacle::OnCollision() {
-	isDead_ = true;
+void Obstacle::OnCollision(const Collider* collider) {
+	//衝突相手の属性を取得
+	uint32_t collisionAttribute = collider->GetCollisionAttribute();
+
+	//衝突相手がプレイヤーの時
+	if (collisionAttribute & CollisionConfig::kCollisionAttributePlayer) {
+		isDead_ = true;
+	}
 }

@@ -49,7 +49,7 @@ public:
 	/// <summary>
 	/// 衝突判定
 	/// </summary>
-	void OnCollision() override;
+	void OnCollision(const Collider* collider) override;
 
 	/// <summary>
 	/// ワールドトランスフォームを取得
