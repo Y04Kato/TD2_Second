@@ -115,6 +115,7 @@ void GamePlayScene::Update() {
 
 	groundManager_->Update();
 	player_->Update();
+	player_->SetIsSideScroll(isSideScroll_);
 
 	//障害物の更新処理
 	obstacleManager_->Update();
