@@ -18,6 +18,8 @@ public:
 
 	void Attack();
 
+	void Jump();
+
 	WorldTransform GetWorldTransform() override { return worldTransformBase_; }
 
 	//ワールド座標
@@ -32,8 +34,13 @@ private:
 	std::vector<Model*> models_;
 	Vector4 modelMaterial_;
 
+	//速度
+	Vector3 velocity_ = {};
+	//ジャンプフラグ
+	bool jump_;
+	//ヒットフラグ
 	bool isHit;
-
+	//ライフ
 	int life_ = 3;
 
 	//弾

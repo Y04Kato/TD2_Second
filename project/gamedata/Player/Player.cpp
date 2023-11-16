@@ -15,8 +15,13 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 }
 
 void Player::Update() {
-	Attack();
+	
 	Move();
+	Attack();
+	if (jump_) {
+		Jump();
+	}
+
 
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
@@ -38,23 +43,31 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	worldTransformBase_.translation_.num[0] += 0.1f;
+	velocity_.num[0] = 0.1f;
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
+	//ジャンプ初速
+	const float kJumpFirstSpeed = 0.35f;
+	
 	//俯瞰視点移動
-	if (input_->TriggerKey(DIK_D)) {
-		worldTransformBase_.translation_.num[2] -= 15.0f;
-	}else if (input_->TriggerKey(DIK_A)) {
-		worldTransformBase_.translation_.num[2] += 15.0f;
+	if (!jump_) {
+		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] != -15.0f) {
+			velocity_.num[1] = kJumpFirstSpeed;
+			velocity_.num[2] = -1.0f;
+			jump_ = true;
+		}
+		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] != 15.0f) {
+			velocity_.num[1] = kJumpFirstSpeed;
+			velocity_.num[2] = 1.0f;
+			jump_ = true;
+		}
 	}
-	if (worldTransformBase_.translation_.num[2] <= -15.0f) {
-		worldTransformBase_.translation_.num[2] = -15.0f;
-	}else if (worldTransformBase_.translation_.num[2] >= 15.0f) {
-		worldTransformBase_.translation_.num[2] = 15.0f;
-	}
+	
+	
 
-
+	// 移動
+	worldTransformBase_.translation_ += velocity_;
 
 
 }
@@ -62,6 +75,8 @@ void Player::Move() {
 void Player::Attack() {
 	if (input_->PressKey(DIK_P) ) {
 		--fireTimer_;
+		
+		jump_ = true;
 	}
 	else {
 		fireTimer_ = 1;
@@ -96,6 +111,23 @@ void Player::Attack() {
 		bullet->Update();
 	}
 
+}
+
+void Player::Jump() {
+	
+	// 重力加速度
+	const float kGravity = 0.05f;
+	// 加速ベクトル
+	Vector3 accelerationVector = { 0, -kGravity, 0 };
+	// 加速
+	velocity_ += accelerationVector;
+
+	if (worldTransformBase_.translation_.num[1] < 0.0f) {
+		worldTransformBase_.translation_.num[1] = 0.0f;
+		velocity_.num[1] = 0.0f;
+		velocity_.num[2] = 0.0f;
+		jump_ = false;
+	}
 }
 
 Vector3 Player::GetWorldPosition() {
