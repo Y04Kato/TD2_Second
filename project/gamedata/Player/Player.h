@@ -29,6 +29,8 @@ public:
 
 	void SetObstacleMode(int mode) { mode_ = mode; };
 
+	float GetMoveSpeed() { return moveSpeed; }
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;

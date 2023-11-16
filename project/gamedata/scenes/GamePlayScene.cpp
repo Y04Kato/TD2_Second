@@ -81,7 +81,7 @@ void GamePlayScene::Initialize() {
 	//障害物
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize(sphere_.get(), uvResourceNum_);
-  
+
 	// グラウンド
 	groundManager_ = make_unique<GroundManager>();
 	groundManager_->Initialize();
@@ -91,7 +91,7 @@ void GamePlayScene::Initialize() {
 	std::vector<Model*>playerModels = { playerModel_.get() };
 	player_->Initialize(playerModels, uvResourceNum_);
 
-	
+
 }
 
 void GamePlayScene::Update() {
@@ -118,34 +118,42 @@ void GamePlayScene::Update() {
 
 	//障害物の更新処理
 	obstacleManager_->Update();
-	obstacleManager_->SetIsSideScroll(isSideScroll);
+	obstacleManager_->SetIsSideScroll(isSideScroll_);
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 
-	//プレイヤーの移動速度をいじる際は、ここも変更すること
-	debugCamera_->SetMovingSpeed(Vector3{ 0.1f,0.0f,0.0f });
-
+	debugCamera_->SetMovingSpeed(Vector3{ player_->GetMoveSpeed(),0.0f,0.0f });
 
 	if (input_->TriggerKey(DIK_SPACE)) {
-		if (isSideScroll == true) {
-			//debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f }, 0.05f);
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
 			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
-			isSideScroll = false;
+			isSideScroll_ = false;
 			groundManager_->SetFlag(true);
 		}
 		else {
-			debugCamera_->MovingCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
-			isSideScroll = true;
+			debugCamera_->MovingCamera(Vector3{ 20.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			isSideScroll_ = true;
 			groundManager_->SetFlag(false);
 		}
 	}
 
-	if (isSideScroll == true) {
-		debugCamera_->SetCamera(Vector3{ 0.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f }, Vector3{ 0.0f,0.0f,0.0f });
+	if (isSideScroll_ == true) {//横スクロール中
+		debugCamera_->SetCamera(Vector3{ 20.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
 	}
 	else {
-		//debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],2.7f,0.0f }, Vector3{ 0.0f,1.6f,0.0f });
 		debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
+		if (input_->TriggerKey(DIK_D)) {
+			cameraDistance_ -= 15.0f;
+		}
+		else if (input_->TriggerKey(DIK_A)) {
+			cameraDistance_ += 15.0f;
+		}
+		if (cameraDistance_ <= -15.0f) {
+			cameraDistance_ = -15.0f;
+		}
+		else if (cameraDistance_ >= 15.0f) {
+			cameraDistance_ = 15.0f;
+		}
 	}
 
 	for (int i = 0; i < 2; i++) {
@@ -274,7 +282,7 @@ void GamePlayScene::Draw() {
 
 
 	groundManager_->Draw(viewProjection_);
-  
+
 #pragma endregion
 
 #pragma region パーティクル描画
