@@ -13,7 +13,7 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	debugCamera_ = DebugCamera::GetInstance();
 
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
-	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
+	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
 }
 
 void Player::Update() {
@@ -39,6 +39,17 @@ void Player::Update() {
 	ImGui::DragFloat("FirstSpeed",& kJumpFirstSpeed, 0.1f);
 	ImGui::DragFloat("Gravity",& kGravity, 0.01f);
 	ImGui::DragFloat("Width",& jumpWidth_, 0.1f);
+	switch (lane_) {
+	case Obstacle::Lane::Left:
+		ImGui::Text("Left");
+		break;
+	case Obstacle::Lane::Middle:
+		ImGui::Text("Middle");
+		break;
+	case Obstacle::Lane::Right:
+		ImGui::Text("Right");
+		break;
+	}
 	ImGui::End();
 
 	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
@@ -190,6 +201,7 @@ void Player::Attack() {
 		// 弾を生成、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(GetWorldPosition(), velocity, textureHandle_);
+		newBullet->SetObstacleMode(mode_);
 
 		bullets_.push_back(newBullet);
 
@@ -236,7 +248,7 @@ Vector3 Player::GetWorldPosition() {
 	return worldPos;
 }
 
-void Player::OnCollision() {
+void Player::OnCollision(const Collider* collider) {
 	isHit = true;
 	if (mode_ == Obstacle::Mode::None) {
 		life_--;

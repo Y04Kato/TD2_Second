@@ -3,8 +3,9 @@
 #include "Input.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "components/utilities/collisionmanager/Collider.h"
 
-class  PlayerBullet {
+class  PlayerBullet : public Collider {
 public:
 
 	~PlayerBullet();
@@ -29,7 +30,11 @@ public:
 	Vector3 GetWorldPosition();
 
 	// 衝突を検出したら呼び出されるコールバック関数
-	void OnCollision();
+	void OnCollision(const Collider* collider) override;
+
+	WorldTransform GetWorldTransform() override { return worldTransform_; };
+
+	void SetObstacleMode(int mode) { mode_ = mode; };
 
 private:
 	WorldTransform worldTransform_;
@@ -46,4 +51,7 @@ private:
 	int32_t deathTimer_ = kLifeTime;
 	//デスフラグ
 	bool isDead_ = false;
+
+	//障害物のモード
+	int mode_;
 };

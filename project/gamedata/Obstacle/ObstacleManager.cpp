@@ -12,13 +12,13 @@ void ObstacleManager::Initialize(CreateSphere* sphere, uint32_t textureHandle) {
 		obstacles[i] = new Obstacle();
 		switch (i) {
 		case Obstacle::Lane::Left:
-			obstacles[i]->Initialize({ 10 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
+			obstacles[i]->Initialize({ 10 + 0.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
 			break;
 		case Obstacle::Lane::Middle:
-			obstacles[i]->Initialize({ 10 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Acceleration);
+			obstacles[i]->Initialize({ 10 + 10.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
 			break;
 		case Obstacle::Lane::Right:
-			obstacles[i]->Initialize({ 10 + 6.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Deceleration);
+			obstacles[i]->Initialize({ 10 + 0.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
 			break;
 		}
 		AddObstacle(obstacles[i]);

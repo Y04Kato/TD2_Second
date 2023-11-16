@@ -1,6 +1,7 @@
 #include "PlayerBullet.h"
 #include <cassert>
-
+#include "components/utilities/collisionManager/CollisionConfig.h"
+#include "Obstacle/Obstacle.h"
 
 PlayerBullet::~PlayerBullet() {
 	
@@ -14,6 +15,9 @@ void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, 
 	textureHandle_ = textureHandle;
 	//引数で受け取った速度をメンバ変数に代入
 	velocity_ = velocity;
+
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeBullet);
+	SetCollisionMask(CollisionConfig::kCollisionMaskBullet);
 };
 
 /// <summary>
@@ -53,6 +57,8 @@ Vector3 PlayerBullet::GetWorldPosition() {
 }
 
 // 衝突を検出したら呼び出されるコールバック関数
-void PlayerBullet::OnCollision() {
-	isDead_ = true;
+void PlayerBullet::OnCollision(const Collider* collider) {
+	if (mode_ == Obstacle::Mode::None) {
+		isDead_ = true;
+	}
 }

@@ -99,7 +99,6 @@ void GamePlayScene::Initialize() {
 }
 
 void GamePlayScene::Update() {
-
 	ApplyGlobalVariables();
 
 	collisionManager_->ClearColliders();
@@ -108,13 +107,18 @@ void GamePlayScene::Update() {
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
 		distance = obstacle->GetWorldTransform().translation_.num[0] - player_->GetWorldPosition().num[0];
-		if (distance <= distance_) {
+		if (distance <= distance_ && player_->GetLane() == obstacle->GetLane()) {
 			distance_ = distance;
 			player_->SetObstacleMode(obstacle->GetMode());
 		}
-		if (distance_ <= -1.0f) {
+		if (distance_ <= 2.0f) {
 			distance_ = 100.0f;
 		}
+	}
+	//弾
+	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
+	for (PlayerBullet* bullet : bullets) {
+		collisionManager_->AddCollider(bullet);
 	}
 	collisionManager_->CheckAllCollision();
 
