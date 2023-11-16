@@ -15,7 +15,7 @@ public:
 
 	WorldTransform& GetWorldTransform() { return worldTransform_; }
 	void SetTranslate(const Vector3& translate) { worldTransform_.translation_ = translate; }
-
+	
 private:
 	TextureManager* textureManager_;
 	WorldTransform worldTransform_;

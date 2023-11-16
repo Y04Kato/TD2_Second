@@ -17,6 +17,7 @@
 #pragma region ゲームオブジェクト
 #include "Ground/GroundManager.h"
 #include "Player/Player.h"
+#include "Enemy/EnemyManager.h"
 #pragma endregion
 
 class GamePlayScene :public Iscene {
@@ -85,4 +86,7 @@ private:
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerModel_;
+
+	/*-------------------敵------------------*/
+	std::unique_ptr<EnemyManager> enemyManager_ = nullptr;
 };
