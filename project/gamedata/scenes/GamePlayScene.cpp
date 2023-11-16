@@ -103,7 +103,6 @@ void GamePlayScene::Update() {
 	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
-		player_->SetObstacleMode(obstacle->GetMode());
 	}
 	collisionManager_->CheckAllCollision();
 

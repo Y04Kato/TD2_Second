@@ -63,6 +63,9 @@ private:
 	int accelerationTimer_ = 0;
 	bool isAccelerationFlag_ = false;
 
+	int decelerationTimer_ = 0;
+	bool isDecelerationFlag_ = false;
+
 	bool isSideScroll_ = true;
 
 	float cameraDistance_ = 0.0f;

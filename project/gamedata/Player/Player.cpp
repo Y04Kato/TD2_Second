@@ -68,6 +68,24 @@ void Player::Update() {
 		}
 	}
 
+	if (isDecelerationFlag_ == true) {//減速した時
+		decelerationTimer_++;
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			if (decelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				isDecelerationFlag_ = false;
+			}
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0] + 30.0f,22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+			if (decelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+				isDecelerationFlag_ = false;
+			}
+		}
+	}
+
 	if (isDamageFlag_ == false) {//ダメージを受けていない時
 		if (isSideScroll_ == true) {//横スクロール中
 			debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
@@ -186,6 +204,11 @@ void Player::OnCollision() {
 	}
 	if (mode_ == Obstacle::Mode::Deceleration) {
 		moveSpeed_ -= 0.2f;
+		if (moveSpeed_ <= 0.0f) {//速度が0になった時、これ以上下がらないようにする
+			moveSpeed_ = 0.1f;
+		}
+		isDecelerationFlag_ = true;
+		decelerationTimer_ = 0;
 	}
 	if (mode_ == Obstacle::Mode::HealLife) {
 		life_++;

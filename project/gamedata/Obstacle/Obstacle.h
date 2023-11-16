@@ -66,6 +66,7 @@ public:
 	int GetMode() { return mode_; }
 
 private:
+
 	WorldTransform worldTransform_;
 	int lane_ = Middle;
 	bool isDead_ = false;
