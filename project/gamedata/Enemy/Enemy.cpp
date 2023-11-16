@@ -27,6 +27,6 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 }
 
 
-void Enemy::OnCollision() {
+void Enemy::OnCollision(const Collider* collider) {
 	--life_;
 }

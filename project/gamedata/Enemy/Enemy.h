@@ -15,7 +15,7 @@ public:
 	WorldTransform GetWorldTransform() override { return worldTransformBase_; }
 	void SetPositionX(float pos) { worldTransformBase_.translation_.num[0] = pos; };
 	//当たり判定
-	void OnCollision() override;
+	void OnCollision(const Collider* collider)override;
 
 private:
 	std::vector<Model*> models_;
