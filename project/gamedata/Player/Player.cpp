@@ -17,9 +17,11 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 void Player::Update() {
 	
 	Move();
-	Attack();
 	if (jump_) {
 		Jump();
+	}
+	else {
+		Attack();
 	}
 
 
@@ -28,6 +30,9 @@ void Player::Update() {
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
 	ImGui::Text("Attack Push::P");
+	ImGui::DragFloat("FirstSpeed", &kJumpFirstSpeed, 0.01f);
+	ImGui::DragFloat("Gravity", &kGravity, 0.01f);
+	ImGui::DragFloat("Width", &jumpWidth_, 0.01f);
 	ImGui::End();
 
 }
@@ -47,19 +52,18 @@ void Player::Move() {
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
-	//ジャンプ初速
-	const float kJumpFirstSpeed = 0.35f;
+	
 	
 	//俯瞰視点移動
 	if (!jump_) {
-		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] != -15.0f) {
+		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] >= -15.0f) {
 			velocity_.num[1] = kJumpFirstSpeed;
-			velocity_.num[2] = -1.0f;
+			velocity_.num[2] = -jumpWidth_;
 			jump_ = true;
 		}
-		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] != 15.0f) {
+		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] <= 15.0f) {
 			velocity_.num[1] = kJumpFirstSpeed;
-			velocity_.num[2] = 1.0f;
+			velocity_.num[2] = jumpWidth_;
 			jump_ = true;
 		}
 	}
@@ -75,8 +79,6 @@ void Player::Move() {
 void Player::Attack() {
 	if (input_->PressKey(DIK_P) ) {
 		--fireTimer_;
-		
-		jump_ = true;
 	}
 	else {
 		fireTimer_ = 1;
@@ -115,8 +117,7 @@ void Player::Attack() {
 
 void Player::Jump() {
 	
-	// 重力加速度
-	const float kGravity = 0.05f;
+	
 	// 加速ベクトル
 	Vector3 accelerationVector = { 0, -kGravity, 0 };
 	// 加速
