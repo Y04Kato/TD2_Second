@@ -112,6 +112,18 @@ void GamePlayScene::Update() {
 			distance_ = 100.0f;
 		}
 	}
+	//弾
+	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
+	for (PlayerBullet* bullet : bullets) {
+		collisionManager_->AddCollider(bullet);
+		//近くの障害物のモードを取得
+		for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+			if (distance <= distance_) {
+				distance_ = distance;
+				bullet->SetObstacleMode(obstacle->GetMode());
+			}
+		}
+	}
 	collisionManager_->CheckAllCollision();
 
 	debugCamera_->Update();

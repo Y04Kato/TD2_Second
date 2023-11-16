@@ -15,7 +15,7 @@ public:
 	float Getradius() const { return radius_; }
 	void SetRadius(float rad) { radius_ = rad; }
 
-	virtual void OnCollision() = 0;
+	virtual void OnCollision(const Collider* collider) = 0;
 
 	virtual WorldTransform GetWorldTransform() = 0;
 

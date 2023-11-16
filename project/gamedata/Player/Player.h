@@ -29,7 +29,7 @@ public:
 	//ワールド座標
 	Vector3 GetWorldPosition();
 	//当たり判定
-	void OnCollision() override;
+	void OnCollision(const Collider* collider) override;
 
 	void SetObstacleMode(int mode) { mode_ = mode; };
 
@@ -38,6 +38,8 @@ public:
 	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
 
 	int GetLane() { return lane_; };
+
+	const std::list<PlayerBullet*> GetPlayerBullet() const { return bullets_; };
 
 private:
 	WorldTransform worldTransformBase_;
