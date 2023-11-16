@@ -201,6 +201,7 @@ void Player::Attack() {
 		// 弾を生成、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(GetWorldPosition(), velocity, textureHandle_);
+		newBullet->SetObstacleMode(mode_);
 
 		bullets_.push_back(newBullet);
 
