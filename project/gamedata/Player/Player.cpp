@@ -17,14 +17,24 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 }
 
 void Player::Update() {
-	Attack();
+	
 	Move();
+	if (jump_) {
+		Jump();
+	}
+	else {
+		Attack();
+	}
+
 
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
 	ImGui::Text("Attack Push::P");
+	ImGui::DragFloat("FirstSpeed", &kJumpFirstSpeed, 0.01f);
+	ImGui::DragFloat("Gravity", &kGravity, 0.01f);
+	ImGui::DragFloat("Width", &jumpWidth_, 0.01f);
 	ImGui::End();
 
 	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
@@ -102,11 +112,14 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	worldTransformBase_.translation_.num[0] += moveSpeed_;
+
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
+	
+	
 	//俯瞰視点移動
+
 	if (input_->TriggerKey(DIK_D) && isSideScroll_ == false) {
 		worldTransformBase_.translation_.num[2] -= 15.0f;
 	}else if (input_->TriggerKey(DIK_A) && isSideScroll_ == false ) {
@@ -117,8 +130,11 @@ void Player::Move() {
 	}else if (worldTransformBase_.translation_.num[2] >= 15.0f) {
 		worldTransformBase_.translation_.num[2] = 15.0f;
 	}
+	
+	
 
-
+	// 移動
+	worldTransformBase_.translation_ += velocity_;
 
 
 }
@@ -160,6 +176,22 @@ void Player::Attack() {
 		bullet->Update();
 	}
 
+}
+
+void Player::Jump() {
+	
+	
+	// 加速ベクトル
+	Vector3 accelerationVector = { 0, -kGravity, 0 };
+	// 加速
+	velocity_ += accelerationVector;
+
+	if (worldTransformBase_.translation_.num[1] < 0.0f) {
+		worldTransformBase_.translation_.num[1] = 0.0f;
+		velocity_.num[1] = 0.0f;
+		velocity_.num[2] = 0.0f;
+		jump_ = false;
+	}
 }
 
 Vector3 Player::GetWorldPosition() {

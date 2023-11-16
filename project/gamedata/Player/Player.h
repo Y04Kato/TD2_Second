@@ -22,6 +22,8 @@ public:
 
 	void Attack();
 
+	void Jump();
+
 	WorldTransform GetWorldTransform() override { return worldTransformBase_; }
 
 	//ワールド座標
@@ -42,8 +44,20 @@ private:
 	std::vector<Model*> models_;
 	Vector4 modelMaterial_;
 
-	bool isHit;
+	//速度
+	Vector3 velocity_ = {};
+	//ジャンプフラグ
+	bool jump_;
+	//ジャンプ初速
+	float kJumpFirstSpeed = 3.45f;
+	//ジャンプの幅
+	float jumpWidth_ = 0.8f;
+	// 重力加速度  ジャンプの長さ
+	float kGravity = 0.4f;
 
+	//ヒットフラグ
+	bool isHit;
+	//ライフ
 	int life_ = 3;
 
 	//弾
