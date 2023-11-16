@@ -10,11 +10,18 @@ public:
 		Right,
 	};
 
+	enum Mode {
+		None,
+		Acceleration,
+		Deceleration,
+		HealLife,
+	};
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="position"></param>
-	void Initialize(const Vector3& position, int lane);
+	void Initialize(const Vector3& position, int lane ,int mode);
 
 	/// <summary>
 	/// 更新
@@ -56,10 +63,13 @@ public:
 	/// <param name="position"></param>
 	void GetCameraPosition(const Vector3& position) { cameraPos_ = position; };
 
+	int GetMode() { return mode_; }
+
 private:
 	WorldTransform worldTransform_;
 	int lane_ = Middle;
 	bool isDead_ = false;
 	Vector3 cameraPos_{ 0.0f,0.0f,0.0f };
+	int mode_;
 };
 

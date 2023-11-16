@@ -10,6 +10,8 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	input_ = Input::GetInstance();
 	textureHandle_ = textureHandle;
 
+	debugCamera_ = DebugCamera::GetInstance();
+
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 }
@@ -35,6 +37,68 @@ void Player::Update() {
 	ImGui::DragFloat("Width", &jumpWidth_, 0.01f);
 	ImGui::End();
 
+	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
+
+	if (isDamageFlag_ == true) {
+		shakeTimer_++;
+		if (shakeTimer_ <= 60) {
+			debugCamera_->ShakeCamera(4, 6);
+		}
+		else {
+			isDamageFlag_ = false;
+		}
+	}
+
+	if (input_->TriggerKey(DIK_SPACE)) {
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
+			isSideScroll_ = false;
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			isSideScroll_ = true;
+		}
+	}
+
+	if (isAccelerationFlag_ == true) {//加速した時
+		accelerationTimer_++;
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			if (accelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				isAccelerationFlag_ = false;
+			}
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0] - 30.0f,22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+			if (accelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+				isAccelerationFlag_ = false;
+			}
+		}
+	}
+
+	if (isDamageFlag_ == false) {//ダメージを受けていない時
+		if (isSideScroll_ == true) {//横スクロール中
+			debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
+		}
+		else {
+			debugCamera_->SetCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
+			if (input_->TriggerKey(DIK_D)) {
+				cameraDistance_ -= 15.0f;
+			}
+			else if (input_->TriggerKey(DIK_A)) {
+				cameraDistance_ += 15.0f;
+			}
+			if (cameraDistance_ <= -15.0f) {
+				cameraDistance_ = -15.0f;
+			}
+			else if (cameraDistance_ >= 15.0f) {
+				cameraDistance_ = 15.0f;
+			}
+		}
+	}
+
 }
 
 void Player::Draw(const ViewProjection& view) {
@@ -48,24 +112,23 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	velocity_.num[0] = 0.1f;
+
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
 	
 	
 	//俯瞰視点移動
-	if (!jump_) {
-		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] >= -15.0f) {
-			velocity_.num[1] = kJumpFirstSpeed;
-			velocity_.num[2] = -jumpWidth_;
-			jump_ = true;
-		}
-		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] <= 15.0f) {
-			velocity_.num[1] = kJumpFirstSpeed;
-			velocity_.num[2] = jumpWidth_;
-			jump_ = true;
-		}
+
+	if (input_->TriggerKey(DIK_D) && isSideScroll_ == false) {
+		worldTransformBase_.translation_.num[2] -= 15.0f;
+	}else if (input_->TriggerKey(DIK_A) && isSideScroll_ == false ) {
+		worldTransformBase_.translation_.num[2] += 15.0f;
+	}
+	if (worldTransformBase_.translation_.num[2] <= -15.0f) {
+		worldTransformBase_.translation_.num[2] = -15.0f;
+	}else if (worldTransformBase_.translation_.num[2] >= 15.0f) {
+		worldTransformBase_.translation_.num[2] = 15.0f;
 	}
 	
 	
@@ -143,5 +206,20 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::OnCollision() {
 	isHit = true;
-	life_--;
+	if (mode_ == Obstacle::Mode::None) {
+		life_--;
+		isDamageFlag_ = true;
+		shakeTimer_ = 0;
+	}
+	if (mode_ == Obstacle::Mode::Acceleration) {
+		moveSpeed_ += 0.2f;
+		isAccelerationFlag_ = true;
+		accelerationTimer_ = 0;
+	}
+	if (mode_ == Obstacle::Mode::Deceleration) {
+		moveSpeed_ -= 0.2f;
+	}
+	if (mode_ == Obstacle::Mode::HealLife) {
+		life_++;
+	}
 }

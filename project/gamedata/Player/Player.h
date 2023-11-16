@@ -6,6 +6,10 @@
 #include "ViewProjection.h"
 #include "components/utilities/collisionmanager/Collider.h"
 
+#include "components/debugcamera/DebugCamera.h"
+
+#include "Obstacle/Obstacle.h"
+
 class Player : public Collider {
 public:
 	void Initialize(const std::vector<Model*>& models, uint32_t textureHandle);
@@ -26,6 +30,12 @@ public:
 	Vector3 GetWorldPosition();
 	//当たり判定
 	void OnCollision() override;
+
+	void SetObstacleMode(int mode) { mode_ = mode; };
+
+	float GetMoveSpeed() { return moveSpeed_; }
+
+	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
 
 private:
 	WorldTransform worldTransformBase_;
@@ -56,4 +66,20 @@ private:
 
 	//攻撃時間
 	int fireTimer_ = 1;
+
+	int mode_;
+
+	float moveSpeed_ = 0.1f;
+
+	int shakeTimer_ = 0;
+	bool isDamageFlag_ = false;
+
+	int accelerationTimer_ = 0;
+	bool isAccelerationFlag_ = false;
+
+	bool isSideScroll_ = true;
+
+	float cameraDistance_ = 0.0f;
+
+	DebugCamera* debugCamera_;
 };

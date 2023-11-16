@@ -77,8 +77,8 @@ private:
 	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
 	std::unique_ptr<GroundManager> groundManager_;
 
-	bool isSideScroll = true;
-
+	bool isSideScroll_ = true;
+ 
 	/*----------------プレイヤー---------------*/
 
 	std::unique_ptr<Player> player_;
