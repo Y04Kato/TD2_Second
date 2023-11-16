@@ -86,11 +86,15 @@ void GamePlayScene::Initialize() {
 	groundManager_ = make_unique<GroundManager>();
 	groundManager_->Initialize();
 
+	//プレイヤー
 	player_ = std::make_unique <Player>();
 	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "cube.obj"));
 	std::vector<Model*>playerModels = { playerModel_.get() };
 	player_->Initialize(playerModels, uvResourceNum_);
 
+	//敵
+	enemyManager_ = std::make_unique<EnemyManager>();
+	enemyManager_->Initialize();
 
 }
 
@@ -127,7 +131,10 @@ void GamePlayScene::Update() {
 	groundManager_->Update();
 	player_->Update();
 	player_->SetIsSideScroll(isSideScroll_);
-
+	//敵の更新処理
+	enemyManager_->Update();
+	enemyManager_->SetPlayerPosition(player_->GetWorldPosition());
+	enemyManager_->SetIsSideScroll(isSideScroll_);
 	//障害物の更新処理
 	obstacleManager_->Update();
 	obstacleManager_->SetIsSideScroll(isSideScroll_);
@@ -267,6 +274,7 @@ void GamePlayScene::Draw() {
 
 
 	player_->Draw(viewProjection_);
+	enemyManager_->Draw(viewProjection_);
 
 	//障害物の描画
 	obstacleManager_->Draw(viewProjection_);

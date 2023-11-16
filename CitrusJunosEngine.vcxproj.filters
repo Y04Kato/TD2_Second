@@ -136,6 +136,12 @@
     <Filter Include="ソース ファイル\project\gamedata\Obstacle">
       <UniqueIdentifier>{1803d6c9-6da5-46cd-b5a3-cb358ceab78f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\project\gamedata\Player">
+      <UniqueIdentifier>{476f5749-4bf3-4838-a992-da659d7533b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\project\gamedata\Player">
+      <UniqueIdentifier>{3adcc296-f823-443f-8cd1-d825a7152e1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -247,9 +253,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="project\gamedata\Player\Player.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\project\gamedata\Player</Filter>
     </ClCompile>
     <ClCompile Include="project\gamedata\Player\Bullet\PlayerBullet.cpp">
+      <Filter>ソース ファイル\project\gamedata\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="project\gamedata\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="project\gamedata\Enemy\EnemyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -398,9 +410,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="project\gamedata\Player\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\project\gamedata\Player</Filter>
     </ClInclude>
     <ClInclude Include="project\gamedata\Player\Bullet\PlayerBullet.h">
+      <Filter>ヘッダー ファイル\project\gamedata\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="project\gamedata\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="project\gamedata\Enemy\EnemyManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="project\gamedata\resources\resource.h">
