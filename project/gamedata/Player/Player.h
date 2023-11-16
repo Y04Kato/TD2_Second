@@ -33,6 +33,8 @@ public:
 
 	float GetMoveSpeed() { return moveSpeed_; }
 
+	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;

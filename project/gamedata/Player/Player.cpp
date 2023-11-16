@@ -107,9 +107,9 @@ void Player::Move() {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
 	//俯瞰視点移動
-	if (input_->TriggerKey(DIK_D)) {
+	if (input_->TriggerKey(DIK_D) && isSideScroll_ == false) {
 		worldTransformBase_.translation_.num[2] -= 15.0f;
-	}else if (input_->TriggerKey(DIK_A)) {
+	}else if (input_->TriggerKey(DIK_A) && isSideScroll_ == false ) {
 		worldTransformBase_.translation_.num[2] += 15.0f;
 	}
 	if (worldTransformBase_.translation_.num[2] <= -15.0f) {
