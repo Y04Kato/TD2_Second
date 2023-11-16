@@ -122,37 +122,14 @@ void GamePlayScene::Update() {
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 
-	debugCamera_->SetMovingSpeed(Vector3{ player_->GetMoveSpeed(),0.0f,0.0f });
-
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
-			debugCamera_->MovingCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
 			isSideScroll_ = false;
 			groundManager_->SetFlag(true);
 		}
 		else {
-			debugCamera_->MovingCamera(Vector3{ 20.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
 			isSideScroll_ = true;
 			groundManager_->SetFlag(false);
-		}
-	}
-
-	if (isSideScroll_ == true) {//横スクロール中
-		debugCamera_->SetCamera(Vector3{ 20.0f + player_->GetWorldPosition().num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
-	}
-	else {
-		debugCamera_->SetCamera(Vector3{ -50.0f + player_->GetWorldPosition().num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
-		if (input_->TriggerKey(DIK_D)) {
-			cameraDistance_ -= 15.0f;
-		}
-		else if (input_->TriggerKey(DIK_A)) {
-			cameraDistance_ += 15.0f;
-		}
-		if (cameraDistance_ <= -15.0f) {
-			cameraDistance_ = -15.0f;
-		}
-		else if (cameraDistance_ >= 15.0f) {
-			cameraDistance_ = 15.0f;
 		}
 	}
 

@@ -55,9 +55,9 @@ void DebugCamera::Update() {
 }
 
 void DebugCamera::ShakeCamera(int shakePower, int dividePower) {
-	viewProjection_.translation_.num[0] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower;
-	viewProjection_.translation_.num[1] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower;
-	viewProjection_.translation_.num[2] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower;
+	viewProjection_.translation_.num[0] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower + movingSpeed_.num[0];
+	viewProjection_.translation_.num[1] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower + movingSpeed_.num[1];
+	viewProjection_.translation_.num[2] += (rand() % shakePower - shakePower / 2 + rand() / (float)RAND_MAX) / dividePower + movingSpeed_.num[2];
 }
 
 void DebugCamera::SetCamera(Vector3 translation, Vector3 rotation) {

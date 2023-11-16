@@ -78,7 +78,6 @@ private:
 	std::unique_ptr<GroundManager> groundManager_;
 
 	bool isSideScroll_ = true;
-	float cameraDistance_ = 0.0f;
  
 	/*----------------プレイヤー---------------*/
 

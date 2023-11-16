@@ -10,6 +10,8 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	input_ = Input::GetInstance();
 	textureHandle_ = textureHandle;
 
+	debugCamera_ = DebugCamera::GetInstance();
+
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(~CollisionConfig::kCollisionAttributePlayer);
 }
@@ -25,6 +27,68 @@ void Player::Update() {
 	ImGui::Text("Attack Push::P");
 	ImGui::End();
 
+	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
+
+	if (isDamageFlag_ == true) {
+		shakeTimer_++;
+		if (shakeTimer_ <= 60) {
+			debugCamera_->ShakeCamera(4, 6);
+		}
+		else {
+			isDamageFlag_ = false;
+		}
+	}
+
+	if (input_->TriggerKey(DIK_SPACE)) {
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
+			isSideScroll_ = false;
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			isSideScroll_ = true;
+		}
+	}
+
+	if (isAccelerationFlag_ == true) {//加速した時
+		accelerationTimer_++;
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			if (accelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				isAccelerationFlag_ = false;
+			}
+		}
+		else {
+			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0] - 30.0f,22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+			if (accelerationTimer_ >= 120) {
+				debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.06f);
+				isAccelerationFlag_ = false;
+			}
+		}
+	}
+
+	if (isDamageFlag_ == false) {//ダメージを受けていない時
+		if (isSideScroll_ == true) {//横スクロール中
+			debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
+		}
+		else {
+			debugCamera_->SetCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
+			if (input_->TriggerKey(DIK_D)) {
+				cameraDistance_ -= 15.0f;
+			}
+			else if (input_->TriggerKey(DIK_A)) {
+				cameraDistance_ += 15.0f;
+			}
+			if (cameraDistance_ <= -15.0f) {
+				cameraDistance_ = -15.0f;
+			}
+			else if (cameraDistance_ >= 15.0f) {
+				cameraDistance_ = 15.0f;
+			}
+		}
+	}
+
 }
 
 void Player::Draw(const ViewProjection& view) {
@@ -38,7 +102,7 @@ void Player::Draw(const ViewProjection& view) {
 
 void Player::Move() {
 	//横スクロール視点移動
-	worldTransformBase_.translation_.num[0] += moveSpeed;
+	worldTransformBase_.translation_.num[0] += moveSpeed_;
 	if (worldTransformBase_.translation_.num[0] > 20.0f) {
 		worldTransformBase_.translation_.num[0] = -40.0f;
 	}
@@ -112,12 +176,16 @@ void Player::OnCollision() {
 	isHit = true;
 	if (mode_ == Obstacle::Mode::None) {
 		life_--;
+		isDamageFlag_ = true;
+		shakeTimer_ = 0;
 	}
 	if (mode_ == Obstacle::Mode::Acceleration) {
-		moveSpeed += 0.2f;
+		moveSpeed_ += 0.2f;
+		isAccelerationFlag_ = true;
+		accelerationTimer_ = 0;
 	}
 	if (mode_ == Obstacle::Mode::Deceleration) {
-		moveSpeed -= 0.2f;
+		moveSpeed_ -= 0.2f;
 	}
 	if (mode_ == Obstacle::Mode::HealLife) {
 		life_++;
