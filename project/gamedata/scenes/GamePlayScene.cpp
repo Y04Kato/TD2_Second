@@ -103,6 +103,14 @@ void GamePlayScene::Update() {
 	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
+		distance = obstacle->GetWorldTransform().translation_.num[0] - player_->GetWorldPosition().num[0];
+		if (distance <= distance_) {
+			distance_ = distance;
+			player_->SetObstacleMode(obstacle->GetMode());
+		}
+		if (distance_ <= -1.0f) {
+			distance_ = 100.0f;
+		}
 	}
 	collisionManager_->CheckAllCollision();
 
@@ -227,7 +235,9 @@ void GamePlayScene::Update() {
 		ImGui::TreePop();
 	}
 
-	ImGui::Text("%f", ImGui::GetIO().Framerate);
+	ImGui::Text("FPS %f", ImGui::GetIO().Framerate);
+	ImGui::Text("Distance %f", distance_);
+	ImGui::Text("Lane %d", player_->GetLane());
 
 	ImGui::End();
 }

@@ -37,6 +37,8 @@ public:
 
 	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
 
+	int GetLane() { return lane_; };
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
@@ -82,6 +84,8 @@ private:
 	bool isSideScroll_ = true;
 
 	float cameraDistance_ = 0.0f;
+
+	int lane_ = Obstacle::Lane::Middle;
 
 	DebugCamera* debugCamera_;
 };

@@ -78,6 +78,8 @@ private:
 	std::unique_ptr<GroundManager> groundManager_;
 
 	bool isSideScroll_ = true;
+	float distance;
+	float distance_ = 100.0f;
  
 	/*----------------プレイヤー---------------*/
 

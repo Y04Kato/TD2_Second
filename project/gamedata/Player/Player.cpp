@@ -145,11 +145,23 @@ void Player::Move() {
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = -jumpWidth_;
 			jump_ = true;
+			if (lane_ == Obstacle::Lane::Middle) {
+				lane_ = Obstacle::Lane::Right;
+			}
+			if (lane_ == Obstacle::Lane::Left) {
+				lane_ = Obstacle::Lane::Middle;
+			}
 		}
 		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] <= 14.5f && isSideScroll_ == false) {
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = jumpWidth_;
 			jump_ = true;
+			if (lane_ == Obstacle::Lane::Middle) {
+				lane_ = Obstacle::Lane::Left;
+			}
+			if (lane_ == Obstacle::Lane::Right) {
+				lane_ = Obstacle::Lane::Middle;
+			}
 		}
 	}
 
