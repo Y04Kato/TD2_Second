@@ -1,5 +1,4 @@
 #include "GroundManager.h"
-#include "Obstacle/Obstacle.h"
 
 void GroundManager::Initialize() {
 	isGroundMove_ = false;
@@ -9,11 +8,9 @@ void GroundManager::Initialize() {
 	}
 
 	groundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/ground", "CUBE.obj"));
-	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
-	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
-	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
-
-	lane_ = Obstacle::Lane::Middle;
+	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
+	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
+	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
 }
 
 void GroundManager::Update() {

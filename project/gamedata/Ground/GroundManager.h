@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "Model.h"
 #include "MatrixCalculation.h"
+#include "Obstacle/Obstacle.h"
 
 #include <memory>
 
@@ -57,5 +58,5 @@ private:
 	OBB obb_[3];
 
 	bool isGroundMove_;
-	int lane_;
+	int lane_ = Obstacle::Lane::Middle;
 };
