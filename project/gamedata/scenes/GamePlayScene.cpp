@@ -133,6 +133,7 @@ void GamePlayScene::Update() {
 	obstacleManager_->Update();
 	obstacleManager_->SetIsSideScroll(isSideScroll_);
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
+	obstacleManager_->SetLane(player_->GetLane());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 
 	if (input_->TriggerKey(DIK_SPACE)) {

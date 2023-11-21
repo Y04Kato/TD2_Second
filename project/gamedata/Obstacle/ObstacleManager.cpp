@@ -45,17 +45,33 @@ void ObstacleManager::Update() {
 	//	AddObstacle(obstacle);
 	//}
 
-	if (cameraChenge_) {
-		cameraMode_ = CameraMode::Horizontal;
-	}
-	else {
-		cameraMode_ = CameraMode::Vertical;
-	}
-
-	//カメラの状態で障害物の座標を変える
-	if (cameraMode_ == CameraMode::Vertical) {
-		for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
-			switch (obstacle->GetLane()) {
+	for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
+		//障害物のレーンを取得
+		int obstacleLane = obstacle->GetLane();
+		//横スクロールの時
+		if (isSideScroll_) {
+			//プレイヤーのレーンに合わせて障害物を移動させる
+			switch (lane_) {
+			case Obstacle::Lane::Left:
+				if (obstacleLane == Obstacle::Lane::Middle || obstacleLane == Obstacle::Lane::Right) {
+					obstacle->SetPositionZ(lanePosition_[0]);
+				}
+				break;
+			case Obstacle::Lane::Middle:
+				if (obstacleLane == Obstacle::Lane::Left || obstacleLane == Obstacle::Lane::Right) {
+					obstacle->SetPositionZ(lanePosition_[1]);
+				}
+				break;
+			case Obstacle::Lane::Right:
+				if (obstacleLane == Obstacle::Lane::Left || obstacleLane == Obstacle::Lane::Middle) {
+					obstacle->SetPositionZ(lanePosition_[2]);
+				}
+				break;
+			}
+		}
+		//俯瞰カメラの時
+		else {
+			switch (obstacleLane) {
 			case Obstacle::Lane::Left:
 				obstacle->SetPositionZ(lanePosition_[0]);
 				break;
@@ -66,11 +82,6 @@ void ObstacleManager::Update() {
 				obstacle->SetPositionZ(lanePosition_[2]);
 				break;
 			}
-		}
-	}
-	else if (cameraMode_ == CameraMode::Horizontal) {
-		for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
-			obstacle->SetPositionZ(0.0f);
 		}
 	}
 
