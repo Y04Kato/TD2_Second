@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "Model.h"
 #include "MatrixCalculation.h"
+#include "Obstacle/Obstacle.h"
 
 #include <memory>
 
@@ -45,10 +46,17 @@ public:
 	/// <returns>真:縦レーン 偽:横レーン</returns>
 	bool GetFlag() { return isGroundMove_; }
 
+	/// <summary>
+	/// レーンを設定
+	/// </summary>
+	/// <param name="lane"></param>
+	void SetLane(int lane) { lane_ = lane; };
+
 private:
 	unique_ptr<Ground> ground_[3];
 	unique_ptr<Model> groundModel_;
 	OBB obb_[3];
 
 	bool isGroundMove_;
+	int lane_ = Obstacle::Lane::Middle;
 };

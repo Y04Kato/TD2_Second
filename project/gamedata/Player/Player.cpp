@@ -194,7 +194,7 @@ void Player::Attack() {
 
 	if (fireTimer_ == 0) {
 		// 弾の速度
-		const float kBulletSpeed = 1.0f;
+		const float kBulletSpeed = 1.0f + moveSpeed_;
 		Vector3 velocity = { kBulletSpeed, 0, 0 };
 
 

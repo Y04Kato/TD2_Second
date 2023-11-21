@@ -137,6 +137,7 @@ void GamePlayScene::Update() {
 	viewProjection_.UpdateMatrix();
 
 	groundManager_->Update();
+	groundManager_->SetLane(player_->GetLane());
 	player_->Update();
 	player_->SetIsSideScroll(isSideScroll_);
 	//敵の更新処理
@@ -147,6 +148,7 @@ void GamePlayScene::Update() {
 	obstacleManager_->Update();
 	obstacleManager_->SetIsSideScroll(isSideScroll_);
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
+	obstacleManager_->SetLane(player_->GetLane());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 
 	if (input_->TriggerKey(DIK_SPACE)) {
