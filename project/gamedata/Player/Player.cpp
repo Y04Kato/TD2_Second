@@ -146,9 +146,9 @@ void Player::Draw(const ViewProjection& view) {
 void Player::Move() {
 	//横スクロール視点移動
 	velocity_.num[0] = moveSpeed_;
-	if (worldTransformBase_.translation_.num[0] > 20.0f) {
-		worldTransformBase_.translation_.num[0] = -40.0f;
-	}
+	//if (worldTransformBase_.translation_.num[0] > 20.0f) {
+	//	worldTransformBase_.translation_.num[0] = -40.0f;
+	//}
 
 	//俯瞰視点移動
 	if (!jump_) {
