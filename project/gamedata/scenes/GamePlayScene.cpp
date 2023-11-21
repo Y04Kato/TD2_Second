@@ -101,6 +101,38 @@ void GamePlayScene::Initialize() {
 void GamePlayScene::Update() {
 	ApplyGlobalVariables();
 
+	debugCamera_->Update();
+
+	viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+	viewProjection_.UpdateMatrix();
+
+	groundManager_->Update();
+	groundManager_->SetLane(player_->GetLane());
+	player_->Update();
+	player_->SetIsSideScroll(isSideScroll_);
+	//敵の更新処理
+	enemyManager_->SetPlayerPosition(player_->GetWorldPosition());
+	enemyManager_->SetIsSideScroll(isSideScroll_);
+	enemyManager_->Update();
+	//障害物の更新処理
+	obstacleManager_->Update();
+	obstacleManager_->SetIsSideScroll(isSideScroll_);
+	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
+	obstacleManager_->SetLane(player_->GetLane());
+	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+
+	if (input_->TriggerKey(DIK_SPACE)) {
+		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+			isSideScroll_ = false;
+			groundManager_->SetFlag(true);
+		}
+		else {
+			isSideScroll_ = true;
+			groundManager_->SetFlag(false);
+		}
+	}
+
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
 	//敵
@@ -124,43 +156,9 @@ void GamePlayScene::Update() {
 		collisionManager_->AddCollider(bullet);
 		bullet->SetSideScroll(isSideScroll_);
 	}
-	
+
 	collisionManager_->CheckAllCollision();
-	
 
-
-
-	debugCamera_->Update();
-
-	viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
-	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
-	viewProjection_.UpdateMatrix();
-
-	groundManager_->Update();
-	groundManager_->SetLane(player_->GetLane());
-	player_->Update();
-	player_->SetIsSideScroll(isSideScroll_);
-	//敵の更新処理
-	enemyManager_->Update();
-	enemyManager_->SetPlayerPosition(player_->GetWorldPosition());
-	enemyManager_->SetIsSideScroll(isSideScroll_);
-	//障害物の更新処理
-	obstacleManager_->Update();
-	obstacleManager_->SetIsSideScroll(isSideScroll_);
-	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
-	obstacleManager_->SetLane(player_->GetLane());
-	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
-
-	if (input_->TriggerKey(DIK_SPACE)) {
-		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
-			isSideScroll_ = false;
-			groundManager_->SetFlag(true);
-		}
-		else {
-			isSideScroll_ = true;
-			groundManager_->SetFlag(false);
-		}
-	}
 
 	for (int i = 0; i < 2; i++) {
 		worldTransformTriangle_[i].UpdateMatrix();
