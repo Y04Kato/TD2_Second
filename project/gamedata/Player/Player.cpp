@@ -17,16 +17,15 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 }
 
 void Player::Update() {
-	
+
 	Move();
 	if (jump_) {
 		Jump();
 	}
-	Attack();
 
 	if (input_->TriggerKey(DIK_W)) {
 		velocity_.num[1] = kJumpFirstSpeed;
-		
+
 		jump_ = true;
 	}
 
@@ -35,10 +34,10 @@ void Player::Update() {
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
 	ImGui::Text("Attack Push::P");
-	
-	ImGui::DragFloat("FirstSpeed",& kJumpFirstSpeed, 0.1f);
-	ImGui::DragFloat("Gravity",& kGravity, 0.01f);
-	ImGui::DragFloat("Width",& jumpWidth_, 0.1f);
+
+	ImGui::DragFloat("FirstSpeed", &kJumpFirstSpeed, 0.1f);
+	ImGui::DragFloat("Gravity", &kGravity, 0.01f);
+	ImGui::DragFloat("Width", &jumpWidth_, 0.1f);
 	switch (lane_) {
 	case Obstacle::Lane::Left:
 		ImGui::Text("Left");
@@ -63,6 +62,8 @@ void Player::Update() {
 			isDamageFlag_ = false;
 		}
 	}
+
+	Attack();
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
@@ -185,7 +186,7 @@ void Player::Move() {
 }
 
 void Player::Attack() {
-	if (input_->PressKey(DIK_P)&& !jump_ ) {
+	if (input_->PressKey(DIK_P) && !jump_ && isSideScroll_ == true) {
 		--fireTimer_;
 	}
 	else {
@@ -215,7 +216,7 @@ void Player::Attack() {
 			return true;
 		}
 		return false;
-	});
+		});
 
 	for (PlayerBullet* bullet : bullets_) {
 
