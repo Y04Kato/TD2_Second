@@ -1,10 +1,12 @@
 #include "ObstacleManager.h"
 #include "components/math/MatrixCalculation.h"
 
-void ObstacleManager::Initialize(CreateSphere* sphere, uint32_t textureHandle) {
-	assert(sphere);
-	sphere_ = sphere;
-	textureHandle_ = textureHandle;
+void ObstacleManager::Initialize() {
+	noneModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
+	accelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
+	decelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/deceleration", "Deceleration.obj"));
+	healLifeModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
+
 	std::random_device seedGenerator;
 	randomEngine_ = std::mt19937(seedGenerator());
 	Obstacle* obstacles[3]{};
@@ -93,7 +95,18 @@ void ObstacleManager::Update() {
 void ObstacleManager::Draw(const ViewProjection& viewProjection) {
 	//障害物の描画
 	for (std::unique_ptr<Obstacle>& obstacle : obstacles_) {
-		sphere_->Draw(obstacle->GetWorldTransform(), viewProjection, sphereMaterial_, textureHandle_);
+		if (obstacle->GetMode() == Obstacle::Mode::None) {
+			noneModel_->Draw(obstacle->GetWorldTransform(), viewProjection, Vector4{ 1.0f,1.0f,1.0f,1.0f });
+		}
+		if (obstacle->GetMode() == Obstacle::Mode::Acceleration) {
+			accelerationModel_->Draw(obstacle->GetWorldTransform(), viewProjection, Vector4{ 1.0f,1.0f,1.0f,1.0f });
+		}
+		if (obstacle->GetMode() == Obstacle::Mode::Deceleration) {
+			decelerationModel_->Draw(obstacle->GetWorldTransform(), viewProjection, Vector4{ 1.0f,1.0f,1.0f,1.0f });
+		}
+		if (obstacle->GetMode() == Obstacle::Mode::HealLife) {
+			healLifeModel_->Draw(obstacle->GetWorldTransform(), viewProjection, Vector4{ 1.0f,1.0f,1.0f,1.0f });
+		}
 	}
 }
 

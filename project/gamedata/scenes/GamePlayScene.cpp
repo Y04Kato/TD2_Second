@@ -80,7 +80,7 @@ void GamePlayScene::Initialize() {
 
 	//障害物
 	obstacleManager_ = std::make_unique<ObstacleManager>();
-	obstacleManager_->Initialize(sphere_.get(), uvResourceNum_);
+	obstacleManager_->Initialize();
 
 	// グラウンド
 	groundManager_ = make_unique<GroundManager>();
