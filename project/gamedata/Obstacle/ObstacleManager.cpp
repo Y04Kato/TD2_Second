@@ -5,7 +5,7 @@ void ObstacleManager::Initialize() {
 	noneModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
 	accelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
 	decelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/deceleration", "Deceleration.obj"));
-	healLifeModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
+	healLifeModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/healLife", "HealLife.obj"));
 
 	std::random_device seedGenerator;
 	randomEngine_ = std::mt19937(seedGenerator());
@@ -17,7 +17,7 @@ void ObstacleManager::Initialize() {
 			obstacles[i]->Initialize({ 10 + 0.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
 			break;
 		case Obstacle::Lane::Middle:
-			obstacles[i]->Initialize({ 10 + 10.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+			obstacles[i]->Initialize({ 10 + 10.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
 			break;
 		case Obstacle::Lane::Right:
 			obstacles[i]->Initialize({ 10 + 0.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
