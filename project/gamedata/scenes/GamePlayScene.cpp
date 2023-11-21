@@ -103,6 +103,9 @@ void GamePlayScene::Update() {
 
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
+	//敵
+	const std::unique_ptr<Enemy>& enemys = enemyManager_->GetEnemys();
+	collisionManager_->AddCollider(enemys.get());
 	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
@@ -119,8 +122,13 @@ void GamePlayScene::Update() {
 	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
 	for (PlayerBullet* bullet : bullets) {
 		collisionManager_->AddCollider(bullet);
+		bullet->SetSideScroll(isSideScroll_);
 	}
+	
 	collisionManager_->CheckAllCollision();
+	
+
+
 
 	debugCamera_->Update();
 
