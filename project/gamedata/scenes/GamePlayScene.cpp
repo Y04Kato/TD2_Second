@@ -125,6 +125,7 @@ void GamePlayScene::Update() {
 	viewProjection_.UpdateMatrix();
 
 	groundManager_->Update();
+	groundManager_->SetLane(player_->GetLane());
 	player_->Update();
 	player_->SetIsSideScroll(isSideScroll_);
 
