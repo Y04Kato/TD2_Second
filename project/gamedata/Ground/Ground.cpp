@@ -15,5 +15,5 @@ void Ground::Update() {
 }
 
 void Ground::Draw(const ViewProjection& viewProjection) {
-	groundModel_->Draw(worldTransform_, viewProjection, { 0.4f,1.0f,0.0f,1.0f });;
+	groundModel_->Draw(worldTransform_, viewProjection, { 1.0f,1.0f,1.0f,1.0f });;
 }

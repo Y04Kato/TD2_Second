@@ -80,17 +80,21 @@ void GamePlayScene::Initialize() {
 
 	//障害物
 	obstacleManager_ = std::make_unique<ObstacleManager>();
-	obstacleManager_->Initialize(sphere_.get(), uvResourceNum_);
+	obstacleManager_->Initialize();
 
 	// グラウンド
 	groundManager_ = make_unique<GroundManager>();
 	groundManager_->Initialize();
 
+	//プレイヤー
 	player_ = std::make_unique <Player>();
 	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "cube.obj"));
 	std::vector<Model*>playerModels = { playerModel_.get() };
 	player_->Initialize(playerModels, uvResourceNum_);
 
+	//敵
+	enemyManager_ = std::make_unique<EnemyManager>();
+	enemyManager_->Initialize();
 
 }
 
@@ -99,6 +103,9 @@ void GamePlayScene::Update() {
 
 	collisionManager_->ClearColliders();
 	collisionManager_->AddCollider(player_.get());
+	//敵
+	const std::unique_ptr<Enemy>& enemys = enemyManager_->GetEnemys();
+	collisionManager_->AddCollider(enemys.get());
 	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
@@ -115,8 +122,13 @@ void GamePlayScene::Update() {
 	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
 	for (PlayerBullet* bullet : bullets) {
 		collisionManager_->AddCollider(bullet);
+		bullet->SetSideScroll(isSideScroll_);
 	}
+	
 	collisionManager_->CheckAllCollision();
+	
+
+
 
 	debugCamera_->Update();
 
@@ -128,7 +140,10 @@ void GamePlayScene::Update() {
 	groundManager_->SetLane(player_->GetLane());
 	player_->Update();
 	player_->SetIsSideScroll(isSideScroll_);
-
+	//敵の更新処理
+	enemyManager_->Update();
+	enemyManager_->SetPlayerPosition(player_->GetWorldPosition());
+	enemyManager_->SetIsSideScroll(isSideScroll_);
 	//障害物の更新処理
 	obstacleManager_->Update();
 	obstacleManager_->SetIsSideScroll(isSideScroll_);
@@ -269,6 +284,7 @@ void GamePlayScene::Draw() {
 
 
 	player_->Draw(viewProjection_);
+	enemyManager_->Draw(viewProjection_);
 
 	//障害物の描画
 	obstacleManager_->Draw(viewProjection_);

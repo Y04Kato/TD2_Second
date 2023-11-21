@@ -1,5 +1,5 @@
 #pragma once
-#include "components/3d/CreateSphere.h"
+#include "Model.h"
 #include "Obstacle.h"
 #include <random>
 
@@ -19,7 +19,7 @@ public:
 	/// </summary>
 	/// <param name="sphere"></param>
 	/// <param name="textureHandle"></param>
-	void Initialize(CreateSphere* sphere, uint32_t textureHandle);
+	void Initialize();
 
 	/// <summary>
 	/// 更新
@@ -78,11 +78,12 @@ public:
 
 private:
 	//モデル
-	CreateSphere* sphere_ = nullptr;
+	std::unique_ptr <Model> noneModel_;
+	std::unique_ptr <Model> accelerationModel_;
+	std::unique_ptr <Model> decelerationModel_;
+	std::unique_ptr <Model> healLifeModel_;
 	//モデルの色
 	Vector4 sphereMaterial_{ 1.0f,1.0f,1.0f,1.0f };
-	//テクスチャハンドル
-	uint32_t textureHandle_ = 0;
 	//障害物のリスト
 	std::list<std::unique_ptr<Obstacle>> obstacles_{};
 	//カメラモード
