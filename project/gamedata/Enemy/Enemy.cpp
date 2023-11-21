@@ -32,6 +32,7 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 void Enemy::OnCollision(const Collider* collider) {
+
 	//衝突相手の属性を取得
 	uint32_t collisionAttribute = collider->GetCollisionAttribute();
 
@@ -40,5 +41,5 @@ void Enemy::OnCollision(const Collider* collider) {
 		--life_;
 		
 	}
-	
+
 }

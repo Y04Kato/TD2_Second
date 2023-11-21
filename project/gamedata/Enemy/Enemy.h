@@ -15,9 +15,11 @@ public:
 	WorldTransform GetWorldTransform()override { return worldTransformBase_; }
 	void SetPositionX(float pos) { worldTransformBase_.translation_.num[0] = pos; };
 	//当たり判定
+
 	void OnCollision(const Collider* collider) override;
 
 	void SetSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; }
+
 
 private:
 	std::vector<Model*> models_;

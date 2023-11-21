@@ -4,6 +4,7 @@
 void Obstacle::Initialize(const Vector3& position, int lane, int mode) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
+	worldTransform_.scale_ = { 3.0f,3.0f,4.0f };
 	worldTransform_.UpdateMatrix();
 	lane_ = lane;
 	mode_ = mode;
