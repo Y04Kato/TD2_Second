@@ -24,9 +24,11 @@ void Player::Update() {
 	}
 
 	if (input_->TriggerKey(DIK_W)) {
-		velocity_.num[1] = kJumpFirstSpeed;
+		if (!jump_) {
+			velocity_.num[1] = kJumpFirstSpeed;
 
-		jump_ = true;
+			jump_ = true;
+		}
 	}
 
 	worldTransformBase_.UpdateMatrix();
