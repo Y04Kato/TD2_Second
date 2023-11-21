@@ -56,7 +56,7 @@ public:
 	/// カメラの状態を取得
 	/// </summary>
 	/// <param name="isSideScroll"></param>
-	void SetIsSideScroll(bool isSideScroll) { cameraChenge_ = isSideScroll; };
+	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
 
 	/// <summary>
 	/// プレイヤーの座標を取得
@@ -69,6 +69,12 @@ public:
 	/// </summary>
 	/// <param name="position"></param>
 	void SetCameraPosition(const Vector3& position) { cameraPos_ = position; };
+
+	/// <summary>
+	/// プレイヤーのレーンを設定
+	/// </summary>
+	/// <param name="lane"></param>
+	void SetLane(int lane) { lane_ = lane; };
 
 private:
 	//モデル
@@ -91,10 +97,12 @@ private:
 	//ランダムエンジン
 	std::mt19937 randomEngine_;
 	//カメラ切り替えのフラグ
-	bool cameraChenge_ = false;
+	bool isSideScroll_ = false;
 	//プレイヤーの座標
 	Vector3 playerPos_{ 0.0f,0.0f,0.0f };
 	//カメラの座標
 	Vector3 cameraPos_{ 0.0f,0.0f,0.0f };
+	//プレイヤーのレーン
+	int lane_ = Obstacle::Lane::Middle;
 };
 
