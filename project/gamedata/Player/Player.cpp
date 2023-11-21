@@ -180,7 +180,7 @@ void Player::Move() {
 
 	// 移動
 	worldTransformBase_.translation_ += velocity_;
-
+	worldTransformBase_.rotation_.num[2] -= velocity_.num[0];
 
 }
 

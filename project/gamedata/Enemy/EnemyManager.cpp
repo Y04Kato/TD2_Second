@@ -2,7 +2,7 @@
 
 void EnemyManager::Initialize() {
 	enemy_ = std::make_unique <Enemy>();
-	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "cube.obj"));
+	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "Player.obj"));
 	std::vector<Model*>enemyModels = { model_.get() };
 	enemy_->Initialize(enemyModels);
 }
