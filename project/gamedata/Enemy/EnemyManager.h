@@ -18,6 +18,12 @@ public:
 	void SetPlayerPosition(const Vector3& position);
 
 	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
+
+	//ワールド座標
+	Vector3 GetWorldPosition();
+
+	const std::unique_ptr<Enemy>& GetEnemys() const { return enemy_; };
+
 private:
 	unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> model_;

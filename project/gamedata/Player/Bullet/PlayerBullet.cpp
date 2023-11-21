@@ -58,6 +58,14 @@ Vector3 PlayerBullet::GetWorldPosition() {
 
 // 衝突を検出したら呼び出されるコールバック関数
 void PlayerBullet::OnCollision(const Collider* collider) {
+	//衝突相手の属性を取得
+	uint32_t collisionAttribute = collider->GetCollisionAttribute();
+
+	//衝突相手が敵の時
+	if (collisionAttribute & CollisionConfig::kCollisionAttributeEnemy && isSideScroll_) {
+		isDead_ = true;
+	}
+
 	if (mode_ == Obstacle::Mode::None) {
 		isDead_ = true;
 	}

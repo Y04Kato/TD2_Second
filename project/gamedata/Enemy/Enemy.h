@@ -12,14 +12,19 @@ public:
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
-	WorldTransform GetWorldTransform() override { return worldTransformBase_; }
+	WorldTransform GetWorldTransform()override { return worldTransformBase_; }
 	void SetPositionX(float pos) { worldTransformBase_.translation_.num[0] = pos; };
 	//当たり判定
-	void OnCollision(const Collider* collider)override;
+
+	void OnCollision(const Collider* collider) override;
+
+	void SetSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; }
+
 
 private:
 	std::vector<Model*> models_;
 	WorldTransform worldTransformBase_;
 	bool isDead_ = false;
+	bool isSideScroll_;
 	int life_ = 3;
 };

@@ -8,7 +8,10 @@ void EnemyManager::Initialize() {
 }
 
 void EnemyManager::Update() {
+
+	enemy_->SetSideScroll(isSideScroll_);
 	enemy_->Update();
+
 }
 
 void EnemyManager::Draw(const ViewProjection& viewProjection) {
@@ -17,6 +20,16 @@ void EnemyManager::Draw(const ViewProjection& viewProjection) {
 	}
 }
 	
+//ワールド座標
+Vector3 EnemyManager::GetWorldPosition() {
+	// ワールド座標を入れる関数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.num[0] = enemy_->GetWorldTransform().matWorld_.m[3][0];
+	worldPos.num[1] = enemy_->GetWorldTransform().matWorld_.m[3][1];
+	worldPos.num[2] = enemy_->GetWorldTransform().matWorld_.m[3][2];
+	return worldPos;
+}
 
 void EnemyManager::SetPlayerPosition(const Vector3& position) {
 	enemy_->SetPositionX(position.num[0] +30);

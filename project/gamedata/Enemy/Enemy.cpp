@@ -1,9 +1,13 @@
 #include "Enemy.h"
+#include "components/utilities/collisionManager/CollisionConfig.h"
 
 void Enemy::Initialize(const std::vector<Model*>& models) {
 	worldTransformBase_.Initialize();
 	worldTransformBase_.scale_ = { 3.0f,3.0f,3.0f };
 	models_ = models;
+
+	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
+	SetCollisionMask(CollisionConfig::kCollisionMaskEnemy);
 }
 
 void Enemy::Update() {
@@ -28,5 +32,14 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 
 
 void Enemy::OnCollision(const Collider* collider) {
-	--life_;
+
+	//衝突相手の属性を取得
+	uint32_t collisionAttribute = collider->GetCollisionAttribute();
+
+	//衝突相手が敵の時
+	if (collisionAttribute & CollisionConfig::kCollisionAttributeBullet && isSideScroll_) {
+		--life_;
+		
+	}
+
 }

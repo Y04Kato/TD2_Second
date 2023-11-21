@@ -36,11 +36,15 @@ public:
 
 	void SetObstacleMode(int mode) { mode_ = mode; };
 
+	void SetSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; }
+
 private:
 	WorldTransform worldTransform_;
 	std::unique_ptr <CreateSphere> sphere_;
 	uint32_t textureHandle_ = 0u;
 	Vector4 sphereMaterial_{ 1.0f,1.0f,1.0f,1.0f };
+
+	bool isSideScroll_;
 
 	//速度
 	Vector3 velocity_;
