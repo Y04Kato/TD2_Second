@@ -7,7 +7,7 @@ void GroundManager::Initialize() {
 		ground_[i] = make_unique<Ground>();
 	}
 
-	groundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/ground", "CUBE.obj"));
+	groundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/ground", "Ground.obj"));
 	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
 	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
 	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/400.0f,3.0f,4.0f });
