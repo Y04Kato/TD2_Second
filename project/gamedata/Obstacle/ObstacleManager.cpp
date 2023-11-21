@@ -2,7 +2,7 @@
 #include "components/math/MatrixCalculation.h"
 
 void ObstacleManager::Initialize() {
-	noneModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
+	noneModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/none", "None.obj"));
 	accelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/acceleration", "Acceleration.obj"));
 	decelerationModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/deceleration", "Deceleration.obj"));
 	healLifeModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/obstacle/healLife", "HealLife.obj"));
