@@ -1,5 +1,5 @@
 #pragma once
-#include "components/3d/CreateSphere.h"
+#include "Model.h"
 #include "Input.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const Vector3& position, const Vector3& velocity, uint32_t textureHandle);
+	void Initialize(const Vector3& position, const Vector3& velocity, Model* model);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -40,8 +40,7 @@ public:
 
 private:
 	WorldTransform worldTransform_;
-	std::unique_ptr <CreateSphere> sphere_;
-	uint32_t textureHandle_ = 0u;
+	Model* model_;
 	Vector4 sphereMaterial_{ 1.0f,1.0f,1.0f,1.0f };
 
 	bool isSideScroll_;

@@ -7,14 +7,15 @@ PlayerBullet::~PlayerBullet() {
 	
 }
 
-void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, uint32_t textureHandle) {
+void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, Model* model) {
 	worldTransform_.translation_ = position;
 	worldTransform_.Initialize();
-	sphere_ = std::make_unique <CreateSphere>();
-	sphere_->Initialize();
-	textureHandle_ = textureHandle;
+	worldTransform_.rotation_.num[2] = 1.55f;
+
 	//引数で受け取った速度をメンバ変数に代入
 	velocity_ = velocity;
+
+	model_ = model;
 
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributeBullet);
 	SetCollisionMask(CollisionConfig::kCollisionMaskBullet);
@@ -24,7 +25,7 @@ void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity, 
 /// 毎フレーム処理
 /// </summary>
 void PlayerBullet::Update() {
-
+	worldTransform_.rotation_.num[1] += 0.1f;
 
 	//時間経過でデス
 	if (--deathTimer_ <= 0) {
@@ -41,7 +42,7 @@ void PlayerBullet::Update() {
 /// 描画
 /// </summary>
 void PlayerBullet::Draw(const ViewProjection& viewprojection) {
-	sphere_->Draw(worldTransform_, viewprojection, sphereMaterial_, textureHandle_);
+	model_->Draw(worldTransform_, viewprojection, sphereMaterial_);
 
 };
 

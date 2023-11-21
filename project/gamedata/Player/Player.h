@@ -46,6 +46,7 @@ private:
 	Input* input_ = nullptr;
 
 	std::vector<Model*> models_;
+	std::unique_ptr<Model> model_;
 	Vector4 modelMaterial_;
 
 	//

@@ -12,6 +12,8 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 
 	debugCamera_ = DebugCamera::GetInstance();
 
+	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/bullet", "Screw.obj"));
+
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
 }
@@ -201,7 +203,7 @@ void Player::Attack() {
 
 		// 弾を生成、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(GetWorldPosition(), velocity, textureHandle_);
+		newBullet->Initialize(GetWorldPosition(), velocity,model_.get());
 		newBullet->SetObstacleMode(mode_);
 
 		bullets_.push_back(newBullet);
