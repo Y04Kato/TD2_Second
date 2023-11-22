@@ -27,6 +27,7 @@ public:
 private:
 	unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> model_;
+	std::unique_ptr<Model> model2_;
 	OBB obb_;
 	bool isSideScroll_ = true;
 };

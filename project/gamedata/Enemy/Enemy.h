@@ -8,7 +8,7 @@
 
 class Enemy : public Collider {
 public:
-	void Initialize(const std::vector<Model*>& models);
+	void Initialize(const std::vector<Model*>& models, const std::vector<Model*>& models2);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
@@ -23,7 +23,11 @@ public:
 
 private:
 	std::vector<Model*> models_;
+	std::vector<Model*> models2_;
+	std::vector<Model*> models3_;
 	WorldTransform worldTransformBase_;
+	WorldTransform worldTransformTire_;
+	WorldTransform worldTransformTire2_;
 	bool isDead_ = false;
 	bool isSideScroll_;
 	int life_ = 3;
