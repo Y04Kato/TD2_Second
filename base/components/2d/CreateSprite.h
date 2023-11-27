@@ -23,6 +23,8 @@ public:
 	//テクスチャの大きさと同じサイズに変更
 	void SetTextureInitialSize();
 
+	void SetZPoint(float Zpoint);
+
 	Vector2* GetSize() { return &size_; }
 	Vector2* GetTextureLeftTop() { return &textureLeftTop_; }
 	Vector2* GetTextureSize() { return &textureSize_; }
@@ -49,6 +51,7 @@ private:
 
 	Vector2 size_;
 	Vector2 anchor_;
+	float Zpos_ = 0.0f;
 
 	Vector2 textureLeftTop_;
 	Vector2 textureSize_;

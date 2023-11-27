@@ -19,10 +19,14 @@ private:
 
 	TextureManager* textureManager_;
 
-	std::unique_ptr <CreateSprite> sprite_;
+	std::unique_ptr <CreateSprite> sprite_[2];
 	Transform spriteTransform_;
 	Transform SpriteuvTransform_;
 	Vector4 spriteMaterial_;
 
 	uint32_t title_;
+	uint32_t tutorial_;
+
+	int count = 0;
+
 };

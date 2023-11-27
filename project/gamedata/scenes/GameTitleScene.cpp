@@ -10,6 +10,7 @@ void GameTitleScene::Initialize() {
 	textureManager_ = TextureManager::GetInstance();
 
 	title_ = textureManager_->Load("project/gamedata/resources/Start.png");
+	tutorial_ = textureManager_->Load("project/gamedata/resources/tutorial.png");
 
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -18,13 +19,21 @@ void GameTitleScene::Initialize() {
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
-	sprite_ = std::make_unique <CreateSprite>();
-	sprite_->Initialize(Vector2{ 100.0f,100.0f }, title_, false, false);
-	sprite_->SetTextureInitialSize();
+	sprite_[0] = std::make_unique <CreateSprite>();
+	sprite_[0]->Initialize(Vector2{100.0f,100.0f}, title_, false, false);
+	sprite_[0]->SetTextureInitialSize();
+	
+	sprite_[1] = std::make_unique <CreateSprite>();
+	sprite_[1]->Initialize(Vector2{100.0f,100.0f}, tutorial_, false, false);
+	sprite_[1]->SetTextureInitialSize();
 }
 
 void GameTitleScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
+		count++;
+	}
+	if (count == 2) {
+		count = 0;
 		sceneNo = GAME_SCENE;
 	}
 }
@@ -32,8 +41,12 @@ void GameTitleScene::Update() {
 void GameTitleScene::Draw() {
 #pragma region 前景スプライト描画
 	CJEngine_->PreDraw2D();
-
-	sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	if (count == 0) {
+		sprite_[0]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	}
+	if (count == 1) {
+		sprite_[1]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	}
 #pragma endregion
 }
 

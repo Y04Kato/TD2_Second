@@ -45,10 +45,10 @@ void CreateSprite::Draw(const Transform& transform, const Transform& uvTransform
 	}
 
 	//座標の設定
-	vertexData_[0].position = { left,bottom,0.0f,1.0f };
-	vertexData_[1].position = { left,top,0.0f,1.0f };
-	vertexData_[2].position = { right,bottom,0.0f,1.0f };
-	vertexData_[3].position = { right,top,0.0f,1.0f };
+	vertexData_[0].position = { left,bottom,Zpos_,1.0f };
+	vertexData_[1].position = { left,top,Zpos_,1.0f };
+	vertexData_[2].position = { right,bottom,Zpos_,1.0f };
+	vertexData_[3].position = { right,top,Zpos_,1.0f };
 
 	Microsoft::WRL::ComPtr <ID3D12Resource> textureBuffer = textureManager_->GetTextureBuffer(index_);
 
@@ -165,4 +165,8 @@ void CreateSprite::AdjustTextureSize() {
 
 	textureSize_.num[0] = static_cast<float>(resDesc.Width);
 	textureSize_.num[1] = static_cast<float>(resDesc.Height);
+}
+
+void CreateSprite::SetZPoint(float Zpoint) {
+	Zpos_ = Zpoint;
 }

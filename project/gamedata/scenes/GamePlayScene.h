@@ -46,6 +46,13 @@ private:
 
 	CollisionManager* collisionManager_;
 
+	std::unique_ptr <CreateSprite> sprite_;
+	Transform spriteTransform_;
+	Transform SpriteuvTransform_;
+	Vector4 spriteMaterial_;
+
+	uint32_t ui_;
+
 	//障害物
 	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
 	std::unique_ptr<GroundManager> groundManager_;
