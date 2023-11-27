@@ -1,6 +1,6 @@
-#include"GameTitleScene.h"
+#include"GameOverScene.h"
 
-void GameTitleScene::Initialize() {
+void GameOverScene::Initialize() {
 	//CJEngine
 	CJEngine_ = CitrusJunosEngine::GetInstance();
 
@@ -9,7 +9,7 @@ void GameTitleScene::Initialize() {
 
 	textureManager_ = TextureManager::GetInstance();
 
-	title_ = textureManager_->Load("project/gamedata/resources/Start.png");
+	over_ = textureManager_->Load("project/gamedata/resources/Over.png");
 
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -18,25 +18,27 @@ void GameTitleScene::Initialize() {
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
+
 	sprite_ = std::make_unique <CreateSprite>();
-	sprite_->Initialize(Vector2{ 100.0f,100.0f }, title_, false, false);
+	sprite_->Initialize(Vector2{ 100.0f,100.0f }, over_, false, false);
 	sprite_->SetTextureInitialSize();
 }
 
-void GameTitleScene::Update() {
+void GameOverScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = GAME_SCENE;
+		sceneNo = TITLE_SCENE;
 	}
 }
 
-void GameTitleScene::Draw() {
+void GameOverScene::Draw() {
 #pragma region 前景スプライト描画
 	CJEngine_->PreDraw2D();
 
 	sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+
 #pragma endregion
 }
 
-void GameTitleScene::Finalize() {
+void GameOverScene::Finalize() {
 
 }

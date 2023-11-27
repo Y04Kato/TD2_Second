@@ -129,6 +129,7 @@
     <ClCompile Include="project\gamedata\Player\Bullet\PlayerBullet.cpp" />
     <ClCompile Include="project\gamedata\Player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\GameOverScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
     <ClCompile Include="base\components\manager\SceneManager.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="project\gamedata\Player\Bullet\PlayerBullet.h" />
     <ClInclude Include="project\gamedata\Player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
+    <ClInclude Include="project\gamedata\scenes\GameOverScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />
     <ClInclude Include="base\components\manager\Iscene.h" />

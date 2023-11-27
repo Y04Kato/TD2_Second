@@ -1,11 +1,10 @@
 #pragma once
 #include "components/manager/Iscene.h"
-#include "CJEngine.h"
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
 
-class GameTitleScene :public Iscene{
+class GameOverScene :public Iscene {
 public:
 	void Initialize() override;
 	void Update() override;
@@ -24,5 +23,5 @@ private:
 	Transform SpriteuvTransform_;
 	Vector4 spriteMaterial_;
 
-	uint32_t title_;
+	uint32_t over_;
 };

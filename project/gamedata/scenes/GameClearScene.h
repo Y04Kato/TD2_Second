@@ -1,5 +1,8 @@
 #pragma once
 #include "components/manager/Iscene.h"
+#include "components/input/Input.h"
+#include "components/manager/TextureManager.h"
+#include "components/2d/CreateSprite.h"
 
 class GameClearScene :public Iscene {
 public:
@@ -9,4 +12,16 @@ public:
 	void Finalize() override;
 
 private:
+	CitrusJunosEngine* CJEngine_;
+
+	Input* input_ = nullptr;
+
+	TextureManager* textureManager_;
+
+	std::unique_ptr <CreateSprite> sprite_;
+	Transform spriteTransform_;
+	Transform SpriteuvTransform_;
+	Vector4 spriteMaterial_;
+
+	uint32_t clear_;
 };

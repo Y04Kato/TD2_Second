@@ -35,27 +35,7 @@ private:
 	ViewProjection viewProjection_;
 	TextureManager* textureManager_;
 
-	int blendCount_;
-
-	std::unique_ptr <CreateTriangle> triangle_[2];
-	WorldTransform worldTransformTriangle_[2];
-	Vector4 triangleMaterial_[2];
-
-	std::unique_ptr <CreateSprite> sprite_;
-	Transform spriteTransform_;
-	Transform SpriteuvTransform_;
-	Vector4 spriteMaterial_;
-
-	std::unique_ptr <CreateSphere> sphere_;
-	WorldTransform worldTransformSphere_;
-	Vector4 sphereMaterial_;
-
-	std::unique_ptr<Model> model_;
-	WorldTransform worldTransformModel_;
-	Vector4 modelMaterial_;
-
 	uint32_t uvResourceNum_;
-	uint32_t monsterBallResourceNum_;
 
 	Audio* audio_;
 	SoundData soundData1_;
@@ -65,14 +45,6 @@ private:
 	DebugCamera* debugCamera_;
 
 	CollisionManager* collisionManager_;
-
-	int texture_;
-
-	bool isTriangleDraw1_;
-	bool isTriangleDraw2_;
-	int isSphereDraw_;
-	int isSpriteDraw_;
-	int isModelDraw_;
 
 	//障害物
 	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
