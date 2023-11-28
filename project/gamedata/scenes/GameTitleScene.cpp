@@ -12,6 +12,10 @@ void GameTitleScene::Initialize() {
 	title_ = textureManager_->Load("project/gamedata/resources/Start.png");
 	tutorial_ = textureManager_->Load("project/gamedata/resources/tutorial.png");
 
+	//Audio
+	audio_ = Audio::GetInstance();
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/gamestart.wav");
+
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	SpriteuvTransform_ = {
@@ -32,9 +36,16 @@ void GameTitleScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
 		count++;
 	}
+	if (count == 1) {
+		if (isPlaySE1 == false) {
+			audio_->SoundPlayWave(soundData1_, 0.5f, false);
+			isPlaySE1 = true;
+		}
+	}
 	if (count == 2) {
 		count = 0;
 		sceneNo = GAME_SCENE;
+		isPlaySE1 = false;
 	}
 }
 
@@ -51,5 +62,5 @@ void GameTitleScene::Draw() {
 }
 
 void GameTitleScene::Finalize() {
-
+	audio_->SoundUnload(&soundData1_);
 }

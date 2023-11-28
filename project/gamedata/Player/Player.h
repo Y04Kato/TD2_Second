@@ -10,6 +10,8 @@
 
 #include "Obstacle/Obstacle.h"
 
+#include "components/audio/Audio.h"
+
 class Player : public Collider {
 public:
 	void Initialize(const std::vector<Model*>& models, uint32_t textureHandle);
@@ -40,6 +42,8 @@ public:
 	int GetLane() { return lane_; };
 
 	const std::list<PlayerBullet*> GetPlayerBullet() const { return bullets_; };
+
+	~Player();
 
 private:
 	WorldTransform worldTransformBase_;
@@ -73,7 +77,7 @@ private:
 
 	int mode_;
 
-	float moveSpeed_ = 0.1f;
+	float moveSpeed_ = 0.4f;
 
 	int shakeTimer_ = 0;
 	bool isDamageFlag_ = false;
@@ -91,4 +95,13 @@ private:
 	int lane_ = Obstacle::Lane::Middle;
 
 	DebugCamera* debugCamera_;
+
+	Audio* audio_;
+	SoundData soundData1_;
+	SoundData soundData2_;
+	SoundData soundData3_;
+	SoundData soundData4_;
+	SoundData soundData5_;
+	SoundData soundData6_;
+	SoundData soundData7_;
 };

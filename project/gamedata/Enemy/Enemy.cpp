@@ -14,6 +14,10 @@ void Enemy::Initialize(const std::vector<Model*>& models, const std::vector<Mode
 
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributeEnemy);
 	SetCollisionMask(CollisionConfig::kCollisionMaskEnemy);
+
+	//Audio
+	audio_ = Audio::GetInstance();
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/damage2.wav");
 }
 
 void Enemy::Update() {
@@ -53,7 +57,11 @@ void Enemy::OnCollision(const Collider* collider) {
 	//衝突相手が敵の時
 	if (collisionAttribute & CollisionConfig::kCollisionAttributeBullet && isSideScroll_) {
 		--life_;
-		
+		audio_->SoundPlayWave(soundData1_, 0.8f, false);
 	}
 
+}
+
+Enemy::~Enemy() {
+	audio_->SoundUnload(&soundData1_);
 }

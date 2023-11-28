@@ -14,9 +14,9 @@ void GamePlayScene::Initialize() {
 
 	//Audio
 	audio_ = Audio::GetInstance();
-	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/conjurer.wav");
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/cyber14.wav");
 	//音声再生
-	audio_->SoundPlayWave(soundData1_, 0.1f, false);
+	audio_->SoundPlayWave(soundData1_, 0.1f, true);
 
 	// デバッグカメラの初期化
 	debugCamera_ = DebugCamera::GetInstance();

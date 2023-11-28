@@ -4,6 +4,7 @@
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
+#include "components/audio/Audio.h"
 
 class GameTitleScene :public Iscene{
 public:
@@ -28,5 +29,9 @@ private:
 	uint32_t tutorial_;
 
 	int count = 0;
+
+	Audio* audio_;
+	SoundData soundData1_;
+	bool isPlaySE1 = false;
 
 };
