@@ -143,7 +143,7 @@ void ObstacleManager::Reset() {
 
 void ObstacleManager::InitializeObstacles() {
 	AddObstacle({ 55.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
-	AddObstacle({ 80.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 80.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
 	AddObstacle({ 100.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
 	AddObstacle({ 125.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
 	AddObstacle({ 135.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
