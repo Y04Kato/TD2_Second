@@ -11,7 +11,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model,const Vector3& position, const Vector3& scale, Vector3& rotation, const Vector3& velocity);
+	void Initialize(Model* model,const Vector3& position);
 
 	/// <summary>
 	/// 毎フレーム処理

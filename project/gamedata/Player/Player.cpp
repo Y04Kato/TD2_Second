@@ -36,14 +36,10 @@ void Player::Update() {
 	for (PlayerBullet* bullet : bullets_) {
 		if (bullet->IsDead()) {
 			for (int i = 0; i < 15; ++i) {
-				Vector3 velocity = { 0, 0, 0 };
-				float numberX = (rand() % 11 - 5) / 5.0f;
-				float numberY = (rand() % 11 - 5) / 5.0f;
-				float numberZ = (rand() % 11 - 5) / 5.0f;
-				velocity = { numberX, numberY, numberZ };
+				
 				//初期化
 				Particle* newParticles = new Particle();
-				newParticles->Initialize(model_.get(),bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
+				newParticles->Initialize(model_.get(),bullet->GetWorldPosition());
 
 				particle_.push_back(newParticles);
 			}
