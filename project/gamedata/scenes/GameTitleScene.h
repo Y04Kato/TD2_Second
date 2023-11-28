@@ -4,6 +4,8 @@
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
+#include "components/audio/Audio.h"
+#include "Fade/Fade.h"
 
 class GameTitleScene :public Iscene{
 public:
@@ -29,4 +31,10 @@ private:
 
 	int count = 0;
 
+	Audio* audio_;
+	SoundData soundData1_;
+	bool isPlaySE1 = false;
+
+	
+	std::unique_ptr<Fade> fade_;
 };

@@ -14,6 +14,16 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 
 	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/bullet", "Screw.obj"));
 
+	//Audio
+	audio_ = Audio::GetInstance();
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/jump.wav");
+	soundData2_ = audio_->SoundLoadWave("project/gamedata/resources/up.wav");
+	soundData3_ = audio_->SoundLoadWave("project/gamedata/resources/down.wav");
+	soundData4_ = audio_->SoundLoadWave("project/gamedata/resources/damage.wav");
+	soundData5_ = audio_->SoundLoadWave("project/gamedata/resources/Attack.wav");
+	soundData6_ = audio_->SoundLoadWave("project/gamedata/resources/heal.wav");
+	soundData7_ = audio_->SoundLoadWave("project/gamedata/resources/change.wav");
+
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
 }
@@ -26,6 +36,7 @@ void Player::Update() {
 	}
 
 	if (input_->TriggerKey(DIK_W)) {
+		audio_->SoundPlayWave(soundData1_, 0.8f, false);
 		if (!jump_) {
 			velocity_.num[1] = kJumpFirstSpeed;
 
@@ -70,6 +81,7 @@ void Player::Update() {
 	Attack();
 
 	if (input_->TriggerKey(DIK_SPACE)) {
+		audio_->SoundPlayWave(soundData7_, 0.6f, false);
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
 			debugCamera_->MovingCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f }, 0.05f);
 			isSideScroll_ = false;
@@ -164,6 +176,7 @@ void Player::Move() {
 	//俯瞰視点移動
 	if (!jump_) {
 		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] >= -14.5f && isSideScroll_ == false) {
+			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = -jumpWidth_;
 			jump_ = true;
@@ -175,6 +188,7 @@ void Player::Move() {
 			}
 		}
 		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] <= 14.5f && isSideScroll_ == false) {
+			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = jumpWidth_;
 			jump_ = true;
@@ -204,6 +218,7 @@ void Player::Attack() {
 	}
 
 	if (fireTimer_ == 0) {
+		audio_->SoundPlayWave(soundData5_, 0.8f, false);
 		// 弾の速度
 		const float kBulletSpeed = 1.0f + moveSpeed_;
 		Vector3 velocity = { kBulletSpeed, 0, 0 };
@@ -265,11 +280,14 @@ void Player::OnCollision(const Collider* collider) {
 		life_--;
 		isDamageFlag_ = true;
 		shakeTimer_ = 0;
+		audio_->SoundPlayWave(soundData4_, 0.8f, false);
+
 	}
 	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleAcceleration) {
 		moveSpeed_ += 0.2f;
 		isAccelerationFlag_ = true;
 		accelerationTimer_ = 0;
+		audio_->SoundPlayWave(soundData2_, 0.8f, false);
 	}
 	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleDeceleration) {
 		moveSpeed_ -= 0.2f;
@@ -278,9 +296,11 @@ void Player::OnCollision(const Collider* collider) {
 		}
 		isDecelerationFlag_ = true;
 		decelerationTimer_ = 0;
+		audio_->SoundPlayWave(soundData3_, 0.8f, false);
 	}
 	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleHealLife) {
 		life_++;
+		audio_->SoundPlayWave(soundData6_, 0.8f, false);
 	}
 }
 
@@ -295,7 +315,7 @@ void Player::Reset() {
 
 	life_ = 3;
 
-	moveSpeed_ = 0.1f;
+	moveSpeed_ = 0.4f;
 
 	shakeTimer_ = 0;
 	isDamageFlag_ = false;
@@ -309,4 +329,14 @@ void Player::Reset() {
 	cameraDistance_ = 0.0f;
 
 	lane_ = Obstacle::Lane::Middle;
+}
+
+Player::~Player() {
+	audio_->SoundUnload(&soundData1_);
+	audio_->SoundUnload(&soundData2_);
+	audio_->SoundUnload(&soundData3_);
+	audio_->SoundUnload(&soundData4_);
+	audio_->SoundUnload(&soundData5_);
+	audio_->SoundUnload(&soundData6_);
+	audio_->SoundUnload(&soundData7_);
 }
