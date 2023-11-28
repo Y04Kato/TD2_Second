@@ -36,3 +36,8 @@ Vector3 EnemyManager::GetWorldPosition() {
 void EnemyManager::SetPlayerPosition(const Vector3& position) {
 	enemy_->SetPositionX(position.num[0] +50);
 }
+
+void EnemyManager::Reset() {
+	enemy_->SetPositionX(20.6f);
+	enemy_->SetLife(3);
+}

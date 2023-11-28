@@ -52,6 +52,11 @@ public:
 	/// <param name="lane"></param>
 	void SetLane(int lane) { lane_ = lane; };
 
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
 private:
 	unique_ptr<Ground> ground_[3];
 	unique_ptr<Model> groundModel_;

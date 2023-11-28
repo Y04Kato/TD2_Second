@@ -84,6 +84,16 @@ public:
 	/// <param name="lane"></param>
 	void SetLane(int lane) { lane_ = lane; };
 
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+	/// <summary>
+	/// 障害物の初期化
+	/// </summary>
+	void InitializeObstacles();
+
 private:
 	//モデル
 	std::unique_ptr <Model> noneModel_;

@@ -283,3 +283,30 @@ void Player::OnCollision(const Collider* collider) {
 		life_++;
 	}
 }
+
+void Player::Reset() {
+	worldTransformBase_.translation_ = { 0.0f,0.0f,0.0f };
+	debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 1.0f);
+
+	for (PlayerBullet* bullet : bullets_) {
+		delete bullet;
+	}
+	bullets_.clear();
+
+	life_ = 3;
+
+	moveSpeed_ = 0.1f;
+
+	shakeTimer_ = 0;
+	isDamageFlag_ = false;
+
+	accelerationTimer_ = 0;
+	isAccelerationFlag_ = false;
+
+	decelerationTimer_ = 0;
+	isDecelerationFlag_ = false;
+
+	cameraDistance_ = 0.0f;
+
+	lane_ = Obstacle::Lane::Middle;
+}
