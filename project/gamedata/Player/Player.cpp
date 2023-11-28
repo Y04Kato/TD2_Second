@@ -75,7 +75,8 @@ void Player::Update() {
 			isSideScroll_ = false;
 		}
 		else {
-			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			//debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
 			isSideScroll_ = true;
 		}
 	}
@@ -83,9 +84,11 @@ void Player::Update() {
 	if (isAccelerationFlag_ == true) {//加速した時
 		accelerationTimer_++;
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
-			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
 			if (accelerationTimer_ >= 120) {
-				debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
+				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
 				isAccelerationFlag_ = false;
 			}
 		}
@@ -102,8 +105,10 @@ void Player::Update() {
 		decelerationTimer_++;
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
 			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
 			if (decelerationTimer_ >= 120) {
-				debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
+				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
 				isDecelerationFlag_ = false;
 			}
 		}
@@ -118,7 +123,8 @@ void Player::Update() {
 
 	if (isDamageFlag_ == false) {//ダメージを受けていない時
 		if (isSideScroll_ == true) {//横スクロール中
-			debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
+			/*debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });*/
+			debugCamera_->SetCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
 		}
 		else {
 			debugCamera_->SetCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
