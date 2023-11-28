@@ -21,6 +21,13 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> descriptorheap, uint32_t descriptorSize, uint32_t index);
 
 	Microsoft::WRL::ComPtr <ID3D12Resource> GetTextureBuffer(uint32_t index)const { return textureResource_[index].Get(); }
+
+	uint32_t GetTextureIndex() { return textureIndex_; }
+	void SetTextureIndex(uint32_t textureIndex);
+
+	uint32_t GetDescriptorSizeSRV() { return descriptorSizeSRV; }
+	uint32_t GetDescriptorSizeRTV() { return descriptorSizeRTV; }
+	uint32_t GetDescriptorSizeDSV() { return descriptorSizeDSV; }
 private:
 	DirectXCommon* dxCommon_;
 	Microsoft::WRL::ComPtr<ID3D12Resource>intermediateResource_[maxtex];

@@ -70,6 +70,14 @@ void GamePlayScene::Initialize() {
 	enemyManager_ = std::make_unique<EnemyManager>();
 	enemyManager_->Initialize();
 
+	numbers_.reset(new Numbers);
+	numbers_->Initialize();
+	numbers_->SetNum(30);
+	numbers_->SetInitialNum(60);
+	transformNumbers_.translate = { 950.0f,0.0f,0.0f };
+	transformNumbers_.rotate = { 0.0f,0.0f,0.0f };
+	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
+	numbers_->SetTransform(transformNumbers_);
 }
 
 void GamePlayScene::Update() {
@@ -211,6 +219,11 @@ void GamePlayScene::Update() {
 		ImGui::Text("1 : GAMEOVER_SCENE");
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
+
+		if (input_->TriggerKey(DIK_DOWNARROW)) {
+			num--;
+		}
+		numbers_->SetNum(num);
 	}
 }
 
@@ -242,6 +255,7 @@ void GamePlayScene::Draw() {
 
 	if (isGameStart_ == true) {
 		sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+		numbers_->Draw();
 	}
 
 	fade_->FadeInDraw();

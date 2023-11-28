@@ -16,6 +16,16 @@ float Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.num[0] * v2.num[0] + v1.num[1] * v2.num[1] + v1.num[2] * v2.num[2];
 }
 
+bool IsCollision(const AABB& aabb, const Vector3& point) {
+	if ((aabb.min.num[0] <= point.num[0] && point.num[0] <= aabb.max.num[0]) &&
+		(aabb.min.num[1] <= point.num[1] && point.num[1] <= aabb.max.num[1]) &&
+		(aabb.min.num[2] <= point.num[2] && point.num[1] <= aabb.max.num[2])) {
+		return true;
+	}
+
+	return false;
+}
+
 //X軸回転行列
 Matrix4x4 MakeRotateXMatrix(float radian) {
 	Matrix4x4 result;

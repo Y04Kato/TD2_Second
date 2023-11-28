@@ -127,3 +127,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
 	dxCommon_->GetCommandList()->ResourceBarrier(1, &barrier);
 	return intermediateResource_[index];
 }
+
+void TextureManager::SetTextureIndex(uint32_t textureIndex) {
+	textureIndex_ = textureIndex;
+}

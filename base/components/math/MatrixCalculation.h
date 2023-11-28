@@ -33,6 +33,8 @@ Vector3 operator+=(Vector3&, Vector3&);
 Vector3 operator+=(Vector3&, const Vector3&);
 Vector3 operator-=(const Vector3&, const Vector3&);
 
+bool IsCollision(const AABB& aabb, const Vector3& point);
+
 //X軸回転行列
 Matrix4x4 MakeRotateXMatrix(float radian);
 

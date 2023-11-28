@@ -41,30 +41,30 @@ void Player::Update() {
 				float numberY = (rand() % 11 - 5) / 5.0f;
 				float numberZ = (rand() % 11 - 5) / 5.0f;
 				velocity = { numberX, numberY, numberZ };
-				//初期化
-				Particle* newParticles = new Particle();
-				newParticles->Initialize(model_.get(),bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
+				////初期化
+				//Particle* newParticles = new Particle();
+				//newParticles->Initialize(model_.get(),bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
 
-				particle_.push_back(newParticles);
+				//particle_.push_back(newParticles);
 			}
 
 		}
 	}
 
-	for (Particle* particle : particle_) {
-		particle->Update();
-		
-	}
+	//for (Particle* particle : particle_) {
+	//	particle->Update();
+	//	
+	//}
 
-	// デスフラグが立った弾を削除
-	particle_.remove_if([](Particle* particle) {
-		if (particle->IsDead()) {
+	//// デスフラグが立った弾を削除
+	//particle_.remove_if([](Particle* particle) {
+	//	if (particle->IsDead()) {
 
-			delete particle;
-			return true;
-		}
-		return false;
-	});
+	//		delete particle;
+	//		return true;
+	//	}
+	//	return false;
+	//});
 
 	Move();
 	if (jump_) {
@@ -200,9 +200,9 @@ void Player::Draw(const ViewProjection& view) {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(view);
 	}
-	for (Particle* particle : particle_) {
+	/*for (Particle* particle : particle_) {
 		particle->Draw(view);
-	}
+	}*/
 }
 
 void Player::Move() {

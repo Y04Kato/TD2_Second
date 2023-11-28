@@ -19,6 +19,7 @@
 #include "Ground/GroundManager.h"
 #include "Player/Player.h"
 #include "Enemy/EnemyManager.h"
+#include "Numbers/Numbers.h"
 #pragma endregion
 
 class GamePlayScene :public Iscene {
@@ -77,4 +78,9 @@ private:
 	// フェード
 	std::unique_ptr<Fade> fade_;
 	bool isGameStart_;
+
+	//数字
+	std::unique_ptr<Numbers> numbers_;
+	Transform transformNumbers_;
+	int num = 30;
 };

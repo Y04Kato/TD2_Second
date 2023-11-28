@@ -78,6 +78,7 @@ void CitrusJunosEngine::Initialize(const wchar_t* title, int32_t width, int32_t 
 	RasterizerStateParticle();
 
 	SettingDepth();
+	SettingDepthParticle();
 
 	InitializePSO3D();
 	InitializePSO2D();
@@ -435,7 +436,7 @@ void CitrusJunosEngine::CreateRootSignatureParticle() {
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;//VERTEXShaderを使う
 	rootParameters[1].DescriptorTable.pDescriptorRanges = descriptoraRange;//tableの中身の配列を指定
 	rootParameters[1].DescriptorTable.NumDescriptorRanges = _countof(descriptoraRange);//Tableで利用する数
-	
+
 	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//Descriptortableを使う
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderを使う
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptoraRange;//tableの中身の配列を指定
@@ -454,7 +455,7 @@ void CitrusJunosEngine::CreateRootSignatureParticle() {
 	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;//ありったけのmipmapを使う
 	staticSamplers[0].ShaderRegister = 0;//レジスタ番号0を使う
 	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixelShaderで使う
-	
+
 	descriptionRootSignature.pStaticSamplers = staticSamplers;
 	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
 
@@ -523,7 +524,7 @@ void CitrusJunosEngine::InitializePSOParticle() {
 		vertexShaderBlobParticle_->GetBufferSize() };//vertexShader
 	graphicsPipelineStateDesc.PS = { pixelShaderBlobParticle_->GetBufferPointer(),
 		pixelShaderBlobParticle_->GetBufferSize() };//pixcelShader
-	graphicsPipelineStateDesc.BlendState = blendDesc_[kBlendModeNormal];//BlendState
+	graphicsPipelineStateDesc.BlendState = blendDesc_[kBlendModeAdd];//BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDescParticle_;//rasterizerState
 	//書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
@@ -534,7 +535,7 @@ void CitrusJunosEngine::InitializePSOParticle() {
 	//どのように画面に色を打ち込むのかの設定（気にしなく良い）
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc_;
+	graphicsPipelineStateDesc.DepthStencilState = depthStencilDescParticle_;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	//実際に生成
 	graphicsPipelineStateParticle_ = nullptr;
@@ -543,6 +544,13 @@ void CitrusJunosEngine::InitializePSOParticle() {
 	assert(SUCCEEDED(hr));
 }
 #pragma endregion
+
+void CitrusJunosEngine::SettingDepthParticle() {
+	//DepthStencilStateの設定
+	depthStencilDescParticle_.DepthEnable = true;//有効化
+	depthStencilDescParticle_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;//書き込み
+	depthStencilDescParticle_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;//比較関数、近ければ描画される
+}
 
 void CitrusJunosEngine::ViewPort() {
 	//クライアント領域のサイズと一緒にして画面全体に表示

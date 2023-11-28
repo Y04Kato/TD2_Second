@@ -123,11 +123,11 @@
     <ClCompile Include="project\gamedata\Enemy\Enemy.cpp" />
     <ClCompile Include="project\gamedata\Enemy\EnemyManager.cpp" />
     <ClCompile Include="project\gamedata\Fade\Fade.cpp" />
+    <ClCompile Include="project\gamedata\Numbers\Numbers.cpp" />
     <ClCompile Include="project\gamedata\Obstacle\Obstacle.cpp" />
     <ClCompile Include="project\gamedata\Obstacle\ObstacleManager.cpp" />
     <ClCompile Include="project\gamedata\Ground\Ground.cpp" />
     <ClCompile Include="project\gamedata\Ground\GroundManager.cpp" />
-    <ClCompile Include="project\gamedata\Particle\Particle.cpp" />
     <ClCompile Include="project\gamedata\Player\Bullet\PlayerBullet.cpp" />
     <ClCompile Include="project\gamedata\Player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
@@ -212,11 +212,11 @@
     <ClInclude Include="project\gamedata\Enemy\Enemy.h" />
     <ClInclude Include="project\gamedata\Enemy\EnemyManager.h" />
     <ClInclude Include="project\gamedata\Fade\Fade.h" />
+    <ClInclude Include="project\gamedata\Numbers\Numbers.h" />
     <ClInclude Include="project\gamedata\Obstacle\Obstacle.h" />
     <ClInclude Include="project\gamedata\Obstacle\ObstacleManager.h" />
     <ClInclude Include="project\gamedata\Ground\Ground.h" />
     <ClInclude Include="project\gamedata\Ground\GroundManager.h" />
-    <ClInclude Include="project\gamedata\Particle\Particle.h" />
     <ClInclude Include="project\gamedata\Player\Bullet\PlayerBullet.h" />
     <ClInclude Include="project\gamedata\Player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
