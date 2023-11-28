@@ -12,6 +12,7 @@
 
 #include "components/audio/Audio.h"
 #include "components/2d/CreateParticle.h"
+#include "PlayerParticle/PlayerParticle.h"
 
 class Player : public Collider {
 public:
@@ -54,7 +55,7 @@ private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
 
-	//std::list<Particle*> particle_;
+	std::list<PlayerParticle*> particle_;
 
 	std::vector<Model*> models_;
 	std::unique_ptr<Model> model_;
