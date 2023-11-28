@@ -39,6 +39,8 @@ public:
 
 	int GetLane() { return lane_; };
 
+	int GetLife() { return life_; }
+
 	const std::list<PlayerBullet*> GetPlayerBullet() const { return bullets_; };
 
 private:

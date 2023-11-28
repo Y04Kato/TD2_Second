@@ -3,6 +3,7 @@
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
+#include "Fade/Fade.h"
 
 class GameClearScene :public Iscene {
 public:
@@ -24,4 +25,7 @@ private:
 	Vector4 spriteMaterial_;
 
 	uint32_t clear_;
+
+	std::unique_ptr<Fade> fade_;
+	bool isFade_;
 };

@@ -4,6 +4,7 @@
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
+#include "project/gamedata/Fade/Fade.h"
 
 class GameTitleScene :public Iscene{
 public:
@@ -28,5 +29,6 @@ private:
 	uint32_t tutorial_;
 
 	int count = 0;
-
+	
+	std::unique_ptr<Fade> fade_;
 };

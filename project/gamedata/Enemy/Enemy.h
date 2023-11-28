@@ -20,6 +20,7 @@ public:
 
 	void SetSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; }
 
+	int GetLife() { return life_; }
 
 private:
 	std::vector<Model*> models_;
