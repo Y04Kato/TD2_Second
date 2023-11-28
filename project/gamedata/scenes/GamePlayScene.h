@@ -26,6 +26,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Finalize() override;
+	void Reset();
 
 	void ApplyGlobalVariables();
 

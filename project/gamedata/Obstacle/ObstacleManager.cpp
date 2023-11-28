@@ -10,16 +10,7 @@ void ObstacleManager::Initialize() {
 	std::random_device seedGenerator;
 	randomEngine_ = std::mt19937(seedGenerator());
 
-	AddObstacle({ 50.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
-	AddObstacle({ 80.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
-	AddObstacle({ 100.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
-	AddObstacle({ 120.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
-	AddObstacle({ 130.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
-	AddObstacle({ 150.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
-	AddObstacle({ 160.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
-	AddObstacle({ 180.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
-	AddObstacle({ 200.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
-	AddObstacle({ 210.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	InitializeObstacles();
 }
 
 void ObstacleManager::Update() {
@@ -143,4 +134,24 @@ void ObstacleManager::AddObstacle(const Vector3& position, Obstacle::Lane lane, 
 int ObstacleManager::GetRandomInt(int min, int max) {
 	std::uniform_int_distribution<int> distribution(min, max);
 	return distribution(randomEngine_);
+}
+
+void ObstacleManager::Reset() {
+	obstacles_.clear();
+	InitializeObstacles();
+}
+
+void ObstacleManager::InitializeObstacles() {
+	AddObstacle({ 50.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
+	AddObstacle({ 80.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 100.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
+	AddObstacle({ 120.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 130.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 150.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
+	AddObstacle({ 160.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 180.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
+	AddObstacle({ 200.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
+	AddObstacle({ 210.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 230.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 250.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
 }

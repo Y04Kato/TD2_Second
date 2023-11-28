@@ -43,6 +43,10 @@ public:
 
 	const std::list<PlayerBullet*> GetPlayerBullet() const { return bullets_; };
 
+	void Reset();
+
+	int GetLife() { return life_; };
+
 	~Player();
 
 private:
