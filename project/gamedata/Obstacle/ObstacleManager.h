@@ -39,6 +39,14 @@ public:
 	void AddObstacle(Obstacle* obstacle);
 
 	/// <summary>
+	/// 障害物を追加
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="lane"></param>
+	/// <param name="mode"></param>
+	void AddObstacle(const Vector3& position, Obstacle::Lane lane, Obstacle::Mode mode);
+
+	/// <summary>
 	/// 障害物のリストを取得
 	/// </summary>
 	/// <returns></returns>
@@ -91,7 +99,7 @@ private:
 	//障害物のスポーンタイマー
 	int obstacleSpawnTimer_ = 0;
 	//2Dモードの生成位置
-	Vector3 obstacleSpawnPosition_{ 60.0f,0.0f,0.0f };
+	Vector3 obstacleSpawnPosition_{ 200.0f,0.0f,0.0f };
 	//レーンごとの座標
 	float lanePosition_[3] = { 15.0f,0.0f,-15.0f };
 	//ランダムエンジン

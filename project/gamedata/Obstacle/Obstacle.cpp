@@ -24,35 +24,6 @@ void Obstacle::Update() {
 	if (worldTransform_.translation_.num[0] <= cameraPos_.num[0] - 40.0f) {
 		isDead_ = true;
 	}
-
-	ImGui::Begin("Obstacle");
-	switch (mode_) {
-	case Mode::Acceleration:
-		ImGui::Text("Acceleration");
-		break;
-	case Mode::Deceleration:
-		ImGui::Text("Deceleration");
-		break;
-	case Mode::HealLife:
-		ImGui::Text("HealLife");
-		break;
-	case Mode::None:
-		ImGui::Text("None");
-		break;
-	}
-
-	switch (lane_) {
-	case Lane::Left:
-		ImGui::Text("Left");
-		break;
-	case Lane::Middle:
-		ImGui::Text("Middle");
-		break;
-	case Lane::Right:
-		ImGui::Text("Right");
-		break;
-	}
-	ImGui::End();
 }
 
 void Obstacle::OnCollision(const Collider* collider) {
