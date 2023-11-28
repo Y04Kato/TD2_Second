@@ -9,6 +9,10 @@ void GameOverScene::Initialize() {
 
 	textureManager_ = TextureManager::GetInstance();
 
+	// フェード
+	fade_ = std::make_unique<Fade>();
+	fade_->Initialize();
+
 	over_ = textureManager_->Load("project/gamedata/resources/Over.png");
 
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
@@ -22,12 +26,29 @@ void GameOverScene::Initialize() {
 	sprite_ = std::make_unique <CreateSprite>();
 	sprite_->Initialize(Vector2{ 100.0f,100.0f }, over_, false, false);
 	sprite_->SetTextureInitialSize();
+
+	isFade_ = true;
 }
 
 void GameOverScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
+		fade_->FadeInFlagSet(true);
+	}
+
+	if (fade_->GetColor(0) > 1.0f) {
 		sceneNo = TITLE_SCENE;
 	}
+
+	if (isFade_ == true) {
+		fade_->FadeOutFlagSet(true);
+	}
+	if (fade_->GetColor(1) < 0.0f) {
+		isFade_ = false;
+		fade_->FadeOutFlagSet(false);
+	}
+
+	fade_->FadeInUpdate();
+	fade_->FadeOutUpdate();
 }
 
 void GameOverScene::Draw() {
@@ -35,6 +56,8 @@ void GameOverScene::Draw() {
 	CJEngine_->PreDraw2D();
 
 	sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	fade_->FadeOutDraw();
+	fade_->FadeInDraw();
 
 #pragma endregion
 }

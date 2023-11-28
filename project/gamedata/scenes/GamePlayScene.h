@@ -13,6 +13,7 @@
 #include "components/utilities/collisionManager/CollisionManager.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
 #include "../Obstacle/ObstacleManager.h"
+#include "Fade/Fade.h"
 
 #pragma region ゲームオブジェクト
 #include "Ground/GroundManager.h"
@@ -69,4 +70,8 @@ private:
 
 	/*-------------------敵------------------*/
 	std::unique_ptr<EnemyManager> enemyManager_ = nullptr;
+
+	// フェード
+	std::unique_ptr<Fade> fade_;
+	bool isGameStart_;
 };

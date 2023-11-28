@@ -6,6 +6,11 @@ void GamePlayScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
+	// フェード
+	fade_ = std::make_unique<Fade>();
+	fade_->Initialize();
+	isGameStart_ = false;
+
 	//テクスチャ
 	uvResourceNum_ = textureManager_->Load("project/gamedata/resources/uvChecker.png");
 
@@ -70,11 +75,41 @@ void GamePlayScene::Initialize() {
 void GamePlayScene::Update() {
 	ApplyGlobalVariables();
 
-	debugCamera_->Update();
+	// フェード
+	fade_->FadeInUpdate();
 
-	viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
-	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
-	viewProjection_.UpdateMatrix();
+	if (isGameStart_ == false) {
+		fade_->FadeOutFlagSet(true);
+		fade_->FadeOutUpdate();
+	}
+
+	if (fade_->GetColor(1) < -1.0f) {
+		isGameStart_ = true;
+	}
+
+	// フェードが終わるまで処理待機
+	if (isGameStart_ == true) {
+		debugCamera_->Update();
+
+		if (player_->GetLife() <= 0) {
+			fade_->FadeInFlagSet(true);
+		}
+
+		if (enemyManager_->GetEnemys()->GetLife() <= 0) {
+			fade_->FadeInFlagSet(true);
+		}
+
+		if (fade_->GetColor(0) > 1.0f && player_->GetLife() <= 0) {
+			sceneNo = GAMEOVER_SCENE;
+		}
+
+		if (fade_->GetColor(0) > 1.0f && enemyManager_->GetEnemys()->GetLife() <= 0) {
+			sceneNo = CLEAR_SCENE;
+		}
+
+		viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+		viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+		viewProjection_.UpdateMatrix();
 
 	groundManager_->SetLane(player_->GetLane());
 	groundManager_->Update();
@@ -91,42 +126,42 @@ void GamePlayScene::Update() {
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
 	obstacleManager_->Update();
 
-	if (input_->TriggerKey(DIK_SPACE)) {
-		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
-			isSideScroll_ = false;
-			groundManager_->SetFlag(true);
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
+				isSideScroll_ = false;
+				groundManager_->SetFlag(true);
+			}
+			else {
+				isSideScroll_ = true;
+				groundManager_->SetFlag(false);
+			}
 		}
-		else {
-			isSideScroll_ = true;
-			groundManager_->SetFlag(false);
-		}
-	}
 
-	collisionManager_->ClearColliders();
-	collisionManager_->AddCollider(player_.get());
-	//敵
-	const std::unique_ptr<Enemy>& enemys = enemyManager_->GetEnemys();
-	collisionManager_->AddCollider(enemys.get());
-	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
-	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
-		collisionManager_->AddCollider(obstacle.get());
-		distance = obstacle->GetWorldTransform().translation_.num[0] - player_->GetWorldPosition().num[0];
-		if (distance <= distance_ && player_->GetLane() == obstacle->GetLane()) {
-			distance_ = distance;
-			player_->SetObstacleMode(obstacle->GetMode());
+		collisionManager_->ClearColliders();
+		collisionManager_->AddCollider(player_.get());
+		//敵
+		const std::unique_ptr<Enemy>& enemys = enemyManager_->GetEnemys();
+		collisionManager_->AddCollider(enemys.get());
+		const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
+		for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
+			collisionManager_->AddCollider(obstacle.get());
+			distance = obstacle->GetWorldTransform().translation_.num[0] - player_->GetWorldPosition().num[0];
+			if (distance <= distance_ && player_->GetLane() == obstacle->GetLane()) {
+				distance_ = distance;
+				player_->SetObstacleMode(obstacle->GetMode());
+			}
+			if (distance_ <= 2.0f) {
+				distance_ = 100.0f;
+			}
 		}
-		if (distance_ <= 2.0f) {
-			distance_ = 100.0f;
+		//弾
+		const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
+		for (PlayerBullet* bullet : bullets) {
+			collisionManager_->AddCollider(bullet);
+			bullet->SetSideScroll(isSideScroll_);
 		}
-	}
-	//弾
-	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
-	for (PlayerBullet* bullet : bullets) {
-		collisionManager_->AddCollider(bullet);
-		bullet->SetSideScroll(isSideScroll_);
-	}
 
-	collisionManager_->CheckAllCollision();
+		collisionManager_->CheckAllCollision();
 
 	//ゲームオーバー処理
 	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
@@ -156,34 +191,43 @@ void GamePlayScene::Update() {
 	ImGui::Text("1 : GAMEOVER_SCENE");
 	ImGui::Text("2 : CLEAR_SCENE");
 
-	ImGui::End();
+		ImGui::End();
+	}
 }
 
 void GamePlayScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	CJEngine_->PreDraw3D();
 
-	player_->Draw(viewProjection_);
-	enemyManager_->Draw(viewProjection_);
+	if (isGameStart_ == true) {
 
-	//障害物の描画
-	obstacleManager_->Draw(viewProjection_);
+		player_->Draw(viewProjection_);
+		enemyManager_->Draw(viewProjection_);
+
+		//障害物の描画
+		obstacleManager_->Draw(viewProjection_);
 
 
-	groundManager_->Draw(viewProjection_);
+		groundManager_->Draw(viewProjection_);
+	}
 
 #pragma endregion
 
 #pragma region パーティクル描画
-	CJEngine_->PreDrawParticle();
-
+		CJEngine_->PreDrawParticle();
 
 #pragma endregion
 
 #pragma region 前景スプライト描画
 	CJEngine_->PreDraw2D();
 
-	sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	if (isGameStart_ == true) {
+		sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+	}
+
+	fade_->FadeInDraw();
+	fade_->FadeOutDraw();
+
 #pragma endregion
 }
 
