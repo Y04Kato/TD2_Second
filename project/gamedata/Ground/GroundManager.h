@@ -59,7 +59,10 @@ public:
 
 private:
 	unique_ptr<Ground> ground_[3];
+	unique_ptr<Ground> rightGround_[60];
+	unique_ptr<Ground> leftGround_[60];
 	unique_ptr<Model> groundModel_;
+	unique_ptr<Model> sideGroundModel_;
 	OBB obb_[3];
 
 	bool isGroundMove_;

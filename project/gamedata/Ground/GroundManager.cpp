@@ -11,6 +11,13 @@ void GroundManager::Initialize() {
 	ground_[0]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
 	ground_[1]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
 	ground_[2]->Initialize(groundModel_.get(), { 0.0f,-6.0f,0.0f }, { /*40.0f*/4000.0f,3.0f,4.0f });
+
+	sideGroundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/Block", "Block.obj"));
+
+	for (int i = 0; i < 60; i++) {
+		leftGround_[i] = make_unique<Ground>();
+		leftGround_[i]->Initialize(sideGroundModel_.get(), { 15.0f * i,-6.0f,0.0f }, { /*40.0f*/10.0f,10.0f,10.0f });
+	}
 }
 
 void GroundManager::Update() {
@@ -19,6 +26,9 @@ void GroundManager::Update() {
 	for (int i = 0; i < 3; i++) {
 		ground_[i]->Update();
 	}
+	for (int i = 0; i < 60; i++) {
+		leftGround_[i]->Update();
+	}
 
 	MovingGround();
 }
@@ -26,6 +36,9 @@ void GroundManager::Update() {
 void GroundManager::Draw(const ViewProjection& viewProjection) {
 	for (int i = 0; i < 3; i++) {
 		ground_[i]->Draw(viewProjection);
+	}
+	for (int i = 0; i < 60; i++) {
+		leftGround_[i]->Draw(viewProjection);
 	}
 }
 
