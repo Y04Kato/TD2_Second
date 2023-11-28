@@ -22,12 +22,32 @@ void GameClearScene::Initialize() {
 	sprite_ = std::make_unique <CreateSprite>();
 	sprite_->Initialize(Vector2{ 100.0f,100.0f }, clear_, false, false);
 	sprite_->SetTextureInitialSize();
+
+	fade_ = std::make_unique<Fade>();
+	fade_->Initialize();
+
+	isFade_ = true;
 }
 
 void GameClearScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
+		fade_->FadeInFlagSet(true);
+	}
+
+	if (fade_->GetColor(0) > 1.0f) {
 		sceneNo = TITLE_SCENE;
 	}
+
+	if (isFade_ == true) {
+		fade_->FadeOutFlagSet(true);
+	}
+	if (fade_->GetColor(1) < 0.0f) {
+		isFade_ = false;
+		fade_->FadeOutFlagSet(false);
+	}
+
+	fade_->FadeInUpdate();
+	fade_->FadeOutUpdate();
 }
 
 void GameClearScene::Draw() {
@@ -35,6 +55,9 @@ void GameClearScene::Draw() {
 	CJEngine_->PreDraw2D();
 
 	sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+
+	fade_->FadeOutDraw();
+	fade_->FadeInDraw();
 
 #pragma endregion
 }

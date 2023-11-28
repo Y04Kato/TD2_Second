@@ -29,6 +29,9 @@ public:
 	Vector2* GetTextureLeftTop() { return &textureLeftTop_; }
 	Vector2* GetTextureSize() { return &textureSize_; }
 
+	// 追加分
+	void SetColor(const Vector4& color) { materialData_->color = color; }
+
 private:
 	DirectXCommon* dxCommon_;
 	TextureManager* textureManager_;
