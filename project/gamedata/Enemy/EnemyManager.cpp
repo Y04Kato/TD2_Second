@@ -17,9 +17,9 @@ void EnemyManager::Update() {
 }
 
 void EnemyManager::Draw(const ViewProjection& viewProjection) {
-	if (isSideScroll_) {
+	//if (isSideScroll_) {
 		enemy_->Draw(viewProjection);
-	}
+	//}
 }
 	
 //ワールド座標
@@ -34,5 +34,5 @@ Vector3 EnemyManager::GetWorldPosition() {
 }
 
 void EnemyManager::SetPlayerPosition(const Vector3& position) {
-	enemy_->SetPositionX(position.num[0] +30);
+	enemy_->SetPositionX(position.num[0] +50);
 }
