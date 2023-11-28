@@ -8,8 +8,24 @@ void Obstacle::Initialize(const Vector3& position, int lane, int mode) {
 	worldTransform_.UpdateMatrix();
 	lane_ = lane;
 	mode_ = mode;
-	SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacle);
-	SetCollisionMask(CollisionConfig::kCollisionMaskObstacle);
+	switch (mode_) {
+	case Mode::None:
+		SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacleNone);
+		SetCollisionMask(CollisionConfig::kCollisionMaskObstacleNone);
+		break;
+	case Mode::Acceleration:
+		SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacleAcceleration);
+		SetCollisionMask(CollisionConfig::kCollisionMaskObstacleAcceleration);
+		break;
+	case Mode::Deceleration:
+		SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacleDeceleration);
+		SetCollisionMask(CollisionConfig::kCollisionMaskObstacleDeceleration);
+		break;
+	case Mode::HealLife:
+		SetCollisionAttribute(CollisionConfig::kCollisionAttributeObstacleHealLife);
+		SetCollisionMask(CollisionConfig::kCollisionMaskObstacleHealLife);
+		break;
+	}
 }
 
 void Obstacle::Update() {
