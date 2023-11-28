@@ -11,6 +11,7 @@
 #include "Obstacle/Obstacle.h"
 
 #include "components/audio/Audio.h"
+#include "components/2d/CreateParticle.h"
 
 class Player : public Collider {
 public:
