@@ -76,20 +76,20 @@ void GamePlayScene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
-	groundManager_->Update();
 	groundManager_->SetLane(player_->GetLane());
-	player_->Update();
+	groundManager_->Update();
 	player_->SetIsSideScroll(isSideScroll_);
+	player_->Update();
 	//敵の更新処理
 	enemyManager_->SetPlayerPosition(player_->GetWorldPosition());
 	enemyManager_->SetIsSideScroll(isSideScroll_);
 	enemyManager_->Update();
 	//障害物の更新処理
-	obstacleManager_->Update();
 	obstacleManager_->SetIsSideScroll(isSideScroll_);
 	obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 	obstacleManager_->SetLane(player_->GetLane());
 	obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+	obstacleManager_->Update();
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
@@ -128,11 +128,21 @@ void GamePlayScene::Update() {
 
 	collisionManager_->CheckAllCollision();
 
+	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() < 0.0f) {
+		sceneNo = CLEAR_SCENE;
+		Reset();
+		debugCamera_->Update();
+		viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+		viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+		viewProjection_.UpdateMatrix();
+	}
+
 	ImGui::Begin("debug");
 	ImGui::Text("GamePlayScene");
 	ImGui::Text("FPS %f", ImGui::GetIO().Framerate);
 	ImGui::Text("Distance %f", distance_);
 	ImGui::Text("Lane %d", player_->GetLane());
+	ImGui::Text("R : ClearScene");
 
 	ImGui::End();
 }
@@ -172,4 +182,14 @@ void GamePlayScene::Finalize() {
 void GamePlayScene::ApplyGlobalVariables() {
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 	const char* groupName = "GamePlayScene";
+}
+
+void GamePlayScene::Reset() {
+	isSideScroll_ = true;
+	distance = 0.0f;
+	distance_ = 100.0f;
+	player_->Reset();
+	enemyManager_->Reset();
+	groundManager_->Reset();
+	obstacleManager_->Reset();
 }

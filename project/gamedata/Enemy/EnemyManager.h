@@ -24,6 +24,8 @@ public:
 
 	const std::unique_ptr<Enemy>& GetEnemys() const { return enemy_; };
 
+	void Reset();
+
 private:
 	unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> model_;

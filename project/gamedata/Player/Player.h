@@ -41,6 +41,10 @@ public:
 
 	const std::list<PlayerBullet*> GetPlayerBullet() const { return bullets_; };
 
+	void Reset();
+
+	int GetLife() { return life_; };
+
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
