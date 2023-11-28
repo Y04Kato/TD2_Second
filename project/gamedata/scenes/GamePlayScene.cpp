@@ -128,8 +128,8 @@ void GamePlayScene::Update() {
 
 	collisionManager_->CheckAllCollision();
 
-	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() < 0.0f) {
-		sceneNo = CLEAR_SCENE;
+	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_P)) {
+		sceneNo = GAMEOVER_SCENE;
 		Reset();
 		debugCamera_->Update();
 		viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -142,7 +142,7 @@ void GamePlayScene::Update() {
 	ImGui::Text("FPS %f", ImGui::GetIO().Framerate);
 	ImGui::Text("Distance %f", distance_);
 	ImGui::Text("Lane %d", player_->GetLane());
-	ImGui::Text("R : ClearScene");
+	ImGui::Text("P : ClearScene");
 
 	ImGui::End();
 }
