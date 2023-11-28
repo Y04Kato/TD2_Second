@@ -176,7 +176,7 @@ void Player::Move() {
 	//俯瞰視点移動
 	if (!jump_) {
 		if (input_->TriggerKey(DIK_D) && worldTransformBase_.translation_.num[2] >= -14.5f && isSideScroll_ == false) {
-			audio_->SoundPlayWave(soundData1_, 0.8f, false);
+			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = -jumpWidth_;
 			jump_ = true;
@@ -188,7 +188,7 @@ void Player::Move() {
 			}
 		}
 		else if (input_->TriggerKey(DIK_A) && worldTransformBase_.translation_.num[2] <= 14.5f && isSideScroll_ == false) {
-			audio_->SoundPlayWave(soundData1_, 0.8f, false);
+			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = jumpWidth_;
 			jump_ = true;
