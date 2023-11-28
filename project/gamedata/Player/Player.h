@@ -70,7 +70,7 @@ private:
 
 	bool isHit;
 
-	int life_ = 3;
+	int life_ = 100;
 
 	//弾
 	std::list<PlayerBullet*> bullets_;
