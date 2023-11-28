@@ -59,6 +59,7 @@ void GameTitleScene::Update() {
 	if (fade_->GetColor(0) > 1.0f) {
 		sceneNo = GAME_SCENE;
 		isPlaySE1 = false;
+		count = 0;
 	}
 
 	fade_->FadeInUpdate();

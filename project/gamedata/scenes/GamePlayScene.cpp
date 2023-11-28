@@ -72,12 +72,21 @@ void GamePlayScene::Initialize() {
 
 	numbers_.reset(new Numbers);
 	numbers_->Initialize();
-	numbers_->SetNum(30);
-	numbers_->SetInitialNum(60);
+	numbers_->SetNum(enemyManager_->GetEnemyLife());
+	numbers_->SetInitialNum(enemyManager_->GetEnemyLife());
 	transformNumbers_.translate = { 950.0f,0.0f,0.0f };
 	transformNumbers_.rotate = { 0.0f,0.0f,0.0f };
 	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
 	numbers_->SetTransform(transformNumbers_);
+
+	numbers2_.reset(new Numbers);
+	numbers2_->Initialize();
+	numbers2_->SetNum(player_->GetLife());
+	numbers2_->SetInitialNum(player_->GetLife());
+	transformNumbers2_.translate = { 950.0f,66.0f,0.0f };
+	transformNumbers2_.rotate = { 0.0f,0.0f,0.0f };
+	transformNumbers2_.scale = { 1.2f,0.12f,1.2f };
+	numbers2_->SetTransform(transformNumbers2_);
 }
 
 void GamePlayScene::Update() {
@@ -220,10 +229,9 @@ void GamePlayScene::Update() {
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
 
-		if (input_->TriggerKey(DIK_DOWNARROW)) {
-			num--;
-		}
-		numbers_->SetNum(num);
+		
+		numbers_->SetNum(enemyManager_->GetEnemyLife());
+		numbers2_->SetNum(player_->GetLife());
 	}
 }
 
@@ -256,6 +264,7 @@ void GamePlayScene::Draw() {
 	if (isGameStart_ == true) {
 		sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		numbers_->Draw();
+		numbers2_->Draw();
 	}
 
 	fade_->FadeInDraw();

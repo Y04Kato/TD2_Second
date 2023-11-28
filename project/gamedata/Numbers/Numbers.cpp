@@ -16,7 +16,7 @@ void Numbers::Draw() {
 	if (num_ < initialNum_ / 2) {
 		color = { 0.8f,0.8f,0.0f,1.0f };
 	}
-	if (num_ <= 5) {
+	if (num_ <= 1) {
 		color = { 0.9f,0.0f,0.0f,1.0f };
 	}
 	for (int index = 0; index < kDigits; index++) {
@@ -25,13 +25,6 @@ void Numbers::Draw() {
 		uv.translate.num[1] = 0.1f * float(drawNum);
 		Sprites_[index]->Draw(transform_[index], uv, color);
 	}
-
-	ImGui::Begin("numbers");
-	ImGui::DragFloat3("NumTranslate", transform_[0].translate.num);
-	ImGui::DragFloat3("NumScale", transform_[0].scale.num, 0.1f);
-	ImGui::Text("%d", drawNum);
-	ImGui::Text("%d", num_);
-	ImGui::End();
 }
 
 void Numbers::SetTransform(Transform transform) {

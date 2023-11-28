@@ -39,5 +39,5 @@ void EnemyManager::SetPlayerPosition(const Vector3& position) {
 
 void EnemyManager::Reset() {
 	enemy_->SetPositionX(20.6f);
-	enemy_->SetLife(3);
+	enemy_->SetLife(20);
 }

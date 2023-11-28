@@ -356,7 +356,7 @@ void Player::Reset() {
 	}
 	bullets_.clear();
 
-	life_ = 3;
+	life_ = 5;
 
 	moveSpeed_ = 0.4f;
 
