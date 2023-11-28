@@ -128,8 +128,19 @@ void GamePlayScene::Update() {
 
 	collisionManager_->CheckAllCollision();
 
-	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_P)) {
+	//ゲームオーバー処理
+	if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
 		sceneNo = GAMEOVER_SCENE;
+		Reset();
+		debugCamera_->Update();
+		viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+		viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+		viewProjection_.UpdateMatrix();
+	}
+
+	//ゲームクリア処理
+	if (enemyManager_->GetEnemyLife() <= 0 || Input::GetInstance()->TriggerKey(DIK_2)) {
+		sceneNo = CLEAR_SCENE;
 		Reset();
 		debugCamera_->Update();
 		viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -142,7 +153,8 @@ void GamePlayScene::Update() {
 	ImGui::Text("FPS %f", ImGui::GetIO().Framerate);
 	ImGui::Text("Distance %f", distance_);
 	ImGui::Text("Lane %d", player_->GetLane());
-	ImGui::Text("P : ClearScene");
+	ImGui::Text("1 : GAMEOVER_SCENE");
+	ImGui::Text("2 : CLEAR_SCENE");
 
 	ImGui::End();
 }

@@ -26,6 +26,8 @@ public:
 
 	void Reset();
 
+	int GetEnemyLife() { return enemy_->GetLife(); };
+
 private:
 	unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> model_;
