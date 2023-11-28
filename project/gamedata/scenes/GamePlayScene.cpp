@@ -16,7 +16,7 @@ void GamePlayScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/cyber14.wav");
 	//音声再生
-	audio_->SoundPlayWave(soundData1_, 0.1f, true);
+	audio_->SoundPlayWave(soundData1_, 0.3f, true);
 
 	// デバッグカメラの初期化
 	debugCamera_ = DebugCamera::GetInstance();
