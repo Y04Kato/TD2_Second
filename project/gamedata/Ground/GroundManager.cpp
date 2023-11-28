@@ -19,6 +19,10 @@ void GroundManager::Initialize() {
 		leftGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,40.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
 		leftGround2_[i] = make_unique<Ground>();
 		leftGround2_[i]->Initialize(sideGroundModel_.get(), { 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,65.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		rightGround_[i] = make_unique<Ground>();
+		rightGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,-40.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		rightGround2_[i] = make_unique<Ground>();
+		rightGround2_[i]->Initialize(sideGroundModel_.get(), { 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,-65.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
 	}
 }
 
@@ -31,6 +35,8 @@ void GroundManager::Update() {
 	for (int i = 0; i < sideGroundNum; i++) {
 		leftGround_[i]->Update();
 		leftGround2_[i]->Update();
+		rightGround_[i]->Update();
+		rightGround2_[i]->Update();
 	}
 
 	MovingGround();
@@ -43,6 +49,10 @@ void GroundManager::Draw(const ViewProjection& viewProjection) {
 	for (int i = 0; i < sideGroundNum; i++) {
 		leftGround_[i]->Draw(viewProjection);
 		leftGround2_[i]->Draw(viewProjection);
+		if (isSideScroll_ == false) {
+			rightGround_[i]->Draw(viewProjection);
+			rightGround2_[i]->Draw(viewProjection);
+		}
 	}
 }
 
@@ -84,4 +94,32 @@ void GroundManager::Reset() {
 	ground_[0]->SetTranslate(Lerp(ground_[0]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
 	ground_[1]->SetTranslate(Lerp(ground_[1]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
 	ground_[2]->SetTranslate(Lerp(ground_[2]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
+}
+
+void GroundManager::SetSideGround() {
+	for (int i = 0; i < 29; i++) {
+		leftGround_[i]->SetTranslate(Vector3{ leftGround_[59]->GetWorldTransform().translation_.num[0] + 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,40.0f});
+		rightGround_[i]->SetTranslate(Vector3{ rightGround_[59]->GetWorldTransform().translation_.num[0] + 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,-40.0f });
+	}
+}
+
+void GroundManager::SetSideGround2() {
+	for (int i = 29; i < sideGroundNum; i++) {
+		leftGround_[i]->SetTranslate(Vector3{ leftGround_[0]->GetWorldTransform().translation_.num[0] + 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,40.0f });
+		rightGround_[i]->SetTranslate(Vector3{ rightGround_[0]->GetWorldTransform().translation_.num[0] + 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,-40.0f });
+	}
+}
+
+void GroundManager::SetSideGround3() {
+	for (int i = 0; i < 29; i++) {
+		leftGround2_[i]->SetTranslate(Vector3{ leftGround2_[59]->GetWorldTransform().translation_.num[0] + 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,65.0f });
+		rightGround2_[i]->SetTranslate(Vector3{ rightGround2_[59]->GetWorldTransform().translation_.num[0] + 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,-65.0f });
+	}
+}
+
+void GroundManager::SetSideGround4() {
+	for (int i = 29; i < sideGroundNum; i++) {
+		leftGround2_[i]->SetTranslate(Vector3{ leftGround2_[0]->GetWorldTransform().translation_.num[0] + 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,65.0f });
+		rightGround2_[i]->SetTranslate(Vector3{ rightGround2_[0]->GetWorldTransform().translation_.num[0] + 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,-65.0f });
+	}
 }

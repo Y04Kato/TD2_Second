@@ -57,17 +57,32 @@ public:
 	/// </summary>
 	void Reset();
 
+	void SetSideGround();
+	void SetSideGround2();
+	void SetSideGround3();
+	void SetSideGround4();
+	void SetScroll(bool issideScroll) { isSideScroll_ = issideScroll; };
+
+	float GetSideGround() { return rightGround_[29]->GetWorldTransform().translation_.num[0]; };
+	float GetSideGround2() { return rightGround_[59]->GetWorldTransform().translation_.num[0]; };
+	float GetSideGround3() { return rightGround2_[29]->GetWorldTransform().translation_.num[0]; };
+	float GetSideGround4() { return rightGround2_[59]->GetWorldTransform().translation_.num[0]; };
+
 private:
-	static const int sideGroundNum = 120;
+	static const int sideGroundNum = 60;
 
 	unique_ptr<Ground> ground_[3];
 	unique_ptr<Ground> rightGround_[sideGroundNum];
+	unique_ptr<Ground> rightGround2_[sideGroundNum];
 	unique_ptr<Ground> leftGround_[sideGroundNum];
 	unique_ptr<Ground> leftGround2_[sideGroundNum];
+
 	unique_ptr<Model> groundModel_;
 	unique_ptr<Model> sideGroundModel_;
 	OBB obb_[3];
 
 	bool isGroundMove_;
 	int lane_ = Obstacle::Lane::Middle;
+
+	bool isSideScroll_ = true;
 };

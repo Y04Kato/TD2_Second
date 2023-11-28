@@ -82,7 +82,7 @@ void GamePlayScene::Update() {
 		fade_->FadeOutFlagSet(true);
 		fade_->FadeOutUpdate();
 	}
-  
+
 	if (fade_->GetColor(1) < -1.0f) {
 		isGameStart_ = true;
 	}
@@ -130,11 +130,31 @@ void GamePlayScene::Update() {
 			if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
 				isSideScroll_ = false;
 				groundManager_->SetFlag(true);
+				groundManager_->SetScroll(false);
 			}
 			else {
 				isSideScroll_ = true;
 				groundManager_->SetFlag(false);
+				groundManager_->SetScroll(true);
 			}
+		}
+
+		groundCounter += player_->GetMoveSpeed();
+		if (groundCounter >= groundManager_->GetSideGround() && isGroundSet == false) {
+			groundManager_->SetSideGround();
+			isGroundSet = true;
+		}
+		if (groundCounter >= groundManager_->GetSideGround2()) {
+			groundManager_->SetSideGround2();
+			isGroundSet = false;
+		}
+		if (groundCounter >= groundManager_->GetSideGround3() && isGroundSet2 == false) {
+			groundManager_->SetSideGround3();
+			isGroundSet2 = true;
+		}
+		if (groundCounter >= groundManager_->GetSideGround4()) {
+			groundManager_->SetSideGround4();
+			isGroundSet2 = false;
 		}
 
 		collisionManager_->ClearColliders();
@@ -243,6 +263,7 @@ void GamePlayScene::Reset() {
 	isSideScroll_ = true;
 	distance = 0.0f;
 	distance_ = 100.0f;
+	groundCounter = 0.0f;
 	player_->Reset();
 	enemyManager_->Reset();
 	groundManager_->Reset();

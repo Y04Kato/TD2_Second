@@ -58,6 +58,9 @@ private:
 	//障害物
 	std::unique_ptr<ObstacleManager> obstacleManager_ = nullptr;
 	std::unique_ptr<GroundManager> groundManager_;
+	float groundCounter = 0;
+	bool isGroundSet = false;
+	bool isGroundSet2 = false;
 
 	bool isSideScroll_ = true;
 	float distance;
