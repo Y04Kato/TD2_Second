@@ -1,14 +1,18 @@
 #include "Particle.h"
 
 
-void Particle::Initialize(Model* model,const Vector3& position, const Vector3& scale, Vector3& rotation, const Vector3& velocity) {
+void Particle::Initialize(Model* model,const Vector3& position) {
+	float numberX = (rand() % 11 - 5) / 5.0f;
+	float numberY = (rand() % 11 - 5) / 5.0f;
+	float numberZ = (rand() % 11 - 5) / 5.0f;
+	
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	worldTransform_.scale_ = scale;
-	worldTransform_.rotation_ = rotation;
+	worldTransform_.scale_ = { 0.5f,0.5f,0.5f };
+	worldTransform_.rotation_ = { numberX, numberY, numberZ };
 	// 引数で受け取った速度をメンバ変数に代入
-	velocity_ = velocity;
+	velocity_ = { numberX, numberY, numberZ };
 
 
 
