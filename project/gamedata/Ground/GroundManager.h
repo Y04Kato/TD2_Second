@@ -58,9 +58,12 @@ public:
 	void Reset();
 
 private:
+	static const int sideGroundNum = 120;
+
 	unique_ptr<Ground> ground_[3];
-	unique_ptr<Ground> rightGround_[60];
-	unique_ptr<Ground> leftGround_[60];
+	unique_ptr<Ground> rightGround_[sideGroundNum];
+	unique_ptr<Ground> leftGround_[sideGroundNum];
+	unique_ptr<Ground> leftGround2_[sideGroundNum];
 	unique_ptr<Model> groundModel_;
 	unique_ptr<Model> sideGroundModel_;
 	OBB obb_[3];

@@ -14,9 +14,11 @@ void GroundManager::Initialize() {
 
 	sideGroundModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/Block", "Block.obj"));
 
-	for (int i = 0; i < 60; i++) {
+	for (int i = 0; i < sideGroundNum; i++) {
 		leftGround_[i] = make_unique<Ground>();
-		leftGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i,-16.0f,40.0f }, { /*40.0f*/8.0f,30.0f,8.0f });
+		leftGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,40.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		leftGround2_[i] = make_unique<Ground>();
+		leftGround2_[i]->Initialize(sideGroundModel_.get(), { 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,65.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
 	}
 }
 
@@ -26,8 +28,9 @@ void GroundManager::Update() {
 	for (int i = 0; i < 3; i++) {
 		ground_[i]->Update();
 	}
-	for (int i = 0; i < 60; i++) {
+	for (int i = 0; i < sideGroundNum; i++) {
 		leftGround_[i]->Update();
+		leftGround2_[i]->Update();
 	}
 
 	MovingGround();
@@ -37,8 +40,9 @@ void GroundManager::Draw(const ViewProjection& viewProjection) {
 	for (int i = 0; i < 3; i++) {
 		ground_[i]->Draw(viewProjection);
 	}
-	for (int i = 0; i < 60; i++) {
+	for (int i = 0; i < sideGroundNum; i++) {
 		leftGround_[i]->Draw(viewProjection);
+		leftGround2_[i]->Draw(viewProjection);
 	}
 }
 
