@@ -26,9 +26,45 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
+
+	
 }
 
 void Player::Update() {
+	
+	
+	for (PlayerBullet* bullet : bullets_) {
+		if (bullet->IsDead()) {
+			for (int i = 0; i < 15; ++i) {
+				Vector3 velocity = { 0, 0, 0 };
+				float numberX = (rand() % 11 - 5) / 5.0f;
+				float numberY = (rand() % 11 - 5) / 5.0f;
+				float numberZ = (rand() % 11 - 5) / 5.0f;
+				velocity = { numberX, numberY, numberZ };
+				//初期化
+				Particle* newParticles = new Particle();
+				newParticles->Initialize(model_.get(),bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
+
+				particle_.push_back(newParticles);
+			}
+
+		}
+	}
+
+	for (Particle* particle : particle_) {
+		particle->Update();
+		
+	}
+
+	// デスフラグが立った弾を削除
+	particle_.remove_if([](Particle* particle) {
+		if (particle->IsDead()) {
+
+			delete particle;
+			return true;
+		}
+		return false;
+	});
 
 	Move();
 	if (jump_) {
@@ -164,6 +200,9 @@ void Player::Draw(const ViewProjection& view) {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(view);
 	}
+	for (Particle* particle : particle_) {
+		particle->Draw(view);
+	}
 }
 
 void Player::Move() {
@@ -237,17 +276,21 @@ void Player::Attack() {
 	// デスフラグが立った弾を削除
 	bullets_.remove_if([](PlayerBullet* bullet) {
 		if (bullet->IsDead()) {
+			
 			delete bullet;
 			return true;
 		}
 		return false;
-		});
+	});
 
 	for (PlayerBullet* bullet : bullets_) {
 
 		bullet->Update();
+	
 	}
 
+	
+	
 }
 
 void Player::Jump() {
