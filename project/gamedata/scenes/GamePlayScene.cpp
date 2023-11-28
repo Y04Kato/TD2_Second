@@ -82,7 +82,7 @@ void GamePlayScene::Update() {
 		fade_->FadeOutFlagSet(true);
 		fade_->FadeOutUpdate();
 	}
-
+  
 	if (fade_->GetColor(1) < -1.0f) {
 		isGameStart_ = true;
 	}

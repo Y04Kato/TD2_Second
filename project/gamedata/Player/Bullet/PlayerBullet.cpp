@@ -67,7 +67,11 @@ void PlayerBullet::OnCollision(const Collider* collider) {
 		isDead_ = true;
 	}
 
-	if (mode_ == Obstacle::Mode::None) {
+	//if (mode_ == Obstacle::Mode::None) {
+	//	isDead_ = true;
+	//}
+
+	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleNone) {
 		isDead_ = true;
 	}
 }
