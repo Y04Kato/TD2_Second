@@ -47,8 +47,6 @@ public:
 
 	void Reset();
 
-	int GetLife() { return life_; };
-
 	~Player();
 
 private:
