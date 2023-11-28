@@ -16,7 +16,7 @@ void GroundManager::Initialize() {
 
 	for (int i = 0; i < 60; i++) {
 		leftGround_[i] = make_unique<Ground>();
-		leftGround_[i]->Initialize(sideGroundModel_.get(), { 15.0f * i,-6.0f,0.0f }, { /*40.0f*/10.0f,10.0f,10.0f });
+		leftGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i,-16.0f,40.0f }, { /*40.0f*/8.0f,30.0f,8.0f });
 	}
 }
 

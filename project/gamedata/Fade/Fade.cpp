@@ -34,7 +34,7 @@ void Fade::Initialize() {
 	};
 
 	fadeColor_[0] = 0.0f;
-	fadeColor_[1] = 2.0f;
+	fadeColor_[1] = 1.0f;
 }
 
 void Fade::FadeInUpdate() {
@@ -60,12 +60,12 @@ void Fade::FadeOutUpdate() {
 }
 
 void Fade::FadeInDraw() {
-	sprite_[0]->SetColor({ 1.0f,1.0f,1.0f,fadeColor_[0] });
+	//sprite_[0]->SetColor({ 1.0f,1.0f,1.0f,fadeColor_[0] });
 	sprite_[0]->Draw(spriteTransform_[0],spriteUvTransform_[0],{1.0f,1.0f,1.0f,fadeColor_[0]});
 }
 
 void Fade::FadeOutDraw() {
-	sprite_[1]->SetColor({ 1.0f,1.0f,1.0f,fadeColor_[1] });
+	//sprite_[1]->SetColor({ 1.0f,1.0f,1.0f,fadeColor_[1] });
 	sprite_[1]->Draw(spriteTransform_[1],spriteUvTransform_[1],{1.0f,1.0f,1.0f,fadeColor_[1]});
 }
 

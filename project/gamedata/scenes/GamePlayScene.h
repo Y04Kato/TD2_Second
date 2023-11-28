@@ -13,7 +13,7 @@
 #include "components/utilities/collisionManager/CollisionManager.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
 #include "../Obstacle/ObstacleManager.h"
-#include "Fade/Fade.h"
+#include "gamedata/Fade/Fade.h"
 
 #pragma region ゲームオブジェクト
 #include "Ground/GroundManager.h"

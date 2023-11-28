@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base/components/2d/CreateSprite.h"
-#include "base/components/manager/TextureManager.h"
+#include "CreateSprite.h"
+#include "TextureManager.h"
 
 class Fade {
 public:

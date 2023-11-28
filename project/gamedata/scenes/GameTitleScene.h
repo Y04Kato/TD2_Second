@@ -5,7 +5,7 @@
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
 #include "components/audio/Audio.h"
-#include "project/gamedata/Fade/Fade.h"
+#include "gamedata/Fade/Fade.h"
 
 class GameTitleScene :public Iscene{
 public:

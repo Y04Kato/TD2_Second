@@ -3,7 +3,7 @@
 #include "components/input/Input.h"
 #include "components/manager/TextureManager.h"
 #include "components/2d/CreateSprite.h"
-#include "Fade/Fade.h"
+#include "gamedata/Fade/Fade.h"
 
 class GameOverScene :public Iscene {
 public:
