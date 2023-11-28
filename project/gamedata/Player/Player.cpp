@@ -261,17 +261,17 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::OnCollision(const Collider* collider) {
 	isHit = true;
-	if (mode_ == Obstacle::Mode::None) {
+	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleNone) {
 		life_--;
 		isDamageFlag_ = true;
 		shakeTimer_ = 0;
 	}
-	if (mode_ == Obstacle::Mode::Acceleration) {
+	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleAcceleration) {
 		moveSpeed_ += 0.2f;
 		isAccelerationFlag_ = true;
 		accelerationTimer_ = 0;
 	}
-	if (mode_ == Obstacle::Mode::Deceleration) {
+	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleDeceleration) {
 		moveSpeed_ -= 0.2f;
 		if (moveSpeed_ <= 0.0f) {//速度が0になった時、これ以上下がらないようにする
 			moveSpeed_ = 0.1f;
@@ -279,7 +279,7 @@ void Player::OnCollision(const Collider* collider) {
 		isDecelerationFlag_ = true;
 		decelerationTimer_ = 0;
 	}
-	if (mode_ == Obstacle::Mode::HealLife) {
+	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleHealLife) {
 		life_++;
 	}
 }

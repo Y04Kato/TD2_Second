@@ -110,14 +110,6 @@ void GamePlayScene::Update() {
 	const std::list<std::unique_ptr<Obstacle>>& obstacles = obstacleManager_->GetObstacles();
 	for (const std::unique_ptr<Obstacle>& obstacle : obstacles) {
 		collisionManager_->AddCollider(obstacle.get());
-		distance = obstacle->GetWorldTransform().translation_.num[0] - player_->GetWorldPosition().num[0];
-		if (distance <= distance_ && player_->GetLane() == obstacle->GetLane()) {
-			distance_ = distance;
-			player_->SetObstacleMode(obstacle->GetMode());
-		}
-		if (distance_ <= 2.0f) {
-			distance_ = 100.0f;
-		}
 	}
 	//弾
 	const std::list<PlayerBullet*> bullets = player_->GetPlayerBullet();
