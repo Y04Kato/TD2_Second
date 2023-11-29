@@ -136,4 +136,7 @@ private:
 	const int kHealParticleActiveTime = 60 * 5;
 	ParticleInfo healParticle_{};
 	uint32_t healParticleTextureHandle_ = 0;
+
+	float cameraPosY = 12.7f;
+	float cameraRotX = 0.1f;
 };
