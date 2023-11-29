@@ -66,7 +66,7 @@ void GamePlayScene::Initialize() {
 	//煙
 	smokeParticleTexture_ = textureManager_->Load("project/gamedata/resources/player/circle.png");
 	std::vector<Model*>playerModels = { playerModel_.get() };
-	player_->Initialize(playerModels, uvResourceNum_);
+	player_->Initialize(playerModels, smokeParticleTexture_);
 
 	//敵
 	enemyManager_ = std::make_unique<EnemyManager>();
