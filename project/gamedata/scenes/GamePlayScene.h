@@ -39,6 +39,7 @@ private:
 	TextureManager* textureManager_;
 
 	uint32_t uvResourceNum_;
+	
 
 	Audio* audio_;
 	SoundData soundData1_;
@@ -71,6 +72,7 @@ private:
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerModel_;
+	uint32_t smokeParticleTexture_;
 
 	/*-------------------敵------------------*/
 	std::unique_ptr<EnemyManager> enemyManager_ = nullptr;
