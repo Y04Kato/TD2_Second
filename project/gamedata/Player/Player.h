@@ -144,4 +144,9 @@ private:
 	float cameraRotX = 0.1f;
 
 	int time_ = 30;
+
+	//const int kAccelerationTime = 120;
+	//const int kDecelerationTime = 120;
+	const int kAccelerationTime = 60;
+	const int kDecelerationTime = 60;
 };
