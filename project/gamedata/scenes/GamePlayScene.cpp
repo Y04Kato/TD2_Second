@@ -204,6 +204,7 @@ void GamePlayScene::Update() {
 
 		//ゲームオーバー処理
 		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || player_->GetWorldPosition().num[0] >= 7000) {
+
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -279,6 +280,13 @@ void GamePlayScene::Draw() {
 
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
+	if (player_->GetVelocitySpeed() >= 0.1f) {
+		player_->ParticleDraw(viewProjection_);
+	}
+	
+	
+	
+	
 
 	player_->ParticleDraw(viewProjection_);
 

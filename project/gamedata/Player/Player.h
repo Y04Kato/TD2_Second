@@ -24,6 +24,7 @@ public:
 
 	void Draw(const ViewProjection& view);
 	void ParticleDraw(const ViewProjection& view);
+
 	void Move();
 
 	void Attack();
@@ -40,6 +41,8 @@ public:
 	void SetObstacleMode(int mode) { mode_ = mode; };
 
 	float GetMoveSpeed() { return moveSpeed_; }
+
+	float GetVelocitySpeed() { return velocity_.num[0]; }
 
 	void SetIsSideScroll(bool isSideScroll) { isSideScroll_ = isSideScroll; };
 

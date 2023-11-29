@@ -45,20 +45,24 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
   
 	//パーティクルの設定
 	emitter.transform.translate = GetWorldPosition();
-	emitter.count = 5;
-	emitter.frequency = 0.5f;
+	emitter.transform.translate.num[1] = emitter.transform.translate.num[1] - 3.0f;
+	emitter.transform.scale = { 5.0f,5.0f,5.0f };
+	emitter.count = 1;
+	emitter.frequency = 0.05f;
+	emitter.frequencyTime = 0.0f;
+
 
 	//フィールド設定
-	field.acceleration = { 0.0f,velocity_.num[1],0.0f };
-	field.area.min = { -1.0f,-1.0f,-1.0f };
-	field.area.max = { 1.0f,1.0f,1.0f };
 
-	particle_ = std::make_unique <CreateParticle>();
-	particle_->Initialize(100, emitter, field, textureHandle_);
+	field.acceleration = { -5,10,0.0f };
+	field.area.min = { -1.0f,-1.0f,-20.0f };
+	field.area.max = { 10000.0f,10.0f,20.0f };
+	particle_ = std::make_unique<CreateParticle>();
+	particle_->Initialize(200, emitter, field,textureHandle_);
 }
 
-void Player::Update() {
-	
+void Player::Update() {	
+
 
 	Move();
 	if (jump_) {
@@ -76,8 +80,10 @@ void Player::Update() {
 
 
 	bulletParticle();
+	smokeParticle();
 	worldTransformBase_.UpdateMatrix();
 #ifdef _DEBUG
+
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
@@ -210,13 +216,7 @@ void Player::Draw(const ViewProjection& view) {
     for (PlayerParticle* particle : bulletParticle_) {
 		particle->Draw(view);
 	}
-	/*for (PlayerParticle* particle : smokeParticle_) {
-		particle->Draw(view);
-	}*/
-	
 }
-
-
 void Player::ParticleDraw(const ViewProjection& view) {
 	particle_->Draw(view);
 }
@@ -414,6 +414,18 @@ void Player::bulletParticle() {
 		}
 		return false;
 		});
+}
+
+
+void Player::smokeParticle() {
+
+
+	particle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	particle_->SetTranslate(worldTransformBase_.translation_);
+	particle_->SetFrequency(0.05f / velocity_.num[0]);
+	particle_->SetCount(1 + int(velocity_.num[0] / 2));
+	particle_->Update();
+
 }
 
 

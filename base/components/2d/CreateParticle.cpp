@@ -59,6 +59,7 @@ void CreateParticle::Draw(const ViewProjection& viewProjection) {
 	if (emitter_.frequency <= emitter_.frequencyTime) {
 		particles_.splice(particles_.end(), Emission(emitter_, randomEngine));
 		emitter_.frequencyTime -= emitter_.frequency;
+		
 	}
 
 	for (std::list<Particle>::iterator iterator = particles_.begin(); iterator != particles_.end();) {
@@ -74,17 +75,16 @@ void CreateParticle::Draw(const ViewProjection& viewProjection) {
 
 		(*iterator).transform.translate += (*iterator).velocity * kDeltaTime;
 		(*iterator).currentTime += kDeltaTime;//経過時間を足す
-
+		
 		if (numInstance_ < kNumMaxInstance_) {
 			instancingData_[numInstance_].matWorld = MakeScaleMatrix((*iterator).transform.scale) * billboardMatrix * MakeTranslateMatrix((*iterator).transform.translate);
 
 			instancingData_[numInstance_].color = (*iterator).color;
 			float alpha = 1.0f - ((*iterator).currentTime / (*iterator).lifeTime);
 			instancingData_[numInstance_].color.num[3] = alpha;
-
 			numInstance_++;//生きているParticleの数をカウントする
 		}
-
+		
 		iterator++;
 	}
 
@@ -169,12 +169,17 @@ Particle CreateParticle::MakeNewParticle(std::mt19937& randomEngine, const Trans
 	std::uniform_real_distribution<float> distTime(1.0f, 3.0f);
 
 	Particle particles;
-	particles.transform.scale = { 1.0f,1.0f,1.0f };
+	particles.transform.scale = { 1.0f + transform.scale.num[0],1.0f + transform.scale.num[1],1.0f * transform.scale.num[2] };
 	particles.transform.rotate = { 0.0f,0.0f,0.0f };
 	Vector3 randomTranslate = { distribution(randomEngine),distribution(randomEngine),distribution(randomEngine) };
 	particles.transform.translate = transform.translate + randomTranslate;
+	if (isColor) {
+		particles.color = color_;
+	}
+	else {
+		particles.color = { distColor(randomEngine),distColor(randomEngine) ,distColor(randomEngine) ,1.0f };
+	}
 	particles.velocity = { distribution(randomEngine) ,distribution(randomEngine) ,distribution(randomEngine) };
-	particles.color = { distColor(randomEngine),distColor(randomEngine) ,distColor(randomEngine) ,1.0f };
 	particles.lifeTime = distTime(randomEngine);
 	particles.currentTime = 0;
 
