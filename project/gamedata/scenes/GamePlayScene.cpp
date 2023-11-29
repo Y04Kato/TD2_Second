@@ -256,6 +256,8 @@ void GamePlayScene::Draw() {
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
 
+	player_->DrawParticle(viewProjection_);
+
 #pragma endregion
 
 #pragma region 前景スプライト描画

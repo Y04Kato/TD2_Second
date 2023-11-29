@@ -27,7 +27,20 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
 
-	
+	//回復パーティクルの初期化
+	healParticleTextureHandle_ = TextureManager::GetInstance()->Load("project/gamedata/resources/Heart.png");
+	healParticle_.particle = std::make_unique<CreateParticle>();
+	Emitter emitter{
+		.transform{.scale{1.0f,1.0f,1.0f},.rotate{0.0f,0.0f,0.0f},.translate{0.0f,0.0f,0.0f}},
+		.count = 0,
+		.frequency = 10000,
+		.frequencyTime = 10000,
+	};
+	AccelerationField accelerationField{
+		.acceleration{0.0f,15.0f,0.0f},
+		.area{.min{-1.0f,-1.0f,-1.0f},.max{1.0f,1.0f,1.0f}},
+	};
+	healParticle_.particle->Initialize(1000, emitter, accelerationField, healParticleTextureHandle_);
 }
 
 void Player::Update() {
@@ -191,6 +204,13 @@ void Player::Update() {
 		}
 	}
 
+	//回復パーティクルの更新
+	if (healParticle_.isActive) {
+		if (--healParticle_.activeTimer <= 0) {
+			healParticle_.isActive = false;
+		}
+		healParticle_.particle->Update();
+	}
 }
 
 void Player::Draw(const ViewProjection& view) {
@@ -344,6 +364,23 @@ void Player::OnCollision(const Collider* collider) {
 	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleHealLife) {
 		life_++;
 		audio_->SoundPlayWave(soundData6_, 0.8f, false);
+
+		//エミッターを設定
+		Vector3 pos = GetWorldPosition();
+		Emitter emitter{
+			.transform{.scale{1.0f,1.0f,1.0f},.rotate{0.0f,0.0f,0.0f},.translate{pos}},
+			.count = 100,
+			.frequency = 10000,
+			.frequencyTime = 10000,
+		};
+		AccelerationField accelerationField{
+			.acceleration{0.0f,30.0f,0.0f},
+			.area{.min{pos.num[0] - 2.0f,pos.num[1] - 2.0f,pos.num[2] - 2.0f},.max{pos.num[0] + 2.0f,pos.num[1] + 2.0f,pos.num[2] + 2.0f}},
+		};
+		healParticle_.particle->SetEmitter(emitter);
+		healParticle_.particle->SetAccelerationField(accelerationField);
+		healParticle_.isActive = true;
+		healParticle_.activeTimer = kHealParticleActiveTime;
 	}
 }
 
@@ -382,4 +419,11 @@ Player::~Player() {
 	audio_->SoundUnload(&soundData5_);
 	audio_->SoundUnload(&soundData6_);
 	audio_->SoundUnload(&soundData7_);
+}
+
+void Player::DrawParticle(const ViewProjection& viewProjection) {
+	//回復パーティクルの描画
+	if (healParticle_.isActive) {
+		healParticle_.particle->Draw(viewProjection);
+	}
 }
