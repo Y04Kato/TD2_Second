@@ -278,15 +278,93 @@ void ObstacleManager::InitializeObstacles1() {
 	AddObstacle({ 1350.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
 	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
 	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
-	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1450.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1450.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1500.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1500.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1470.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
+	AddObstacle({ 1530.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1560.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1560.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1590.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1620.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1620.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1580.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::HealLife);
+	AddObstacle({ 1580.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
+	AddObstacle({ 1610.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1610.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1650.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1650.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1690.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1690.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1630.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Acceleration);
+	AddObstacle({ 1730.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1730.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1680.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
+	AddObstacle({ 1750.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1770.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1790.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1830.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 1860.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1860.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1890.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Acceleration);
+	AddObstacle({ 1920.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1940.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 1940.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 1970.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Acceleration);
 }
 
 void ObstacleManager::InitializeObstacles2() {
-	
+	AddObstacle({ 2000.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2000.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2040.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2060.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
+	AddObstacle({ 2060.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 2090.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
+	AddObstacle({ 2120.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2120.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2150.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2150.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
+	AddObstacle({ 2180.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2210.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Acceleration);
+	AddObstacle({ 2260.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2260.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2290.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::Acceleration);
+	AddObstacle({ 2330.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2360.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
+	AddObstacle({ 2360.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2380.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Deceleration);
+	AddObstacle({ 2410.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2450.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
+	AddObstacle({ 2480.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2480.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2530.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2550.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2580.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2620.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2650.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2650.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2680.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2700.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 2730.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2760.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2760.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::HealLife);
+	AddObstacle({ 2790.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2830.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2830.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2860.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2890.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Deceleration);
+	AddObstacle({ 2920.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2920.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	AddObstacle({ 2950.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::Acceleration);
+	AddObstacle({ 2970.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 2990.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
 }
 
 void ObstacleManager::InitializeObstacles3() {
 	//X3000以降
+	AddObstacle({ 3020.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 3030.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
 	AddObstacle({ 3055.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Deceleration);
 	AddObstacle({ 3080.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
 	AddObstacle({ 3100.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::Deceleration);

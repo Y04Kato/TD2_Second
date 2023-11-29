@@ -183,6 +183,15 @@ void Player::Draw(const ViewProjection& view) {
     for (PlayerParticle* particle : bulletParticle_) {
 		particle->Draw(view);
 	}
+	/*for (PlayerParticle* particle : smokeParticle_) {
+		particle->Draw(view);
+	}*/
+	
+}
+
+
+void Player::ParticleDraw(const ViewProjection& view) {
+	particle_->Draw(view);
 }
 
 void Player::Move() {
@@ -363,36 +372,6 @@ void Player::bulletParticle() {
 		});
 }
 
-void Player::smokeParticle() {
-	for (int i = 0; i < 1; ++i) {
-		Vector3 velocity = { 0, 0, 0 };
-		float numberX = (rand() % 11 - 5) / 5.0f;
-		float numberY = (rand() % 11 - 5) / 5.0f;
-		float numberZ = (rand() % 11 - 5) / 5.0f;
-		velocity = { 0.0f, numberY, 0.0f };
-		//初期化
-		PlayerParticle* newParticles = new PlayerParticle();
-		newParticles->Initialize(model_.get(), GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
-
-		smokeParticle_.push_back(newParticles);
-	}
-
-
-	for (PlayerParticle* particle : smokeParticle_) {
-		particle->Update();
-
-	}
-
-	// デスフラグが立った弾を削除
-	smokeParticle_.remove_if([](PlayerParticle* particle) {
-		if (particle->IsDead()) {
-
-			delete particle;
-			return true;
-		}
-		return false;
-	});
-}
 
 void Player::Reset() {
 	worldTransformBase_.translation_ = { 0.0f,0.0f,0.0f };

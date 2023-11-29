@@ -21,7 +21,7 @@ public:
 	void Update();
 
 	void Draw(const ViewProjection& view);
-
+	void ParticleDraw(const ViewProjection& view);
 	void Move();
 
 	void Attack();
@@ -50,7 +50,7 @@ public:
 	void Reset();
 
 	void bulletParticle();
-	void smokeParticle();
+	
 
 	~Player();
 
