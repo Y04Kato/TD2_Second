@@ -77,6 +77,7 @@ void Player::Update() {
 
 	bulletParticle();
 	worldTransformBase_.UpdateMatrix();
+#ifdef _DEBUG
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
@@ -97,6 +98,7 @@ void Player::Update() {
 		break;
 	}
 	ImGui::End();
+#endif
 
 	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
 

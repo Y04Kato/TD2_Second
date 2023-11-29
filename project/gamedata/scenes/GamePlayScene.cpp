@@ -203,7 +203,7 @@ void GamePlayScene::Update() {
 		collisionManager_->CheckAllCollision();
 
 		//ゲームオーバー処理
-		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || player_->GetWorldPosition().num[0] >= 7000 ||Input::GetInstance()->TriggerKey(DIK_1)) {
+		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || player_->GetWorldPosition().num[0] >= 7000) {
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -213,7 +213,7 @@ void GamePlayScene::Update() {
 		}
 
 		//ゲームクリア処理
-		if (enemyManager_->GetEnemyLife() <= 0 || Input::GetInstance()->TriggerKey(DIK_2)) {
+		if (enemyManager_->GetEnemyLife() <= 0) {
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -222,6 +222,7 @@ void GamePlayScene::Update() {
 			sceneNo = CLEAR_SCENE;
 		}
 
+#ifdef _DEBUG
 		ImGui::Begin("debug");
 		ImGui::Text("GamePlayScene");
 		ImGui::Text("FPS %f", ImGui::GetIO().Framerate);
@@ -230,6 +231,27 @@ void GamePlayScene::Update() {
 		ImGui::Text("1 : GAMEOVER_SCENE");
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
+
+		//ゲームオーバー処理
+		if (Input::GetInstance()->TriggerKey(DIK_1)) {
+			Reset();
+			debugCamera_->Update();
+			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+			viewProjection_.UpdateMatrix();
+			sceneNo = GAMEOVER_SCENE;
+		}
+
+		//ゲームクリア処理
+		if (Input::GetInstance()->TriggerKey(DIK_2)) {
+			Reset();
+			debugCamera_->Update();
+			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
+			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
+			viewProjection_.UpdateMatrix();
+			sceneNo = CLEAR_SCENE;
+		}
+#endif
 
 		
 		numbers_->SetNum(enemyManager_->GetEnemyLife());
