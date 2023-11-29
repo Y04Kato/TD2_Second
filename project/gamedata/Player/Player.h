@@ -55,7 +55,7 @@ public:
 	void Reset();
 
 	void bulletParticle();
-	
+	void smokeParticle();
 
 	~Player();
 
@@ -142,4 +142,6 @@ private:
 
 	float cameraPosY = 12.7f;
 	float cameraRotX = 0.1f;
+
+	int time_ = 30;
 };

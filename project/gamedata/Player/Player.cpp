@@ -46,15 +46,14 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	//パーティクルの設定
 	emitter.transform.translate = GetWorldPosition();
 	emitter.transform.translate.num[1] = emitter.transform.translate.num[1] - 3.0f;
-	emitter.transform.scale = { 5.0f,5.0f,5.0f };
+	emitter.transform.scale = { 3.0f,3.0f,3.0f };
 	emitter.count = 1;
 	emitter.frequency = 0.05f;
 	emitter.frequencyTime = 0.0f;
 
 
 	//フィールド設定
-
-	field.acceleration = { -5,10,0.0f };
+	field.acceleration = { -5,8,0.0f };
 	field.area.min = { -1.0f,-1.0f,-20.0f };
 	field.area.max = { 10000.0f,10.0f,20.0f };
 	particle_ = std::make_unique<CreateParticle>();
@@ -62,7 +61,7 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 }
 
 void Player::Update() {	
-
+	time_--;
 
 	Move();
 	if (jump_) {
@@ -218,7 +217,10 @@ void Player::Draw(const ViewProjection& view) {
 	}
 }
 void Player::ParticleDraw(const ViewProjection& view) {
-	particle_->Draw(view);
+	if (time_ <= 0) {
+		particle_->Draw(view);
+	}
+	
 }
 
 void Player::Move() {
@@ -422,8 +424,8 @@ void Player::smokeParticle() {
 
 	particle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	particle_->SetTranslate(worldTransformBase_.translation_);
-	particle_->SetFrequency(0.05f / velocity_.num[0]);
-	particle_->SetCount(1 + int(velocity_.num[0] / 2));
+	particle_->SetFrequency(0.1f);
+	particle_->SetCount(1 + int(velocity_.num[0] / 5));
 	particle_->Update();
 
 }

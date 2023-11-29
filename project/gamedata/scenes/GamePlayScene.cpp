@@ -280,9 +280,9 @@ void GamePlayScene::Draw() {
 
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
-	if (player_->GetVelocitySpeed() >= 0.1f) {
-		player_->ParticleDraw(viewProjection_);
-	}
+	 
+	player_->ParticleDraw(viewProjection_);
+	
 	
 	
 	
