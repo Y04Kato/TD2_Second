@@ -244,4 +244,11 @@ void ObstacleManager::InitializeObstacles() {
 	AddObstacle({ 1270.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
 	AddObstacle({ 1290.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::HealLife);
 	AddObstacle({ 1290.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1320.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1320.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1350.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1350.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	AddObstacle({ 1400.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
 }
