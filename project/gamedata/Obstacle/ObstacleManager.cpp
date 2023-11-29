@@ -11,7 +11,6 @@ void ObstacleManager::Initialize() {
 	randomEngine_ = std::mt19937(seedGenerator());
 
 	InitializeObstacles0();
-	InitializeObstacles1();
 }
 
 void ObstacleManager::Update() {
@@ -82,6 +81,10 @@ void ObstacleManager::Update() {
 		obstacle->GetCameraPosition(cameraPos_);
 	}
 
+	if (playerPos_.num[0] >= 500 && isSetObstacles1 == false) {
+		InitializeObstacles1();
+		isSetObstacles1 = true;
+	}
 	if (playerPos_.num[0] >= 1000 && isSetObstacles2 == false) {
 		InitializeObstacles2();
 		isSetObstacles2 = true;
@@ -157,7 +160,6 @@ int ObstacleManager::GetRandomInt(int min, int max) {
 void ObstacleManager::Reset() {
  	obstacles_.clear();
 	InitializeObstacles0();
-	InitializeObstacles1();
 
 	isSetObstacles1 = false;
 	isSetObstacles2 = false;
