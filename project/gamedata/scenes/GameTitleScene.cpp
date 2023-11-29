@@ -39,7 +39,7 @@ void GameTitleScene::Initialize() {
 }
 
 void GameTitleScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->TriggerKey(DIK_SPACE) && count < 2) {
 		count++;
 	}
 	if (count == 1) {
@@ -52,13 +52,10 @@ void GameTitleScene::Update() {
 		fade_->FadeInFlagSet(true);
 	}
 
-	if (count > 2) {
-		count = 2;
-	}
-
-	if (fade_->GetColor(0) > 1.0f) {
-		sceneNo = GAME_SCENE;
+	if (fade_->GetColor(0) > 1.0f && count == 2) {
 		isPlaySE1 = false;
+		count = 0;
+		sceneNo = GAME_SCENE;
 	}
 
 	fade_->FadeInUpdate();

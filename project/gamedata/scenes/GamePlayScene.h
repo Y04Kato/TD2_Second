@@ -84,5 +84,7 @@ private:
 	//数字
 	std::unique_ptr<Numbers> numbers_;
 	Transform transformNumbers_;
-	int num = 30;
+
+	std::unique_ptr<Numbers> numbers2_;
+	Transform transformNumbers2_;
 };

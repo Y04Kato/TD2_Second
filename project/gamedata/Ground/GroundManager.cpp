@@ -94,6 +94,12 @@ void GroundManager::Reset() {
 	ground_[0]->SetTranslate(Lerp(ground_[0]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
 	ground_[1]->SetTranslate(Lerp(ground_[1]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
 	ground_[2]->SetTranslate(Lerp(ground_[2]->GetWorldTransform().translation_, { 0.0f, -6.0f, 0.0f }, 1.0f));
+	for (int i = 0; i < sideGroundNum; i++) {
+		leftGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,40.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		leftGround2_[i]->Initialize(sideGroundModel_.get(), { 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,65.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		rightGround_[i]->Initialize(sideGroundModel_.get(), { 25.0f * i + rand() % 10 - 5,-16.0f + rand() % 10 - 5,-40.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+		rightGround2_[i]->Initialize(sideGroundModel_.get(), { 30.0f * i + rand() % 8 - 4,-16.0f + rand() % 10 - 5,-65.0f }, { /*40.0f*/8.0f,30.0f + rand() % 10 - 5,8.0f });
+	}
 }
 
 void GroundManager::SetSideGround() {

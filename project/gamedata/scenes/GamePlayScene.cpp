@@ -74,12 +74,21 @@ void GamePlayScene::Initialize() {
 
 	numbers_.reset(new Numbers);
 	numbers_->Initialize();
-	numbers_->SetNum(30);
-	numbers_->SetInitialNum(60);
+	numbers_->SetNum(enemyManager_->GetEnemyLife());
+	numbers_->SetInitialNum(enemyManager_->GetEnemyLife());
 	transformNumbers_.translate = { 950.0f,0.0f,0.0f };
 	transformNumbers_.rotate = { 0.0f,0.0f,0.0f };
 	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
 	numbers_->SetTransform(transformNumbers_);
+
+	numbers2_.reset(new Numbers);
+	numbers2_->Initialize();
+	numbers2_->SetNum(player_->GetLife());
+	numbers2_->SetInitialNum(player_->GetLife());
+	transformNumbers2_.translate = { 950.0f,66.0f,0.0f };
+	transformNumbers2_.rotate = { 0.0f,0.0f,0.0f };
+	transformNumbers2_.scale = { 1.2f,0.12f,1.2f };
+	numbers2_->SetTransform(transformNumbers2_);
 }
 
 void GamePlayScene::Update() {
@@ -130,11 +139,11 @@ void GamePlayScene::Update() {
 		enemyManager_->SetIsSideScroll(isSideScroll_);
 		enemyManager_->Update();
 		//障害物の更新処理
-		obstacleManager_->Update();
 		obstacleManager_->SetIsSideScroll(isSideScroll_);
 		obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 		obstacleManager_->SetLane(player_->GetLane());
 		obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+		obstacleManager_->Update();
 
 		if (input_->TriggerKey(DIK_SPACE)) {
 			if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
@@ -195,22 +204,22 @@ void GamePlayScene::Update() {
 
 		//ゲームオーバー処理
 		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
-			sceneNo = GAMEOVER_SCENE;
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
 			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 			viewProjection_.UpdateMatrix();
+			sceneNo = GAMEOVER_SCENE;
 		}
 
 		//ゲームクリア処理
 		if (enemyManager_->GetEnemyLife() <= 0 || Input::GetInstance()->TriggerKey(DIK_2)) {
-			sceneNo = CLEAR_SCENE;
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
 			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 			viewProjection_.UpdateMatrix();
+			sceneNo = CLEAR_SCENE;
 		}
 
 		ImGui::Begin("debug");
@@ -222,10 +231,9 @@ void GamePlayScene::Update() {
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
 
-		if (input_->TriggerKey(DIK_DOWNARROW)) {
-			num--;
-		}
-		numbers_->SetNum(num);
+		
+		numbers_->SetNum(enemyManager_->GetEnemyLife());
+		numbers2_->SetNum(player_->GetLife());
 	}
 }
 
@@ -258,6 +266,7 @@ void GamePlayScene::Draw() {
 	if (isGameStart_ == true) {
 		sprite_->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		numbers_->Draw();
+		numbers2_->Draw();
 	}
 
 	fade_->FadeInDraw();
@@ -284,4 +293,5 @@ void GamePlayScene::Reset() {
 	enemyManager_->Reset();
 	groundManager_->Reset();
 	obstacleManager_->Reset();
+	groundManager_->SetScroll(true);
 }
