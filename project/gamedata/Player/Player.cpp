@@ -37,11 +37,12 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	field.acceleration = { 0.0f,velocity_.num[1],0.0f };
 	field.area.min = { -1.0f,-1.0f,-1.0f };
 	field.area.max = { 1.0f,1.0f,1.0f };
+
+	particle_ = std::make_unique <CreateParticle>();
+	particle_->Initialize(100, emitter, field, textureHandle_);
 }
 
 void Player::Update() {
-	
-	
 	
 
 	Move();

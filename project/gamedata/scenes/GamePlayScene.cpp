@@ -13,7 +13,7 @@ void GamePlayScene::Initialize() {
 
 	//テクスチャ
 	uvResourceNum_ = textureManager_->Load("project/gamedata/resources/uvChecker.png");
-	
+
 	//Input
 	input_ = Input::GetInstance();
 
@@ -231,7 +231,7 @@ void GamePlayScene::Update() {
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
 
-		
+
 		numbers_->SetNum(enemyManager_->GetEnemyLife());
 		numbers2_->SetNum(player_->GetLife());
 	}
