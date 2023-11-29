@@ -37,8 +37,6 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	field.acceleration = { 0.0f,velocity_.num[1],0.0f };
 	field.area.min = { -1.0f,-1.0f,-1.0f };
 	field.area.max = { 1.0f,1.0f,1.0f };
-	particle_ = std::make_unique<CreateParticle>();
-	particle_->Initialize(10, emitter, field,textureHandle_);
 }
 
 void Player::Update() {
@@ -62,8 +60,6 @@ void Player::Update() {
 
 
 	bulletParticle();
-	//smokeParticle();
-	particle_->Update();
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
@@ -187,10 +183,6 @@ void Player::Draw(const ViewProjection& view) {
     for (PlayerParticle* particle : bulletParticle_) {
 		particle->Draw(view);
 	}
-	/*for (PlayerParticle* particle : smokeParticle_) {
-		particle->Draw(view);
-	}*/
-	particle_->Draw(view);
 }
 
 void Player::Move() {
