@@ -130,6 +130,7 @@
     <ClCompile Include="project\gamedata\Ground\GroundManager.cpp" />
     <ClCompile Include="project\gamedata\Player\Bullet\PlayerBullet.cpp" />
     <ClCompile Include="project\gamedata\Player\Player.cpp" />
+    <ClCompile Include="project\gamedata\Player\PlayerParticle\PlayerParticle.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameOverScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="project\gamedata\Ground\GroundManager.h" />
     <ClInclude Include="project\gamedata\Player\Bullet\PlayerBullet.h" />
     <ClInclude Include="project\gamedata\Player\Player.h" />
+    <ClInclude Include="project\gamedata\Player\PlayerParticle\PlayerParticle.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameOverScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />

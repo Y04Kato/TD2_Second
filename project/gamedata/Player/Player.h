@@ -11,10 +11,12 @@
 #include "Obstacle/Obstacle.h"
 
 #include "components/audio/Audio.h"
+#include "components/2d/CreateParticle.h"
+#include "PlayerParticle/PlayerParticle.h"
 
 class Player : public Collider {
 public:
-	void Initialize(const std::vector<Model*>& models, uint32_t textureHandle);
+	void Initialize(const std::vector<Model*>& models,uint32_t textureHandle);
 
 	void Update();
 
@@ -47,13 +49,21 @@ public:
 
 	void Reset();
 
+	void bulletParticle();
+	void smokeParticle();
+
 	~Player();
 
 private:
 	WorldTransform worldTransformBase_;
 	Input* input_ = nullptr;
 
-	//std::list<Particle*> particle_;
+	
+	std::list<PlayerParticle*> bulletParticle_;
+	std::list<PlayerParticle*> smokeParticle_;
+	std::unique_ptr <CreateParticle> particle_;
+	Emitter emitter{};
+	AccelerationField field;
 
 	std::vector<Model*> models_;
 	std::unique_ptr<Model> model_;
@@ -76,7 +86,7 @@ private:
 
 	//弾
 	std::list<PlayerBullet*> bullets_;
-	uint32_t textureHandle_ = 0u;
+	uint32_t textureHandle_;
 
 	//攻撃時間
 	int fireTimer_ = 1;
