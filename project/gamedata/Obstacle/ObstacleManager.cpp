@@ -137,7 +137,7 @@ int ObstacleManager::GetRandomInt(int min, int max) {
 }
 
 void ObstacleManager::Reset() {
-	obstacles_.clear();
+ 	obstacles_.clear();
 	InitializeObstacles();
 }
 

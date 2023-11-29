@@ -137,11 +137,11 @@ void GamePlayScene::Update() {
 		enemyManager_->SetIsSideScroll(isSideScroll_);
 		enemyManager_->Update();
 		//障害物の更新処理
-		obstacleManager_->Update();
 		obstacleManager_->SetIsSideScroll(isSideScroll_);
 		obstacleManager_->SetPlayerPosition(player_->GetWorldPosition());
 		obstacleManager_->SetLane(player_->GetLane());
 		obstacleManager_->SetCameraPosition(debugCamera_->GetViewProjection()->translation_);
+		obstacleManager_->Update();
 
 		if (input_->TriggerKey(DIK_SPACE)) {
 			if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
@@ -202,22 +202,22 @@ void GamePlayScene::Update() {
 
 		//ゲームオーバー処理
 		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
-			sceneNo = GAMEOVER_SCENE;
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
 			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 			viewProjection_.UpdateMatrix();
+			sceneNo = GAMEOVER_SCENE;
 		}
 
 		//ゲームクリア処理
 		if (enemyManager_->GetEnemyLife() <= 0 || Input::GetInstance()->TriggerKey(DIK_2)) {
-			sceneNo = CLEAR_SCENE;
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
 			viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 			viewProjection_.UpdateMatrix();
+			sceneNo = CLEAR_SCENE;
 		}
 
 		ImGui::Begin("debug");
@@ -291,4 +291,5 @@ void GamePlayScene::Reset() {
 	enemyManager_->Reset();
 	groundManager_->Reset();
 	obstacleManager_->Reset();
+	groundManager_->SetScroll(true);
 }
