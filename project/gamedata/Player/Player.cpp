@@ -181,12 +181,6 @@ void Player::Update() {
 		}
 		else {
 			debugCamera_->SetCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
-			if (input_->TriggerKey(DIK_D)) {
-				cameraDistance_ -= 15.0f;
-			}
-			else if (input_->TriggerKey(DIK_A)) {
-				cameraDistance_ += 15.0f;
-			}
 			if (cameraDistance_ <= -15.0f) {
 				cameraDistance_ = -15.0f;
 			}
@@ -236,6 +230,7 @@ void Player::Move() {
 			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = -jumpWidth_;
+			cameraDistance_ -= 15.0f;
 			jump_ = true;
 			if (lane_ == Obstacle::Lane::Middle) {
 				lane_ = Obstacle::Lane::Right;
@@ -248,6 +243,7 @@ void Player::Move() {
 			audio_->SoundPlayWave(soundData1_, 0.5f, false);
 			velocity_.num[1] = kJumpFirstSpeed;
 			velocity_.num[2] = jumpWidth_;
+			cameraDistance_ += 15.0f;
 			jump_ = true;
 			if (lane_ == Obstacle::Lane::Middle) {
 				lane_ = Obstacle::Lane::Left;
