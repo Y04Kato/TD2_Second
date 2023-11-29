@@ -26,7 +26,7 @@ void GameOverScene::Initialize() {
 	sprite_ = std::make_unique <CreateSprite>();
 	sprite_->Initialize(Vector2{ 100.0f,100.0f }, over_, false, false);
 	sprite_->SetTextureInitialSize();
-
+	fade_->SetColor(1, 1);
 	isFade_ = true;
 }
 
@@ -36,6 +36,10 @@ void GameOverScene::Update() {
 	}
 
 	if (fade_->GetColor(0) > 1.0f) {
+		fade_->SetFadeInFlag(false);
+		fade_->SetColor(1, 1);
+		fade_->SetColor(0, 0);
+		isFade_ = true;
 		sceneNo = TITLE_SCENE;
 	}
 

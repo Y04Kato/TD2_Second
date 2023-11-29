@@ -37,7 +37,7 @@ private:
 	WorldTransform worldTransformTire2_;
 	bool isDead_ = false;
 	bool isSideScroll_;
-	int life_ = 20;
+	int life_ = 80;
 
 	Audio* audio_;
 	SoundData soundData1_;

@@ -22,6 +22,10 @@ public:
 
 	float GetColor(int num) { return fadeColor_[num]; }
 
+	void SetFadeInFlag(bool flag) { isCount_[0] = flag; }
+	void SetFadeOutFlag(bool flag) { isCount_[1] = flag; }
+	void SetColor(int num,float num2) { fadeColor_[num] = num2; }
+
 private:
 	std::unique_ptr<CreateSprite> sprite_[2];
 	uint32_t textureHandle_;

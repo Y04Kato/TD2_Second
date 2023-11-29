@@ -25,7 +25,7 @@ void GameClearScene::Initialize() {
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Initialize();
-
+	fade_->SetColor(1, 1);
 	isFade_ = true;
 }
 
@@ -35,6 +35,10 @@ void GameClearScene::Update() {
 	}
 
 	if (fade_->GetColor(0) > 1.0f) {
+		fade_->SetFadeInFlag(false);
+		fade_->SetColor(1, 1);
+		fade_->SetColor(0, 0);
+		isFade_ = true;
 		sceneNo = TITLE_SCENE;
 	}
 
