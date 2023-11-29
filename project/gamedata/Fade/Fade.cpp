@@ -17,7 +17,7 @@ void Fade::Initialize() {
 	sprite_[1]->Initialize(Vector2{ 100.0f,100.0f }, textureHandle_, false, false);
 	sprite_[1]->SetTextureInitialSize();
 
-	spriteMaterial_[0] = {1.0f,1.0f,1.0f,fadeColor_[0]};
+	spriteMaterial_[0] = {1.0f,1.0f,1.0f,0.0f};
 	spriteTransform_[0] = {{1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f}};
 	spriteUvTransform_[0] = {
 		{1.0f,1.0f,1.0f},
@@ -25,7 +25,7 @@ void Fade::Initialize() {
 		{0.0f,0.0f,0.0f},
 	};
 
-	spriteMaterial_[1] = {1.0f,1.0f,1.0f,fadeColor_[1]};
+	spriteMaterial_[1] = {1.0f,1.0f,1.0f,1.0f};
 	spriteTransform_[1] = {{1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f}};
 	spriteUvTransform_[1] = {
 		{1.0f,1.0f,1.0f},
@@ -35,6 +35,9 @@ void Fade::Initialize() {
 
 	fadeColor_[0] = 0.0f;
 	fadeColor_[1] = 1.0f;
+
+	isCount_[0] = false;
+	isCount_[1] = false;
 }
 
 void Fade::FadeInUpdate() {
