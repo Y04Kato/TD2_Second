@@ -399,12 +399,14 @@ void ObstacleManager::InitializeObstacles4() {
 	AddObstacle({ 4400.0f,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
 	AddObstacle({ 4400.0f,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
 	AddObstacle({ 4400.0f,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
-	for (int i = 0; i < 50; i++) {
-		AddObstacle({ 4500.0f + i * 10,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
-		AddObstacle({ 4500.0f + i * 10,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
+	for (int i = 0; i < 15; i++) {
+		AddObstacle({ 4500.0f + i * 30,0.0f,0.0f }, Obstacle::Lane::Left, Obstacle::Mode::None);
+		AddObstacle({ 4500.0f + i * 30,0.0f,0.0f }, Obstacle::Lane::Right, Obstacle::Mode::None);
 	}
 }
 
 void ObstacleManager::InitializeObstacles5() {
-
+	for (int i = 0; i < 30; i++) {
+		AddObstacle({ 5100.0f + i * 30,0.0f,0.0f }, Obstacle::Lane::Middle, Obstacle::Mode::None);
+	}
 }
