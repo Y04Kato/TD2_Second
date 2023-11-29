@@ -13,7 +13,7 @@ void GamePlayScene::Initialize() {
 
 	//テクスチャ
 	uvResourceNum_ = textureManager_->Load("project/gamedata/resources/uvChecker.png");
-
+	
 	//Input
 	input_ = Input::GetInstance();
 
@@ -203,7 +203,7 @@ void GamePlayScene::Update() {
 		collisionManager_->CheckAllCollision();
 
 		//ゲームオーバー処理
-		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
+		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || player_->GetWorldPosition().num[0] >= 7000 ||Input::GetInstance()->TriggerKey(DIK_1)) {
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -231,7 +231,7 @@ void GamePlayScene::Update() {
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
 
-
+		
 		numbers_->SetNum(enemyManager_->GetEnemyLife());
 		numbers2_->SetNum(player_->GetLife());
 	}
@@ -257,6 +257,7 @@ void GamePlayScene::Draw() {
 
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
+
 	player_->ParticleDraw(viewProjection_);
 
 
