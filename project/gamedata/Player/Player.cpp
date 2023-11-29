@@ -30,21 +30,22 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 
 	//パーティクルの設定
 	emitter.transform.translate = GetWorldPosition();
-	emitter.count = 5;
-	emitter.frequency = 0.5f;
+	emitter.transform.translate.num[1] = emitter.transform.translate.num[1] - 3.0f;
+	emitter.transform.scale = { 5.0f,5.0f,5.0f };
+	emitter.count = 1;
+	emitter.frequency = 0.05f;
+	emitter.frequencyTime = 0.0f;
+
 
 	//フィールド設定
-	field.acceleration = { 0.0f,velocity_.num[1],0.0f };
-	field.area.min = { -1.0f,-1.0f,-1.0f };
-	field.area.max = { 1.0f,1.0f,1.0f };
+	field.acceleration = { -5,10,0.0f };
+	field.area.min = { -1.0f,-1.0f,-20.0f };
+	field.area.max = { 10000.0f,10.0f,20.0f };
 	particle_ = std::make_unique<CreateParticle>();
-	particle_->Initialize(10, emitter, field,textureHandle_);
+	particle_->Initialize(200, emitter, field,textureHandle_);
 }
 
-void Player::Update() {
-	
-	
-	
+void Player::Update() {	
 
 	Move();
 	if (jump_) {
@@ -62,9 +63,9 @@ void Player::Update() {
 
 
 	bulletParticle();
-	//smokeParticle();
-	particle_->Update();
+	smokeParticle();
 	worldTransformBase_.UpdateMatrix();
+	
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
@@ -187,9 +188,11 @@ void Player::Draw(const ViewProjection& view) {
     for (PlayerParticle* particle : bulletParticle_) {
 		particle->Draw(view);
 	}
-	/*for (PlayerParticle* particle : smokeParticle_) {
-		particle->Draw(view);
-	}*/
+	
+	
+}
+
+void Player::ParticleDraw(const ViewProjection& view) {
 	particle_->Draw(view);
 }
 
@@ -372,34 +375,14 @@ void Player::bulletParticle() {
 }
 
 void Player::smokeParticle() {
-	for (int i = 0; i < 1; ++i) {
-		Vector3 velocity = { 0, 0, 0 };
-		float numberX = (rand() % 11 - 5) / 5.0f;
-		float numberY = (rand() % 11 - 5) / 5.0f;
-		float numberZ = (rand() % 11 - 5) / 5.0f;
-		velocity = { 0.0f, numberY, 0.0f };
-		//初期化
-		PlayerParticle* newParticles = new PlayerParticle();
-		newParticles->Initialize(model_.get(), GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
-
-		smokeParticle_.push_back(newParticles);
-	}
 
 
-	for (PlayerParticle* particle : smokeParticle_) {
-		particle->Update();
+	particle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	particle_->SetTranslate(worldTransformBase_.translation_);
+	particle_->SetFrequency(0.05f / velocity_.num[0]);
+	particle_->SetCount(1 + int(velocity_.num[0] / 2));
+	particle_->Update();
 
-	}
-
-	// デスフラグが立った弾を削除
-	smokeParticle_.remove_if([](PlayerParticle* particle) {
-		if (particle->IsDead()) {
-
-			delete particle;
-			return true;
-		}
-		return false;
-	});
 }
 
 void Player::Reset() {

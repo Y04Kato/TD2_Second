@@ -203,7 +203,7 @@ void GamePlayScene::Update() {
 		collisionManager_->CheckAllCollision();
 
 		//ゲームオーバー処理
-		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || Input::GetInstance()->TriggerKey(DIK_1)) {
+		if (player_->GetLife() <= 0 || player_->GetMoveSpeed() <= 0.0f || player_->GetVelocitySpeed() <= 0.0f||Input::GetInstance()->TriggerKey(DIK_1)) {
 			Reset();
 			debugCamera_->Update();
 			viewProjection_.translation_ = debugCamera_->GetViewProjection()->translation_;
@@ -257,6 +257,13 @@ void GamePlayScene::Draw() {
 
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
+	if (player_->GetVelocitySpeed() >= 0.1f) {
+		player_->ParticleDraw(viewProjection_);
+	}
+	
+	
+	
+	
 
 #pragma endregion
 

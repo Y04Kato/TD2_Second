@@ -21,6 +21,13 @@ public:
 
 	void SetTranslate(Vector3 transform) { emitter_.transform.translate = transform; }
 
+	void SetFrequency(float frequency) { emitter_.frequency = frequency; }
+	void SetCount(int count) { emitter_.count = count; }
+	void SetFired(AccelerationField field) { field = accelerationField_; }
+	void SetColor(Vector4 color) {
+		color_ = color;
+		isColor = true;
+	}
 private:
 	void SettingVertex();
 
@@ -64,6 +71,9 @@ private:
 	bool isBillBoard_ = true;
 
 	std::random_device seedGenerator;
+
+	Vector4 color_;
+	bool isColor = false;
 
 	Emitter emitter_{};
 	AccelerationField accelerationField_;
