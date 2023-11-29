@@ -63,8 +63,10 @@ void GamePlayScene::Initialize() {
 	//プレイヤー
 	player_ = std::make_unique <Player>();
 	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "Player.obj"));
+	//煙
+	smokeParticleTexture_ = textureManager_->Load("project/gamedata/resources/player/circle.png");
 	std::vector<Model*>playerModels = { playerModel_.get() };
-	player_->Initialize(playerModels, uvResourceNum_);
+	player_->Initialize(playerModels, smokeParticleTexture_);
 
 	//敵
 	enemyManager_ = std::make_unique<EnemyManager>();
@@ -229,7 +231,7 @@ void GamePlayScene::Update() {
 		ImGui::Text("2 : CLEAR_SCENE");
 		ImGui::End();
 
-		
+
 		numbers_->SetNum(enemyManager_->GetEnemyLife());
 		numbers2_->SetNum(player_->GetLife());
 	}
@@ -255,6 +257,8 @@ void GamePlayScene::Draw() {
 
 #pragma region パーティクル描画
 	CJEngine_->PreDrawParticle();
+	player_->ParticleDraw(viewProjection_);
+
 
 	player_->DrawParticle(viewProjection_);
 

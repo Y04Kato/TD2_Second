@@ -10,6 +10,7 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	input_ = Input::GetInstance();
 	textureHandle_ = textureHandle;
 
+
 	debugCamera_ = DebugCamera::GetInstance();
 
 	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/bullet", "Screw.obj"));
@@ -41,43 +42,23 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 		.area{.min{-1.0f,-1.0f,-1.0f},.max{1.0f,1.0f,1.0f}},
 	};
 	healParticle_.particle->Initialize(1000, emitter, accelerationField, healParticleTextureHandle_);
+  
+	//パーティクルの設定
+	emitter.transform.translate = GetWorldPosition();
+	emitter.count = 5;
+	emitter.frequency = 0.5f;
+
+	//フィールド設定
+	field.acceleration = { 0.0f,velocity_.num[1],0.0f };
+	field.area.min = { -1.0f,-1.0f,-1.0f };
+	field.area.max = { 1.0f,1.0f,1.0f };
+
+	particle_ = std::make_unique <CreateParticle>();
+	particle_->Initialize(100, emitter, field, textureHandle_);
 }
 
 void Player::Update() {
 	
-	
-	for (PlayerBullet* bullet : bullets_) {
-		if (bullet->IsDead()) {
-			for (int i = 0; i < 15; ++i) {
-				Vector3 velocity = { 0, 0, 0 };
-				float numberX = (rand() % 11 - 5) / 5.0f;
-				float numberY = (rand() % 11 - 5) / 5.0f;
-				float numberZ = (rand() % 11 - 5) / 5.0f;
-				velocity = { numberX, numberY, numberZ };
-				////初期化
-				//Particle* newParticles = new Particle();
-				//newParticles->Initialize(model_.get(),bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
-
-				//particle_.push_back(newParticles);
-			}
-
-		}
-	}
-
-	//for (Particle* particle : particle_) {
-	//	particle->Update();
-	//	
-	//}
-
-	//// デスフラグが立った弾を削除
-	//particle_.remove_if([](Particle* particle) {
-	//	if (particle->IsDead()) {
-
-	//		delete particle;
-	//		return true;
-	//	}
-	//	return false;
-	//});
 
 	Move();
 	if (jump_) {
@@ -93,6 +74,8 @@ void Player::Update() {
 		}
 	}
 
+
+	bulletParticle();
 	worldTransformBase_.UpdateMatrix();
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
@@ -220,9 +203,18 @@ void Player::Draw(const ViewProjection& view) {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(view);
 	}
-	/*for (Particle* particle : particle_) {
+    for (PlayerParticle* particle : bulletParticle_) {
+		particle->Draw(view);
+	}
+	/*for (PlayerParticle* particle : smokeParticle_) {
 		particle->Draw(view);
 	}*/
+	
+}
+
+
+void Player::ParticleDraw(const ViewProjection& view) {
+	particle_->Draw(view);
 }
 
 void Player::Move() {
@@ -383,6 +375,43 @@ void Player::OnCollision(const Collider* collider) {
 		healParticle_.activeTimer = kHealParticleActiveTime;
 	}
 }
+
+
+void Player::bulletParticle() {
+	for (PlayerBullet* bullet : bullets_) {
+		if (bullet->IsDead()) {
+			for (int i = 0; i < 15; ++i) {
+				Vector3 velocity = { 0, 0, 0 };
+				float numberX = (rand() % 11 - 5) / 5.0f;
+				float numberY = (rand() % 11 - 5) / 5.0f;
+				float numberZ = (rand() % 11 - 5) / 5.0f;
+				velocity = { numberX, numberY, numberZ };
+				//初期化
+				PlayerParticle* newParticles = new PlayerParticle();
+				newParticles->Initialize(model_.get(), bullet->GetWorldPosition(), { 0.5f, 0.5f, 0.5f }, velocity, velocity);
+
+				bulletParticle_.push_back(newParticles);
+			}
+
+		}
+	}
+
+	for (PlayerParticle* particle : bulletParticle_) {
+		particle->Update();
+
+	}
+
+	// デスフラグが立った弾を削除
+	bulletParticle_.remove_if([](PlayerParticle* particle) {
+		if (particle->IsDead()) {
+
+			delete particle;
+			return true;
+		}
+		return false;
+		});
+}
+
 
 void Player::Reset() {
 	worldTransformBase_.translation_ = { 0.0f,0.0f,0.0f };
