@@ -261,6 +261,8 @@ void GamePlayScene::Draw() {
 	player_->ParticleDraw(viewProjection_);
 
 
+	player_->DrawParticle(viewProjection_);
+
 #pragma endregion
 
 #pragma region 前景スプライト描画

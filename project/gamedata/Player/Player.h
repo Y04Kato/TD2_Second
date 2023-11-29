@@ -14,6 +14,8 @@
 #include "components/2d/CreateParticle.h"
 #include "PlayerParticle/PlayerParticle.h"
 
+#include "CreateParticle.h"
+
 class Player : public Collider {
 public:
 	void Initialize(const std::vector<Model*>& models,uint32_t textureHandle);
@@ -53,6 +55,8 @@ public:
 	
 
 	~Player();
+
+	void DrawParticle(const ViewProjection& viewProjection);
 
 private:
 	WorldTransform worldTransformBase_;
@@ -120,4 +124,16 @@ private:
 	SoundData soundData5_;
 	SoundData soundData6_;
 	SoundData soundData7_;
+
+	//パーティクル
+	struct ParticleInfo {
+		std::unique_ptr<CreateParticle> particle = nullptr;
+		bool isActive = false;
+		int activeTimer = 0;
+	};
+
+	//回復パーティクル
+	const int kHealParticleActiveTime = 60 * 5;
+	ParticleInfo healParticle_{};
+	uint32_t healParticleTextureHandle_ = 0;
 };
