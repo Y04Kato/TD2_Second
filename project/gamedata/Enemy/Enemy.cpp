@@ -32,11 +32,12 @@ void Enemy::Update() {
 	if (life_ == 0) {
 		isDead_ = true;
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("Enemy");
 	ImGui::DragFloat3("Pos", worldTransformTire2_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
 	ImGui::End();
+#endif
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection) {

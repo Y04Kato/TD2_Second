@@ -90,9 +90,14 @@ public:
 	void Reset();
 
 	/// <summary>
-	/// 障害物の初期化
+	/// 障害物の初期化 関数末尾の数字*X1000で使用
 	/// </summary>
-	void InitializeObstacles();
+	void InitializeObstacles0();
+	void InitializeObstacles1();
+	void InitializeObstacles2();
+	void InitializeObstacles3();
+	void InitializeObstacles4();
+	void InitializeObstacles5();
 
 private:
 	//モデル
@@ -122,5 +127,12 @@ private:
 	Vector3 cameraPos_{ 0.0f,0.0f,0.0f };
 	//プレイヤーのレーン
 	int lane_ = Obstacle::Lane::Middle;
+
+	bool isSetObstacles0 = false;
+	bool isSetObstacles1 = false;
+	bool isSetObstacles2 = false;
+	bool isSetObstacles3 = false;
+	bool isSetObstacles4 = false;
+	bool isSetObstacles5 = false;
 };
 

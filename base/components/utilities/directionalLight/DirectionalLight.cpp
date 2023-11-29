@@ -12,9 +12,10 @@ void DirectionalLights::Initialize() {
 
 void DirectionalLights::Update() {
 	directionalLight_.direction = Normalize(directionalLight_.direction);
-
+#ifdef _DEBUG
 	ImGui::Begin("DirectionalLight");
 	ImGui::DragFloat3("LightColor", directionalLight_.color.num, 1.0f);
 	ImGui::DragFloat3("lightDirection", directionalLight_.direction.num, 0.1f);
 	ImGui::End();
+#endif
 }

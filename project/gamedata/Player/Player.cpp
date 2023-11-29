@@ -28,6 +28,21 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 	SetCollisionAttribute(CollisionConfig::kCollisionAttributePlayer);
 	SetCollisionMask(CollisionConfig::kCollisionMaskPlayer);
 
+	//回復パーティクルの初期化
+	healParticleTextureHandle_ = TextureManager::GetInstance()->Load("project/gamedata/resources/Heart.png");
+	healParticle_.particle = std::make_unique<CreateParticle>();
+	Emitter emitter{
+		.transform{.scale{1.0f,1.0f,1.0f},.rotate{0.0f,0.0f,0.0f},.translate{0.0f,0.0f,0.0f}},
+		.count = 0,
+		.frequency = 10000,
+		.frequencyTime = 10000,
+	};
+	AccelerationField accelerationField{
+		.acceleration{0.0f,15.0f,0.0f},
+		.area{.min{-1.0f,-1.0f,-1.0f},.max{1.0f,1.0f,1.0f}},
+	};
+	healParticle_.particle->Initialize(1000, emitter, accelerationField, healParticleTextureHandle_);
+  
 	//パーティクルの設定
 	emitter.transform.translate = GetWorldPosition();
 	emitter.transform.translate.num[1] = emitter.transform.translate.num[1] - 3.0f;
@@ -38,6 +53,7 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 
 
 	//フィールド設定
+
 	field.acceleration = { -5,10,0.0f };
 	field.area.min = { -1.0f,-1.0f,-20.0f };
 	field.area.max = { 10000.0f,10.0f,20.0f };
@@ -46,6 +62,7 @@ void Player::Initialize(const std::vector<Model*>& models, uint32_t textureHandl
 }
 
 void Player::Update() {	
+
 
 	Move();
 	if (jump_) {
@@ -65,7 +82,8 @@ void Player::Update() {
 	bulletParticle();
 	smokeParticle();
 	worldTransformBase_.UpdateMatrix();
-	
+#ifdef _DEBUG
+
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", worldTransformBase_.translation_.num, 0.1f);
 	ImGui::Text("Life : %d", life_);
@@ -74,6 +92,8 @@ void Player::Update() {
 	ImGui::DragFloat("FirstSpeed", &kJumpFirstSpeed, 0.1f);
 	ImGui::DragFloat("Gravity", &kGravity, 0.01f);
 	ImGui::DragFloat("Width", &jumpWidth_, 0.1f);
+	ImGui::DragFloat("CameraPosY", &cameraPosY, 0.1f);
+	ImGui::DragFloat("CameraRotX", &cameraRotX, 0.01f);
 	switch (lane_) {
 	case Obstacle::Lane::Left:
 		ImGui::Text("Left");
@@ -86,6 +106,7 @@ void Player::Update() {
 		break;
 	}
 	ImGui::End();
+#endif
 
 	debugCamera_->SetMovingSpeed(Vector3{ moveSpeed_,0.0f,0.0f });
 
@@ -109,7 +130,7 @@ void Player::Update() {
 		}
 		else {
 			//debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
-			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.05f);
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f }, 0.05f);
 			isSideScroll_ = true;
 		}
 	}
@@ -118,10 +139,10 @@ void Player::Update() {
 		accelerationTimer_++;
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
 			/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
-			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] + 10.0f,2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] + 10.0f,cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f }, 0.06f);
 			if (accelerationTimer_ >= 120) {
 				/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
-				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f }, 0.06f);
 				isAccelerationFlag_ = false;
 			}
 		}
@@ -137,11 +158,11 @@ void Player::Update() {
 	if (isDecelerationFlag_ == true) {//減速した時
 		decelerationTimer_++;
 		if (isSideScroll_ == true) {//横スクロールから縦スクロールへ
-			debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
-			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			//debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0] - 10.0f,2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+			debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0] - 10.0f,cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f }, 0.06f);
 			if (decelerationTimer_ >= 120) {
 				/*debugCamera_->MovingCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);*/
-				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f }, 0.06f);
+				debugCamera_->MovingCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f }, 0.06f);
 				isDecelerationFlag_ = false;
 			}
 		}
@@ -157,7 +178,7 @@ void Player::Update() {
 	if (isDamageFlag_ == false) {//ダメージを受けていない時
 		if (isSideScroll_ == true) {//横スクロール中
 			/*debugCamera_->SetCamera(Vector3{ 20.0f + worldTransformBase_.translation_.num[0],2.7f,-50.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });*/
-			debugCamera_->SetCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],2.7f,-60.0f + cameraDistance_ }, Vector3{ 0.0f,0.0f,0.0f });
+			debugCamera_->SetCamera(Vector3{ 30.0f + worldTransformBase_.translation_.num[0],cameraPosY,-60.0f + cameraDistance_ }, Vector3{ cameraRotX,0.0f,0.0f });
 		}
 		else {
 			debugCamera_->SetCamera(Vector3{ -50.0f + worldTransformBase_.translation_.num[0],22.7f,0.0f }, Vector3{ 0.0f,1.6f,-0.3f });
@@ -176,6 +197,13 @@ void Player::Update() {
 		}
 	}
 
+	//回復パーティクルの更新
+	if (healParticle_.isActive) {
+		if (--healParticle_.activeTimer <= 0) {
+			healParticle_.isActive = false;
+		}
+		healParticle_.particle->Update();
+	}
 }
 
 void Player::Draw(const ViewProjection& view) {
@@ -188,10 +216,7 @@ void Player::Draw(const ViewProjection& view) {
     for (PlayerParticle* particle : bulletParticle_) {
 		particle->Draw(view);
 	}
-	
-	
 }
-
 void Player::ParticleDraw(const ViewProjection& view) {
 	particle_->Draw(view);
 }
@@ -335,6 +360,23 @@ void Player::OnCollision(const Collider* collider) {
 	if (collider->GetCollisionAttribute() & CollisionConfig::kCollisionAttributeObstacleHealLife) {
 		life_++;
 		audio_->SoundPlayWave(soundData6_, 0.8f, false);
+
+		//エミッターを設定
+		Vector3 pos = GetWorldPosition();
+		Emitter emitter{
+			.transform{.scale{1.0f,1.0f,1.0f},.rotate{0.0f,0.0f,0.0f},.translate{pos}},
+			.count = 100,
+			.frequency = 10000,
+			.frequencyTime = 10000,
+		};
+		AccelerationField accelerationField{
+			.acceleration{0.0f,30.0f,0.0f},
+			.area{.min{pos.num[0] - 2.0f,pos.num[1] - 2.0f,pos.num[2] - 2.0f},.max{pos.num[0] + 2.0f,pos.num[1] + 2.0f,pos.num[2] + 2.0f}},
+		};
+		healParticle_.particle->SetEmitter(emitter);
+		healParticle_.particle->SetAccelerationField(accelerationField);
+		healParticle_.isActive = true;
+		healParticle_.activeTimer = kHealParticleActiveTime;
 	}
 }
 
@@ -374,6 +416,7 @@ void Player::bulletParticle() {
 		});
 }
 
+
 void Player::smokeParticle() {
 
 
@@ -384,6 +427,7 @@ void Player::smokeParticle() {
 	particle_->Update();
 
 }
+
 
 void Player::Reset() {
 	worldTransformBase_.translation_ = { 0.0f,0.0f,0.0f };
@@ -420,4 +464,11 @@ Player::~Player() {
 	audio_->SoundUnload(&soundData5_);
 	audio_->SoundUnload(&soundData6_);
 	audio_->SoundUnload(&soundData7_);
+}
+
+void Player::DrawParticle(const ViewProjection& viewProjection) {
+	//回復パーティクルの描画
+	if (healParticle_.isActive) {
+		healParticle_.particle->Draw(viewProjection);
+	}
 }

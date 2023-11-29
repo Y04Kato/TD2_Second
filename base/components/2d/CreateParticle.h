@@ -20,6 +20,8 @@ public:
 	std::list<Particle> Emission(const Emitter& emitter, std::mt19937& randomEngine);
 
 	void SetTranslate(Vector3 transform) { emitter_.transform.translate = transform; }
+	void SetEmitter(const Emitter& emitter) { emitter_ = emitter; };
+	void SetAccelerationField(const AccelerationField& accelerationField) { accelerationField_ = accelerationField; };
 
 	void SetFrequency(float frequency) { emitter_.frequency = frequency; }
 	void SetCount(int count) { emitter_.count = count; }
