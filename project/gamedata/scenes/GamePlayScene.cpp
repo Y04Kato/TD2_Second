@@ -13,7 +13,7 @@ void GamePlayScene::Initialize() {
 
 	//テクスチャ
 	uvResourceNum_ = textureManager_->Load("project/gamedata/resources/uvChecker.png");
-
+	
 	//Input
 	input_ = Input::GetInstance();
 
@@ -63,6 +63,8 @@ void GamePlayScene::Initialize() {
 	//プレイヤー
 	player_ = std::make_unique <Player>();
 	playerModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/player", "Player.obj"));
+	//煙
+	smokeParticleTexture_ = textureManager_->Load("project/gamedata/resources/player/circle.png");
 	std::vector<Model*>playerModels = { playerModel_.get() };
 	player_->Initialize(playerModels, uvResourceNum_);
 
